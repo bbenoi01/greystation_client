@@ -15,12 +15,13 @@ import {
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Single from './pages/Single';
+import Create from './pages/Create';
 import Auth from './pages/Auth';
 
 library.add(fab, faGamepad, faSearch, faEdit, faTrashAlt, faPlus, faUserCircle);
 
 const App = () => {
-	const user = false;
+	const user = true;
 
 	return (
 		<Router>
@@ -32,8 +33,8 @@ const App = () => {
 				<Route path='/post/:postId'>
 					<Single />
 				</Route>
-				{/* <Route path='/wrtie'>{user ? <Write /> : <Auth />}</Route>
-				<Route path='/settings'>{user ? <Settings /> : <Auth />}</Route> */}
+				<Route path='/create'>{user ? <Create /> : <Auth />}</Route>
+				{/* <Route path='/settings'>{user ? <Settings /> : <Auth />}</Route> */}
 				<Route path='/auth'>{user ? <Home /> : <Auth />}</Route>
 			</Switch>
 		</Router>
