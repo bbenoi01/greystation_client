@@ -1,0 +1,81 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	/* .example {background: red;} */
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	/* .example {background: green;} */
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	/* .example {background: blue;} */
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	/* .example {background: orange;} */
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	/* .example {background: pink;} */
+}
+
+.login {
+	height: calc(100vh - 50px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: url('/src/assets/laughing\ babies.jpg');
+	background-size: cover;
+}
+
+.login-title {
+	font-size: 50px;
+}
+
+.login-form {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.login-form > label {
+	margin: 10px 0;
+}
+
+.login-input {
+	padding: 10px;
+	background-color: whitesmoke;
+	border: none;
+}
+
+.login-submit {
+	margin-top: 20px;
+	cursor: pointer;
+	background-color: lightcoral;
+	border: none;
+	color: whitesmoke;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.login-submit:disabled {
+	cursor: not-allowed;
+	background-color: grey;
+}
+
+.login-register-btn {
+	position: absolute;
+	top: 5rem;
+	right: 1.25rem;
+	background-color: teal;
+	cursor: pointer;
+	border: none;
+	padding: 10px;
+	color: whitesmoke;
+	border-radius: 10px;
+}
