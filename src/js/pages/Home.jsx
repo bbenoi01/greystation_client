@@ -1,22 +1,19 @@
-// import { useEffect, useState } from 'react';
-// import { useLocation } from 'react-router';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useLocation } from 'react-router';
 import Header from '../components/Header';
 import Posts from '../components/Posts';
 import Sidebar from '../components/Sidebar';
 
-const Home = () => {
-	// const [posts, setPosts] = useState([]);
-	// const { search } = useLocation();
+import { getPosts } from '../actions/actions';
 
-	// useEffect(() => {
-	// 	const fetchPosts = async () => {
-	// 		const res = await blogApi.get('/posts' + search);
-	// 		setPosts(res.data);
-	// 	};
-	// 	fetchPosts();
-	// }, [search]);
+const Home = ({ dispatch, posts }) => {
+	const { search } = useLocation();
 
-	// console.log('posts', posts);
+	useEffect(() => {
+		dispatch(getPosts(search));
+	}, [search]);
+
 	return (
 		<>
 			<div className='primary'>
@@ -24,7 +21,7 @@ const Home = () => {
 					<Header />
 				</div>
 				<div className='p-bottom'>
-					<Posts />
+					<Posts posts={posts} />
 					<Sidebar />
 				</div>
 			</div>
@@ -32,4 +29,10 @@ const Home = () => {
 	);
 };
 
-export default Home;
+function mapStoreToProps(store) {
+	return {
+		posts: store.app.posts,
+	};
+}
+
+export default connect(mapStoreToProps)(Home);
