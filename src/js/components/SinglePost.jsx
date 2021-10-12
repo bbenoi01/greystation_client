@@ -1,29 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const SinglePost = () => {
+import { getPost, deletePost, updatePost } from '../actions/actions';
+
+const SinglePost = ({ dispatch, user, post }) => {
 	const location = useLocation();
 	const path = location.pathname.split('/')[2];
-	let [post, setPost] = useState({});
 	const [title, setTitle] = useState('');
 	const [desc, setDesc] = useState('');
 	const [updateMode, setUpdateMode] = useState(false);
 
-	const user = {
-		username: 'test',
+	useEffect(() => {
+		setTitle(post.title);
+		setDesc(post.desc);
+		dispatch(getPost(path));
+	}, [path]);
+
+	const handleDelete = () => {
+		dispatch(deletePost(post._id));
 	};
 
-	post = {
-		_id: 1,
-		title: 'My First Post',
-		desc: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti et magnam iure vero, unde fugiat aut nobis fugit? In, corporis incidunt rerum est provident possimus cupiditate minus earum et dolore!',
-		photo:
-			'https://cdn.pixabay.com/photo/2021/09/07/07/11/game-console-6603120_1280.jpg',
-		categories: [],
-		createdAt: '2021-10-10T20:46:43.436+00:00',
-		username: 'test',
+	const handleUpdate = () => {
+		const postDetails = {
+			username: user.username,
+			title,
+			desc,
+		};
+		dispatch(updatePost(post._id, postDetails));
+		setUpdateMode(false);
 	};
 
 	return (
@@ -52,6 +59,7 @@ const SinglePost = () => {
 								<FontAwesomeIcon
 									icon='trash-alt'
 									className='single-post-icon trash'
+									onClick={handleDelete}
 								/>
 							</div>
 						)}
@@ -82,10 +90,7 @@ const SinglePost = () => {
 					<p className='single-post-desc'>{post.desc}</p>
 				)}
 				{updateMode && (
-					<button
-						className='single-post-btn'
-						onClick={() => setUpdateMode(false)}
-					>
+					<button className='single-post-btn' onClick={handleUpdate}>
 						Update
 					</button>
 				)}
@@ -94,4 +99,11 @@ const SinglePost = () => {
 	);
 };
 
-export default SinglePost;
+function mapStoreToProps(store) {
+	return {
+		user: store.app.user,
+		post: store.app.post,
+	};
+}
+
+export default connect(mapStoreToProps)(SinglePost);

@@ -1,10 +1,15 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
-const Sidebar = () => {
-	const [categories, setCategories] = useState([]);
+import { getCategories } from '../actions/actions';
+
+const Sidebar = ({ dispatch, categories }) => {
+	useEffect(() => {
+		dispatch(getCategories());
+	});
 
 	return (
 		<div className='sidebar'>
@@ -43,4 +48,10 @@ const Sidebar = () => {
 	);
 };
 
-export default Sidebar;
+function mapStoreToProps(store) {
+	return {
+		categories: store.app.categories,
+	};
+}
+
+export default connect(mapStoreToProps)(Sidebar);

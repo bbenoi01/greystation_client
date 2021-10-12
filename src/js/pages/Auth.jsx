@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Auth = () => {
+import { register, login } from '../actions/actions';
+
+const Auth = ({ dispatch }) => {
 	const [authType, setAuthType] = useState('login');
 	const [title, setTitle] = useState('Login');
 	const [email, setEmail] = useState('');
@@ -21,10 +23,34 @@ const Auth = () => {
 		setUsername('');
 	};
 
+	const handleLogin = (e) => {
+		e.preventDefault();
+		const userCredentials = {
+			email,
+			password,
+		};
+
+		dispatch(login(userCredentials));
+	};
+
+	const handleRegister = (e) => {
+		e.preventDefault();
+		const userCredentials = {
+			username,
+			email,
+			password,
+		};
+
+		dispatch(register(userCredentials));
+	};
+
 	return (
 		<div className='auth'>
 			<div className='auth-title'>{title}</div>
-			<form className='auth-form'>
+			<form
+				className='auth-form'
+				onSubmit={authType === 'login' ? handleLogin : handleRegister}
+			>
 				{authType === 'register' ? (
 					<>
 						<label htmlFor=''>Username</label>
@@ -78,4 +104,8 @@ const Auth = () => {
 	);
 };
 
-export default Auth;
+function mapStoreToProps(store) {
+	return {};
+}
+
+export default connect(mapStoreToProps)(Auth);

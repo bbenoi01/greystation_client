@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
-	const user = false;
+import { logout } from '../../actions/actions';
+
+const Navbar = ({ dispatch, user }) => {
+	const handleLogout = (e) => {
+		dispatch(logout());
+	};
 
 	return (
 		<nav className='navbar sticky-top navbar-expand-md navbar-dark bg-dark'>
@@ -20,19 +25,24 @@ const Navbar = () => {
 						<div className='collapse navbar-collapse' id='navbarNav'>
 							<ul className='navbar-nav'>
 								<li className='nav-item'>
-									<a className='nav-link' href='!#'>
+									<Link to='/' className='link'>
 										Home
-									</a>
+									</Link>
 								</li>
 								<li className='nav-item'>
-									<a className='nav-link' href='!#'>
-										Write
-									</a>
+									<Link to='/create' className='link'>
+										Create
+									</Link>
 								</li>
 								<li className='nav-item'>
-									<a className='nav-link' href='!#'>
+									<Link to='/settings' className='link'>
+										Settings
+									</Link>
+								</li>
+								<li className='nav-item'>
+									<Link to='/' className='link' onClick={handleLogout}>
 										Logout
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div>
@@ -57,6 +67,11 @@ const Navbar = () => {
 										Login
 									</Link>
 								</li>
+								<li className='nav-item'>
+									<Link to='/about' className='link'>
+										About
+									</Link>
+								</li>
 							</ul>
 						</div>
 					</>
@@ -66,4 +81,10 @@ const Navbar = () => {
 	);
 };
 
-export default Navbar;
+function mapStoreToProps(store) {
+	return {
+		user: store.app.user,
+	};
+}
+
+export default connect(mapStoreToProps)(Navbar);
