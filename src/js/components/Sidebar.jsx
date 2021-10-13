@@ -1,3 +1,4 @@
+import '../../css/sidebar.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';

@@ -1,3 +1,4 @@
+import '../../../css/navbar.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -57,9 +58,9 @@ const Navbar = ({ dispatch, user }) => {
 						>
 							<span className='navbar-toggler-icon'></span>
 						</button>
-						<a className='navbar-brand' href='!#'>
+						<Link to='/' className='link'>
 							GreyStation13 - The Blog
-						</a>
+						</Link>
 						<div className='collapse navbar-collapse' id='navbarNav'>
 							<ul className='navbar-nav'>
 								<li className='nav-item'>
