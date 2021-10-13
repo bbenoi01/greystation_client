@@ -1,33 +1,4 @@
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-	/* .example {background: red;} */
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-	/* .example {background: green;} */
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-	/* .example {background: blue;} */
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-	/* .example {background: orange;} */
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-	/* .example {background: pink;} */
-}
-
 /* Post */
-.post {
-	width: 385px;
-	margin: 0px 25px 40px 25px;
-}
 
 .post-img {
 	width: 100%;
@@ -79,4 +50,71 @@
 	display: -webkit-box;
 	-webkit-line-clamp: 4;
 	-webkit-box-orient: vertical;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (min-width: 280px) {
+	/* .example {background: red;} */
+	.post {
+		width: 100%;
+		height: fit-content;
+		margin-bottom: 10px;
+	}
+
+	.post-img {
+		height: 100px;
+	}
+
+	.post-info {
+		position: relative;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.post-category {
+		position: absolute;
+		left: 0px;
+		bottom: 20px;
+	}
+
+	.post-title {
+		color: black;
+		position: absolute;
+		left: 0px;
+		bottom: 0px;
+	}
+
+	.post-desc {
+		display: none;
+	}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	/* .example {background: blue;} */
+	.post {
+		width: 128.33px;
+		margin: 0px 8.33px 13.33px 8.33px;
+	}
+
+	.post-img {
+		height: 280px;
+	}
+
+	.post-info {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.post-desc {
+		display: -webkit-box;
+	}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	/* .example {background: pink;} */
+	.post {
+		width: 30%;
+	}
 }

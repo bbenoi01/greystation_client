@@ -1,3 +1,4 @@
+import '../../css/home.css';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -16,11 +17,9 @@ const Home = ({ dispatch, posts }) => {
 
 	return (
 		<>
-			<div className='primary'>
-				<div className='p-top'>
-					<Header />
-				</div>
-				<div className='p-bottom'>
+			<div className='home'>
+				<Header />
+				<div className='h-bottom'>
 					<Posts posts={posts} />
 					<Sidebar />
 				</div>
