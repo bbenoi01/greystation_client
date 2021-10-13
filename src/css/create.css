@@ -1,0 +1,89 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	/* .example {background: red;} */
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	/* .example {background: green;} */
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	/* .example {background: blue;} */
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	/* .example {background: orange;} */
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	/* .example {background: pink;} */
+}
+
+/* Write */
+.write {
+	padding-top: 50px;
+}
+
+.write-img {
+	margin-left: 150px;
+	width: 70vw;
+	height: 250px;
+	border-radius: 10px;
+	object-fit: cover;
+}
+
+.write-from {
+	position: relative;
+}
+
+.write-form-group {
+	margin-left: 150px;
+	display: flex;
+	align-items: center;
+}
+
+.write-icon {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	border: 1px solid;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	color: rgb(121, 118, 118);
+	cursor: pointer;
+}
+
+.write-input {
+	font-size: 30px;
+	border: none;
+	padding: 20px;
+	width: 70vw;
+}
+
+.write-input:focus {
+	outline: none;
+}
+
+.write-text {
+	font-size: 20px;
+	height: 100vh;
+}
+
+.write-submit {
+	position: absolute;
+	top: 40%;
+	right: 15%;
+	color: whitesmoke;
+	background-color: teal;
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	font-size: 16px;
+}

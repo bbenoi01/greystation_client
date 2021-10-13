@@ -1,0 +1,113 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	/* .example {background: red;} */
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	/* .example {background: green;} */
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	/* .example {background: blue;} */
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	/* .example {background: orange;} */
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	/* .example {background: pink;} */
+}
+
+/* Settings */
+.settings {
+	display: flex;
+}
+
+.settings-wrapper {
+	flex: 9;
+	padding: 20px;
+}
+
+.settings-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.settings-update-title {
+	font-size: 30px;
+	margin-bottom: 20px;
+	color: lightcoral;
+}
+
+.settings-delete-title {
+	color: red;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.settings-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.settings-profile-picture {
+	display: flex;
+	align-items: center;
+	margin: 10px 0;
+}
+
+.settings-profile-picture > img {
+	width: 70px;
+	height: 70px;
+	border-radius: 20px;
+	object-fit: cover;
+}
+
+.settings-profile-picture-icon {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	background-color: lightcoral;
+	color: whitesmoke;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.settings-form > label {
+	font-size: 20px;
+	margin-top: 20px;
+}
+
+.settings-form > input {
+	color: grey;
+	margin: 10px 0;
+	border: none;
+	border-bottom: 1px solid lightgrey;
+}
+
+.settings-submit {
+	width: 150px;
+	align-self: center;
+	border: none;
+	border-radius: 10px;
+	color: whitesmoke;
+	background-color: teal;
+	padding: 10px;
+	margin-top: 20px;
+	cursor: pointer;
+}
+
+.success-banner {
+	color: green;
+	text-align: center;
+	margin-top: 20px;
+}

@@ -1,0 +1,91 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	/* .example {background: red;} */
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	/* .example {background: green;} */
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	/* .example {background: blue;} */
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	/* .example {background: orange;} */
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	/* .example {background: pink;} */
+}
+
+/* Sidebar */
+.sidebar {
+	flex: 3;
+	margin: 20px;
+	padding-bottom: 30px;
+	background-color: burlywood;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.sidebar-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.sidebar-title {
+	margin: 10px;
+	padding: 5px;
+	width: 80%;
+	border-top: 1px solid grey;
+	border-bottom: 1px solid grey;
+	font-family: 'Varela Round', sans-serif;
+	font-size: 12px;
+	color: #222;
+	font-weight: 600;
+	line-height: 20px;
+}
+
+.sidebar-img {
+	width: 100%;
+	margin-top: 15px;
+}
+
+.sidebar-item > p {
+	padding: 30px;
+}
+
+.sidebar-list {
+	list-style: none;
+	margin-bottom: 30px;
+}
+
+.sidebar-list-item {
+	font-size: small;
+	display: inline-block;
+	width: 50%;
+	margin-top: 15px;
+	cursor: pointer;
+}
+
+.siderbar-social {
+	margin-top: 15px;
+	width: 250px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.sidebar svg {
+	font-size: 16px;
+	margin-left: 10px;
+	cursor: pointer;
+}
