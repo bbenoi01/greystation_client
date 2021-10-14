@@ -1,3 +1,4 @@
+import '../../css/auth.css';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 

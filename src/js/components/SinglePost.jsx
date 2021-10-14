@@ -1,3 +1,4 @@
+import '../../css/singlePost.css';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -14,9 +15,9 @@ const SinglePost = ({ dispatch, user, post }) => {
 	const [updateMode, setUpdateMode] = useState(false);
 
 	useEffect(() => {
+		dispatch(getPost(path));
 		setTitle(post.title);
 		setDesc(post.desc);
-		dispatch(getPost(path));
 	}, [path]);
 
 	const handleDelete = () => {
@@ -81,7 +82,7 @@ const SinglePost = ({ dispatch, user, post }) => {
 						name=''
 						id=''
 						cols='30'
-						rows='10'
+						rows='7'
 						className='single-post-desc-input'
 						value={desc}
 						onChange={(e) => setDesc(e.target.value)}

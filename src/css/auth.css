@@ -1,5 +1,5 @@
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 280px) {
 	/* .example {background: red;} */
 }
 
@@ -23,37 +23,37 @@
 	/* .example {background: pink;} */
 }
 
-.login {
-	height: calc(100vh - 50px);
+.auth {
+	height: calc(100vh - 56px);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background: url('/src/assets/laughing\ babies.jpg');
+	background: url('../assets/laughing_babies.jpg');
 	background-size: cover;
 }
 
-.login-title {
+.auth-title {
 	font-size: 50px;
 }
 
-.login-form {
+.auth-form {
 	margin-top: 20px;
 	display: flex;
 	flex-direction: column;
 }
 
-.login-form > label {
+.auth-form > label {
 	margin: 10px 0;
 }
 
-.login-input {
+.auth-input {
 	padding: 10px;
 	background-color: whitesmoke;
 	border: none;
 }
 
-.login-submit {
+.auth-submit {
 	margin-top: 20px;
 	cursor: pointer;
 	background-color: lightcoral;
@@ -63,19 +63,24 @@
 	padding: 10px;
 }
 
-.login-submit:disabled {
+.auth-submit:disabled {
 	cursor: not-allowed;
 	background-color: grey;
 }
 
-.login-register-btn {
+.auth-switch {
 	position: absolute;
 	top: 5rem;
 	right: 1.25rem;
-	background-color: teal;
+	background-color: transparent;
+	color: transparent;
 	cursor: pointer;
 	border: none;
 	padding: 10px;
-	color: whitesmoke;
 	border-radius: 10px;
+}
+
+.auth-switch:hover {
+	background-color: teal;
+	color: whitesmoke;
 }
