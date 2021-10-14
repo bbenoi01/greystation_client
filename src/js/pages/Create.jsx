@@ -1,52 +1,88 @@
+import '../../css/create.css';
+import { connect } from 'react-redux';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Create = () => {
+import { upload, submitPost } from '../actions/actions';
+
+const Create = ({ dispatch, user }) => {
 	const [title, setTitle] = useState('');
 	const [desc, setDesc] = useState('');
 	const [file, setFile] = useState(null);
 	const [blogType, setBlogType] = useState('');
 
-	console.log('bt', blogType);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const newPost = {
+			username: user.username,
+			title,
+			desc,
+			userId: user._id,
+		};
+		if (file) {
+			const data = new FormData();
+			const filename = Date.now() + '-' + file.name;
+			const PF = 'http://localhost:3005/images/';
+			data.append('name', filename);
+			data.append('file', file);
+			newPost.photo = PF + filename;
+
+			dispatch(upload(data));
+		}
+		dispatch(submitPost(newPost));
+	};
 
 	return (
 		<div className='create'>
-			<div className='create-blog-type'>
-				<div className='form-check'>
-					<input
-						type='radio'
-						className='form-check-input'
-						name='blogType'
-						id='blog'
-						onChange={() => setBlogType('blog')}
-					/>
-					<label htmlFor='blog' className='form-check-label'>
-						Blog
-					</label>
+			<form
+				encType='multipart/form-data'
+				className='create-form'
+				onSubmit={handleSubmit}
+			>
+				<div className='create-blog-type'>
+					<div className='radios'>
+						<div className='form-check'>
+							<input
+								type='radio'
+								className='form-check-input'
+								name='blogType'
+								id='blog'
+								onChange={() => setBlogType('blog')}
+							/>
+							<label htmlFor='blog' className='form-check-label'>
+								Blog
+							</label>
+						</div>
+						<div className='form-check'>
+							<input
+								type='radio'
+								className='form-check-input'
+								name='blogType'
+								id='vlog'
+								onChange={() => setBlogType('vlog')}
+							/>
+							<label htmlFor='vlog' className='form-check-label'>
+								Vlog
+							</label>
+						</div>
+					</div>
+					<button
+						type='submit'
+						className='create-submit'
+						style={blogType === '' ? { display: 'none' } : null}
+					>
+						Publish
+					</button>
 				</div>
-				<div className='form-check'>
-					<input
-						type='radio'
-						className='form-check-input'
-						name='blogType'
-						id='vlog'
-						onChange={() => setBlogType('vlog')}
-					/>
-					<label htmlFor='vlog' className='form-check-label'>
-						Vlog
-					</label>
-				</div>
-			</div>
-			{blogType === 'blog' ? (
-				<>
-					{file && (
-						<img
-							src={URL.createObjectURL(file)}
-							alt=''
-							className='create-img'
-						/>
-					)}
-					<form encType='multipart/form-data' className='create-form'>
+				{blogType === 'blog' ? (
+					<>
+						{file && (
+							<img
+								src={URL.createObjectURL(file)}
+								alt=''
+								className='create-img'
+							/>
+						)}
 						<div className='create-form-group file-and-title'>
 							<div className='create-file'>
 								<label htmlFor='file-input'>
@@ -78,14 +114,17 @@ const Create = () => {
 								onChange={(e) => setDesc(e.target.value)}
 							/>
 						</div>
-						<button type='submit' className='create-submit'>
-							Publish
-						</button>
-					</form>
-				</>
-			) : null}
+					</>
+				) : null}
+			</form>
 		</div>
 	);
 };
 
-export default Create;
+function mapStoreToProps(store) {
+	return {
+		user: store.app.user,
+	};
+}
+
+export default connect(mapStoreToProps)(Create);

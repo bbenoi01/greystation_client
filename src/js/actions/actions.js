@@ -11,6 +11,7 @@ export function register(userCredentials) {
 			.then((res) => {
 				const { token, ...others } = res.data;
 				sessionStorage.setItem('token', res.data.token);
+				sessionStorage.setItem('user', JSON.stringify(others));
 				dispatch({
 					type: types.LOGIN_SUCCESS,
 					payload: others,
@@ -34,6 +35,7 @@ export function login(userCredentials) {
 			.then((res) => {
 				const { token, ...others } = res.data;
 				sessionStorage.setItem('token', res.data.token);
+				sessionStorage.setItem('user', JSON.stringify(others));
 				dispatch({
 					type: types.LOGIN_SUCCESS,
 					payload: others,
@@ -50,6 +52,7 @@ export function login(userCredentials) {
 export function logout() {
 	return (dispatch) => {
 		sessionStorage.removeItem('token');
+		sessionStorage.removeItem('user');
 		dispatch({
 			type: types.LOGOUT,
 		});
@@ -136,6 +139,27 @@ export function getCategories() {
 				dispatch({
 					type: types.GET_CATEGORIES_FAILURE,
 				});
+			});
+	};
+}
+
+export function upload(data) {
+	return () => {
+		blogApi.post('/upload', data).catch((err) => {
+			console.log(err);
+		});
+	};
+}
+
+export function submitPost(newPost) {
+	return () => {
+		blogApi
+			.post('/post', newPost)
+			.then((res) => {
+				window.location.replace('/post/' + res.data._id);
+			})
+			.catch((err) => {
+				console.log(err);
 			});
 	};
 }

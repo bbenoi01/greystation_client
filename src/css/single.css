@@ -1,3 +1,8 @@
+/* Single */
+.single {
+	height: calc(100vh - 56px);
+	overflow: hidden;
+}
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
 	/* .example {background: red;} */
@@ -11,6 +16,9 @@
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
 	/* .example {background: blue;} */
+	.single {
+		display: flex;
+	}
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -21,9 +29,4 @@
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 	/* .example {background: pink;} */
-}
-
-/* Single */
-.single {
-	display: flex;
 }

@@ -9,8 +9,8 @@ import { getCategories } from '../actions/actions';
 
 const Sidebar = ({ dispatch, categories }) => {
 	useEffect(() => {
-		dispatch(getCategories());
-	});
+		// dispatch(getCategories());
+	}, [categories]);
 
 	return (
 		<div className='sidebar'>
