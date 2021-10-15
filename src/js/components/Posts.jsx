@@ -5,9 +5,13 @@ import Post from './Post';
 const Posts = ({ posts }) => {
 	return (
 		<div className='posts'>
-			{posts.map((p) => (
-				<Post key={p._id} post={p} />
-			))}
+			<div className='row'>
+				{posts.map((p) => (
+					<div key={p._id} className='col-sm-4'>
+						<Post post={p} />
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };

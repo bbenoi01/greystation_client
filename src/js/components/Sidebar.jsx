@@ -1,16 +1,20 @@
 import '../../css/sidebar.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
 import { getCategories } from '../actions/actions';
 
 const Sidebar = ({ dispatch, categories }) => {
+	const pullCats = useCallback(() => {
+		dispatch(getCategories());
+	}, [dispatch]);
+
 	useEffect(() => {
-		// dispatch(getCategories());
-	}, [categories]);
+		pullCats();
+	}, [pullCats]);
 
 	return (
 		<div className='sidebar'>
