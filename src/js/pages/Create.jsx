@@ -22,7 +22,7 @@ const Create = ({ dispatch, user }) => {
 		if (file) {
 			const data = new FormData();
 			const filename = Date.now() + '-' + file.name;
-			const PF = 'http://localhost:3005/images/';
+			const PF = 'https://greystation-api.herokuapp.com/images/';
 			data.append('name', filename);
 			data.append('file', file);
 			newPost.photo = PF + filename;
