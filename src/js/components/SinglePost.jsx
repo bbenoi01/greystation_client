@@ -1,5 +1,5 @@
 import '../../css/singlePost.css';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -14,11 +14,15 @@ const SinglePost = ({ dispatch, user, post }) => {
 	const [desc, setDesc] = useState('');
 	const [updateMode, setUpdateMode] = useState(false);
 
-	useEffect(() => {
+	const pullPost = useCallback(() => {
 		dispatch(getPost(path));
+	}, [dispatch, path]);
+
+	useEffect(() => {
 		setTitle(post.title);
 		setDesc(post.desc);
-	}, [path]);
+		pullPost();
+	}, [post.title, post.desc, pullPost]);
 
 	const handleDelete = () => {
 		dispatch(deletePost(post._id));

@@ -1,4 +1,9 @@
 /* Post */
+.post {
+	width: 100%;
+	height: fit-content;
+	margin-bottom: 10px;
+}
 
 .post-img {
 	width: 100%;
@@ -55,11 +60,6 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (min-width: 280px) {
 	/* .example {background: red;} */
-	.post {
-		width: 100%;
-		height: fit-content;
-		margin-bottom: 10px;
-	}
 
 	.post-img {
 		height: 100px;
@@ -93,7 +93,6 @@
 @media only screen and (min-width: 768px) {
 	/* .example {background: blue;} */
 	.post {
-		width: 128.33px;
 		margin: 0px 8.33px 13.33px 8.33px;
 	}
 
@@ -114,7 +113,4 @@
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 	/* .example {background: pink;} */
-	.post {
-		width: 30%;
-	}
 }
