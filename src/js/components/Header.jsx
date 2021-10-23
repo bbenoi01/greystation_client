@@ -3,8 +3,8 @@ const Header = () => {
 	return (
 		<div className='header'>
 			<div className='header-titles'>
-				<span className='header-title-sm'>React & Node</span>
-				<span className='header-title-lg'>Blog</span>
+				<span className='header-title-sm'>GreyStation13</span>
+				<span className='header-title-lg'>- The Blog -</span>
 			</div>
 			<img
 				className='header-img'
