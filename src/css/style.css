@@ -3,10 +3,10 @@
 	margin: 0;
 }
 
-.link {
+/* .link {
 	text-decoration: none;
 	color: whitesmoke;
-}
+} */
 
 .main-container {
 	height: calc(100vh - 56px);

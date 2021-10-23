@@ -58,11 +58,13 @@ const Navbar = ({ dispatch, user }) => {
 						>
 							<span className='navbar-toggler-icon'></span>
 						</button>
-						<Link to='/' className='link'>
-							GreyStation13 - The Blog
-						</Link>
 						<div className='collapse navbar-collapse' id='navbarNav'>
 							<ul className='navbar-nav'>
+								<li className='nav-item'>
+									<Link to='/' className='link'>
+										Home
+									</Link>
+								</li>
 								<li className='nav-item'>
 									<Link to='/auth' className='link'>
 										Login
