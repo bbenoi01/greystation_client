@@ -1,5 +1,5 @@
 import React from 'react';
-import './fonts/Mightyspidey.ttf';
+import './fonts/MightySpidey.ttf';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import rootStore from './js/rootStore';
