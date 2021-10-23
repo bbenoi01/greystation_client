@@ -1,7 +1,6 @@
 @font-face {
 	font-family: 'MightySpidey';
-	src: local('MightySpidey'),
-		url('../fonts/MightySpidey.ttf') format('truetype');
+	src: local('MightySpidey'), url('./fonts/MightySpidey.ttf') format('truetype');
 }
 
 /* Header */
