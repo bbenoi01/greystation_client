@@ -1,6 +1,9 @@
 {
 	"name": "greystation_client",
 	"version": "0.1.0",
+	"engines": {
+		"node": "16.8.0"
+	},
 	"private": true,
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^1.2.36",
