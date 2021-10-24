@@ -5,7 +5,19 @@ import { Link } from 'react-router-dom';
 const Post = ({ post }) => {
 	return (
 		<div className='post'>
-			{post.photo && <img src={post.photo} alt='' className='post-img' />}
+			{post.media && post.blogType === 'blog' ? (
+				<img src={post.media} alt='' className='post-img' />
+			) : post.media && post.blogType === 'vlog' ? (
+				<iframe
+					title='Vlog Post'
+					src={post.media}
+					frameBorder='0'
+					controls='0'
+					allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+					allowFullScreen
+					className='post-img'
+				/>
+			) : null}
 			<div className='post-info'>
 				<div className='post-categories'>
 					{post.categories.map((category) => (
