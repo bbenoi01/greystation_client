@@ -52,6 +52,7 @@
 .create-input {
 	border: none;
 	padding: 5px;
+	margin: 5px 0;
 	width: 100%;
 }
 
@@ -74,6 +75,10 @@
 	border-radius: 10px;
 	cursor: pointer;
 	font-size: 16px;
+}
+
+.vlog-form {
+	display: block;
 }
 
 /* Extra small devices (phones, 600px and down) */

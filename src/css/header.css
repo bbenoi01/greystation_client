@@ -51,6 +51,14 @@
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
 	/* .example {background: green;} */
+
+	.header-title-sm {
+		font-size: 22.5px;
+	}
+
+	.header-title-lg {
+		font-size: 45px;
+	}
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -67,11 +75,11 @@
 	}
 
 	.header-title-sm {
-		font-size: 20px;
+		font-size: 32.5px;
 	}
 
 	.header-title-lg {
-		font-size: 50px;
+		font-size: 65px;
 	}
 }
 
