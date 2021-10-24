@@ -1,3 +1,9 @@
+@font-face {
+	font-family: 'MightySpidey';
+	src: local('MightySpidey'),
+		url('../fonts/MightySpidey.ttf') format('truetype');
+}
+
 * {
 	padding: 0;
 	margin: 0;
@@ -6,6 +12,8 @@
 .link {
 	text-decoration: none;
 	color: steelblue;
+	font-family: 'MightySpidey';
+	font-size: 12px;
 }
 
 .link:hover {

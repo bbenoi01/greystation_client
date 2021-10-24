@@ -10,14 +10,16 @@ const Create = ({ dispatch, user }) => {
 	const [desc, setDesc] = useState('');
 	const [file, setFile] = useState(null);
 	const [blogType, setBlogType] = useState('');
+	const [videoAddress, setVideoAddress] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleBlogSubmit = (e) => {
 		e.preventDefault();
 		const newPost = {
 			username: user.username,
 			title,
 			desc,
 			userId: user._id,
+			blogType,
 		};
 		if (file) {
 			const data = new FormData();
@@ -32,12 +34,31 @@ const Create = ({ dispatch, user }) => {
 		dispatch(submitPost(newPost));
 	};
 
+	const handleVlogSubmit = (e) => {
+		e.preventDefault();
+		const newPost = {
+			username: user.username,
+			title,
+			photo: videoAddress,
+			userId: user._id,
+			blogType,
+		};
+
+		dispatch(submitPost(newPost));
+	};
+
 	return (
 		<div className='create'>
 			<form
 				encType='multipart/form-data'
 				className='create-form'
-				onSubmit={handleSubmit}
+				onSubmit={
+					blogType === 'blog'
+						? handleBlogSubmit
+						: blogType === 'vlog'
+						? handleVlogSubmit
+						: null
+				}
 			>
 				<div className='create-blog-type'>
 					<div className='radios'>
@@ -113,6 +134,40 @@ const Create = ({ dispatch, user }) => {
 								className='create-input create-text'
 								onChange={(e) => setDesc(e.target.value)}
 							/>
+						</div>
+					</>
+				) : blogType === 'vlog' ? (
+					<>
+						{videoAddress && (
+							<iframe
+								title='Rick Roll'
+								width='100%'
+								height='315'
+								src={videoAddress}
+								frameBorder='0'
+								controls='0'
+								allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+								allowFullScreen
+							/>
+						)}
+						<div className='create-form-group vlog-form'>
+							<div className='create-video-address-input'>
+								<input
+									type='text'
+									placeholder='Video Address'
+									className='create-input'
+									onChange={(e) => setVideoAddress(e.target.value)}
+								/>
+							</div>
+							<div className='create-title'>
+								<input
+									type='text'
+									placeholder='Title'
+									className='create-input'
+									onChange={(e) => setTitle(e.target.value)}
+									autoFocus
+								/>
+							</div>
 						</div>
 					</>
 				) : null}

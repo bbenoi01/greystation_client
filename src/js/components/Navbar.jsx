@@ -1,9 +1,9 @@
-import '../../../css/navbar.css';
+import '../../css/navbar.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { logout } from '../../actions/actions';
+import { logout } from '../actions/actions';
 
 const Navbar = ({ dispatch, user }) => {
 	const handleLogout = (e) => {
@@ -35,11 +35,11 @@ const Navbar = ({ dispatch, user }) => {
 										Create
 									</Link>
 								</li>
-								<li className='nav-item'>
+								{/* <li className='nav-item'>
 									<Link to='/settings' className='link'>
 										Settings
 									</Link>
-								</li>
+								</li> */}
 								<li className='nav-item'>
 									<Link to='/' className='link' onClick={handleLogout}>
 										Logout
