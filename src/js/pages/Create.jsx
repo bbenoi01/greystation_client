@@ -27,7 +27,7 @@ const Create = ({ dispatch, user }) => {
 			const PF = 'https://greystation-api.herokuapp.com/images/';
 			data.append('name', filename);
 			data.append('file', file);
-			newPost.photo = PF + filename;
+			newPost.media = PF + filename;
 
 			dispatch(upload(data));
 		}
@@ -39,7 +39,7 @@ const Create = ({ dispatch, user }) => {
 		const newPost = {
 			username: user.username,
 			title,
-			photo: videoAddress,
+			media: videoAddress,
 			userId: user._id,
 			blogType,
 		};
@@ -140,14 +140,13 @@ const Create = ({ dispatch, user }) => {
 					<>
 						{videoAddress && (
 							<iframe
-								title='Rick Roll'
-								width='100%'
-								height='315'
+								title='Vlog Post'
 								src={videoAddress}
 								frameBorder='0'
 								controls='0'
 								allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
 								allowFullScreen
+								className='create-img'
 							/>
 						)}
 						<div className='create-form-group vlog-form'>

@@ -41,9 +41,19 @@ const SinglePost = ({ dispatch, user, post }) => {
 	return (
 		<div className='single-post'>
 			<div className='single-post-wrapper'>
-				{post.photo && (
-					<img src={post.photo} alt='' className='single-post-img' />
-				)}
+				{post.media && post.blogType === 'blog' ? (
+					<img src={post.media} alt='' className='single-post-img' />
+				) : post.media && post.blogType === 'vlog' ? (
+					<iframe
+						title='Vlog Post'
+						src={post.media}
+						frameBorder='0'
+						controls='0'
+						allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+						allowFullScreen
+						className='single-post-img'
+					/>
+				) : null}
 				{updateMode ? (
 					<input
 						type='text'
