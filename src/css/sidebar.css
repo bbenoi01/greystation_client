@@ -8,6 +8,7 @@
 	display: none;
 	flex-direction: column;
 	align-items: center;
+	height: fit-content;
 }
 
 .sidebar-item {
@@ -23,7 +24,7 @@
 	border-top: 1px solid grey;
 	border-bottom: 1px solid grey;
 	font-family: 'Varela Round', sans-serif;
-	font-size: 12px;
+	font-size: x-small;
 	color: #222;
 	font-weight: 600;
 	line-height: 20px;
@@ -36,6 +37,11 @@
 
 .sidebar-item > p {
 	padding: 30px;
+}
+
+.sidebar-about {
+	max-height: 180px;
+	overflow: auto;
 }
 
 .sidebar-list {

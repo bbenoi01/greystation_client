@@ -25,7 +25,7 @@ const Sidebar = ({ dispatch, categories }) => {
 					alt='DJ GreyStation'
 					className='sidebar-img'
 				/>
-				<p>
+				<p className='sidebar-about'>
 					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti et
 					magnam iure vero, unde fugiat aut nobis fugit? In, corporis incidunt
 					rerum est provident possimus cupiditate minus earum et dolore!
