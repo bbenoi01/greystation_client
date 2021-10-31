@@ -6,11 +6,6 @@ const Header = () => {
 				<span className='header-title-sm'>GreyStation13</span>
 				<span className='header-title-lg'>- The Blog -</span>
 			</div>
-			<img
-				className='header-img'
-				src='https://blog.playstation.com/tachyon/2020/11/MSMMM_Social_Crouch_Legal.jpg?resize=1088%2C612&crop_strategy=smart&zoom=1'
-				alt='Miles Morales'
-			/>
 		</div>
 	);
 };

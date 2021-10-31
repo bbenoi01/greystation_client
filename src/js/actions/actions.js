@@ -116,9 +116,14 @@ export function deletePost(id) {
 
 export function updatePost(id, postDetails) {
 	return () => {
-		blogApi.put(`/post/${id}`, postDetails).catch((err) => {
-			console.log(err);
-		});
+		blogApi
+			.put(`/post/${id}`, postDetails)
+			.then((res) => {
+				window.location.replace('/post/' + res.data._id);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 }
 
