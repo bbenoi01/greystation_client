@@ -120,7 +120,7 @@
 
 	.single-post-img {
 		height: 300px;
-		object-fit: fill;
+		/* object-fit: fill; */
 		margin-bottom: 20px;
 	}
 
