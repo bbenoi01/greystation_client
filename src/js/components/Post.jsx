@@ -15,7 +15,7 @@ const Post = ({ post }) => {
 					controls='0'
 					allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
 					allowFullScreen
-					className='post-img'
+					className='post-img vlog'
 				/>
 			) : null}
 			<div className='post-info'>
@@ -28,7 +28,6 @@ const Post = ({ post }) => {
 				<Link to={`/post/${post._id}`} className='link'>
 					<span className='post-title'>{post.title}</span>
 				</Link>
-				<hr />
 				<span className='post-date'>
 					{new Date(post.createdAt).toDateString()}
 				</span>
