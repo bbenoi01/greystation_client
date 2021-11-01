@@ -36,8 +36,17 @@
 }
 
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (min-width: 320px) {
+@media only screen and (max-width: 320px) {
 	/* .example {background: red;} */
+
+	.header-title-sm {
+		font-size: 10.5px;
+		margin-top: 5px;
+	}
+
+	.header-title-lg {
+		font-size: 20px;
+	}
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -61,17 +70,21 @@
 	}
 
 	.header-title-sm {
-		font-size: 32.5px;
-	}
-
-	.header-title-lg {
-		font-size: 65px;
+		font-size: 30.5px;
 	}
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
 	/* .example {background: orange;} */
+
+	.header-title-sm {
+		font-size: 32.5px;
+	}
+
+	.header-title-lg {
+		font-size: 65px;
+	}
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */

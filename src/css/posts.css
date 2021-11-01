@@ -1,12 +1,9 @@
 /* Posts */
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (min-width: 280px) {
-	/* .example {background: red;} */
-	.posts {
-		padding: 15px;
-	}
+.posts {
+	padding: 15px;
 }
+
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
 	/* .example {background: blue;} */
