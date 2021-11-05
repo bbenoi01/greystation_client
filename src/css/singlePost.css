@@ -119,8 +119,8 @@
 	}
 
 	.single-post-img {
-		height: 300px;
-		/* object-fit: fill; */
+		height: 400px;
+		object-fit: initial;
 		margin-bottom: 20px;
 	}
 
