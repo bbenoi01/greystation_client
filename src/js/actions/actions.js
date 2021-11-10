@@ -151,7 +151,7 @@ export function getCategories() {
 export function upload(file) {
 	return (dispatch) => {
 		blogApi
-			.post('/upload', file)
+			.put('/upload', file)
 			.then((res) => {
 				console.log('Url', res.data.url);
 				// dispatch({
