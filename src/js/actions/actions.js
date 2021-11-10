@@ -148,11 +148,20 @@ export function getCategories() {
 	};
 }
 
-export function upload(data) {
-	return () => {
-		blogApi.post('/upload', data).catch((err) => {
-			console.log(err);
-		});
+export function upload(file) {
+	return (dispatch) => {
+		blogApi
+			.post('/upload', file)
+			.then((res) => {
+				console.log('Url', res.data.url);
+				// dispatch({
+				// 	type: types.GET_IMAGE_PATH,
+				// 	payload: res.data.url
+				// })
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 }
 

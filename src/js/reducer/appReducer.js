@@ -3,6 +3,7 @@ const INITIAL_STATE = {
 	user: JSON.parse(sessionStorage.getItem('user')) || null,
 	posts: [],
 	post: {},
+	imagePath: '',
 	categories: [],
 	isfetching: false,
 	error: false,
@@ -76,6 +77,13 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				error: true,
+			};
+		}
+
+		case types.GET_IMAGE_PATH: {
+			return {
+				...state,
+				imagePath: payload,
 			};
 		}
 

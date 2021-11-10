@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-	baseURL: 'https://greystation-api.herokuapp.com',
+	baseURL: 'https://test-greystation-api.herokuapp.com',
 });
 
 instance.interceptors.request.use(

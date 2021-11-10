@@ -22,14 +22,14 @@ const Create = ({ dispatch, user }) => {
 			blogType,
 		};
 		if (file) {
-			const data = new FormData();
-			const filename = Date.now() + '-' + file.name;
-			const PF = 'https://greystation-api.herokuapp.com/images/';
-			data.append('name', filename);
-			data.append('file', file);
-			newPost.media = PF + filename;
+			// const data = new FormData();
+			// const filename = Date.now() + '-' + file.name;
+			// const PF = 'https://greystation-api.herokuapp.com/images/';
+			// data.append('name', filename);
+			// data.append('file', file);
+			// newPost.media = PF + filename;
 
-			dispatch(upload(data));
+			dispatch(upload(file));
 		}
 		dispatch(submitPost(newPost));
 	};
