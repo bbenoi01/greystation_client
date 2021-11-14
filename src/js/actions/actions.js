@@ -148,23 +148,6 @@ export function getCategories() {
 	};
 }
 
-export function upload(data) {
-	return (dispatch) => {
-		blogApi
-			.post('/upload', data)
-			.then((res) => {
-				console.log('Url', res.data.url);
-				// dispatch({
-				// 	type: types.GET_IMAGE_PATH,
-				// 	payload: res.data.url
-				// })
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-}
-
 export function submitPost(newPost) {
 	return () => {
 		blogApi
