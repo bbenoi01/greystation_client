@@ -39,10 +39,6 @@
 	cursor: pointer;
 }
 
-.post-desc {
-	display: none;
-}
-
 .post-date {
 	font-family: 'Lora', serif;
 	font-style: italic;
@@ -51,9 +47,13 @@
 	margin-top: 15px;
 }
 
+.post-desc {
+	display: none;
+}
+
 @media only screen and (min-width: 768px) {
 	.post {
-		width: 100%;
+		width: 385px;
 		margin: 0px 25px 40px 25px;
 	}
 
@@ -70,7 +70,6 @@
 
 	.post-category {
 		position: initial;
-		font-size: 11px;
 		line-height: 20px;
 		margin-top: 15px;
 		margin-right: 10px;

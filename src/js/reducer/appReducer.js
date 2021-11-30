@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 	categories: [],
 	isfetching: false,
 	error: false,
+	errorMessage: {},
 };
 
 const appReducer = (state = INITIAL_STATE, action) => {

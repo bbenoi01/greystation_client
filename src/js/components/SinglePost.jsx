@@ -20,9 +20,9 @@ const SinglePost = ({ dispatch, user, post }) => {
 
 	useEffect(() => {
 		setTitle(post.title);
-		setDesc(post.desc);
+		setDesc(post.description);
 		pullPost();
-	}, [post.title, post.desc, pullPost]);
+	}, [post.title, post.description, pullPost]);
 
 	const handleDelete = () => {
 		dispatch(deletePost(post._id));
@@ -64,7 +64,7 @@ const SinglePost = ({ dispatch, user, post }) => {
 				) : (
 					<h1 className='single-post-title'>
 						{post.title}
-						{post.username === user?.username && (
+						{post?.user?.handle === user?.handle && (
 							<div className='single-post-edit'>
 								<FontAwesomeIcon
 									icon='edit'
@@ -83,8 +83,8 @@ const SinglePost = ({ dispatch, user, post }) => {
 				<div className='single-post-info'>
 					<span className='single-post-author'>
 						Author:{' '}
-						<Link to={`/?user=${post.username}`} className='link'>
-							<b>{post.username}</b>
+						<Link to={`/?user=${post?.user?.handle}`} className='link'>
+							<b>{post?.user?.handle}</b>
 						</Link>
 					</span>
 					<span className='single-post-date'>
@@ -102,7 +102,7 @@ const SinglePost = ({ dispatch, user, post }) => {
 						onChange={(e) => setDesc(e.target.value)}
 					/>
 				) : (
-					<p className='single-post-desc'>{post.desc}</p>
+					<p className='single-post-desc'>{post.description}</p>
 				)}
 				{updateMode && (
 					<button className='single-post-btn' onClick={handleUpdate}>
