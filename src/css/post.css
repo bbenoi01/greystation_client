@@ -8,7 +8,7 @@
 .post-img {
 	height: 162.398px;
 	width: 100%;
-	object-fit: fill;
+	object-fit: cover;
 	border-radius: 10px;
 	margin-bottom: 10px;
 }
@@ -54,7 +54,6 @@
 @media only screen and (min-width: 768px) {
 	.post {
 		width: 385px;
-		margin: 0px 25px 40px 25px;
 	}
 
 	.post-img {

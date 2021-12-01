@@ -4,6 +4,11 @@
 	padding: 15px;
 }
 
+.posts-col {
+	display: flex;
+	justify-content: center;
+}
+
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
 	/* .example {background: blue;} */

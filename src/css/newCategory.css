@@ -1,0 +1,37 @@
+.new-category {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: slategray;
+}
+
+.new-category-title {
+	margin-bottom: 10px;
+}
+
+.new-category-subtitle {
+	color: whitesmoke;
+}
+
+.new-category-input,
+.new-category-submit {
+	display: block;
+}
+
+.new-category-input {
+	text-align: center;
+	border: none;
+	padding: 5px;
+	margin-bottom: 15px;
+}
+
+.new-category-submit {
+	margin: auto;
+	color: whitesmoke;
+	background-color: teal;
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+}

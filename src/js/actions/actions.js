@@ -135,6 +135,7 @@ export function getCategories() {
 		blogApi
 			.get('/api/category')
 			.then((res) => {
+				sessionStorage.setItem('categories', JSON.stringify(res.data));
 				dispatch({
 					type: types.GET_CATEGORIES_SUCCESS,
 					payload: res.data,
@@ -147,7 +148,27 @@ export function getCategories() {
 			});
 	};
 }
+export function addCategory(category) {
+	return (dispatch) => {
+		blogApi
+			.post('/api/category', category)
+			.then((res) => {
+				alert('Category Added!');
+				dispatch(getCategories());
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
 
+export function upload(data) {
+	return () => {
+		blogApi.post('/upload', data).catch((err) => {
+			console.log(err);
+		});
+	};
+}
 export function submitPost(newPost) {
 	return () => {
 		blogApi
@@ -158,6 +179,14 @@ export function submitPost(newPost) {
 			.catch((err) => {
 				console.log(err);
 			});
+	};
+}
+
+export function clearLoadedPost() {
+	return (dispatch) => {
+		dispatch({
+			type: types.CLEAR_POST,
+		});
 	};
 }
 

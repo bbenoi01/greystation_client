@@ -3,12 +3,11 @@ import React from 'react';
 import Post from './Post';
 
 const Posts = ({ allPosts }) => {
-	console.log('All Posts', allPosts);
 	return (
 		<div className='posts'>
 			<div className='row'>
 				{allPosts.map((p) => (
-					<div key={p._id} className='col-xs-12 col-sm-6'>
+					<div key={p._id} className='col-xs-12 col-md-6 col-lg-4 posts-col'>
 						<Post singlePost={p} />
 					</div>
 				))}
