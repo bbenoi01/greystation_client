@@ -1,10 +1,18 @@
 import '../../css/single.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Sidebar from '../components/Sidebar';
 import SinglePost from '../components/SinglePost';
 
-const Single = () => {
+import { clearLoadedPost } from '../actions/actions';
+
+const Single = ({ dispatch }) => {
+	useEffect(() => {
+		return () => {
+			dispatch(clearLoadedPost());
+		};
+	}, [dispatch]);
+
 	return (
 		<div className='single'>
 			<SinglePost />

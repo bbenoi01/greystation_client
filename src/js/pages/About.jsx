@@ -1,10 +1,19 @@
 import '../../css/about.css';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
-const About = () => {
-	const [categories, setCategories] = useState([]);
+import { getCategories } from '../actions/actions';
+
+const About = ({ dispatch, categories }) => {
+	const pullCats = useCallback(() => {
+		dispatch(getCategories());
+	}, [dispatch]);
+
+	useEffect(() => {
+		pullCats();
+	}, [pullCats]);
 
 	return (
 		<div className='about'>
@@ -25,8 +34,12 @@ const About = () => {
 				<div className='about-title'>CATEGORIES</div>
 				<ul className='about-list'>
 					{categories.map((category) => (
-						<Link to={`/?category=${category.name}`} className='link'>
-							<li className='about-list-item'>{category.name}</li>
+						<Link
+							to={`/?category=${category.title}`}
+							key={category._id}
+							className='link'
+						>
+							<li className='about-list-item'>{category.title}</li>
 						</Link>
 					))}
 				</ul>
@@ -43,4 +56,10 @@ const About = () => {
 	);
 };
 
-export default About;
+function mapStoreToProps(store) {
+	return {
+		categories: store.app.categories,
+	};
+}
+
+export default connect(mapStoreToProps)(About);

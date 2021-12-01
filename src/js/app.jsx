@@ -1,7 +1,12 @@
 // import '../css/style.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Redirect,
+} from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -18,6 +23,7 @@ import Home from './pages/Home';
 import Single from './pages/Single';
 import Create from './pages/Create';
 import About from './pages/About';
+import CategoryManagement from './pages/CategoryManagement';
 import Settings from './pages/Settings';
 import Auth from './pages/Auth';
 
@@ -31,15 +37,24 @@ const App = ({ user }) => {
 				<Route exact path='/'>
 					<Home />
 				</Route>
-				<Route path='/about'>
+				<Route exact path='/about'>
 					<About />
 				</Route>
-				<Route path='/post/:postId'>
+				<Route exact path='/post/:postId'>
 					<Single />
 				</Route>
-				<Route path='/create'>{user ? <Create /> : <Auth />}</Route>
-				<Route path='/settings'>{user ? <Settings /> : <Auth />}</Route>
-				<Route path='/auth'>{user ? <Home /> : <Auth />}</Route>
+				<Route exact path='/create'>
+					{user ? <Create /> : <Auth />}
+				</Route>
+				<Route exact path='/category-management'>
+					{user ? <CategoryManagement /> : <Auth />}
+				</Route>
+				<Route exact path='/settings'>
+					{user ? <Settings /> : <Auth />}
+				</Route>
+				<Route exact path='/auth'>
+					{user ? <Redirect to='/' /> : <Auth />}
+				</Route>
 			</Switch>
 		</Router>
 	);

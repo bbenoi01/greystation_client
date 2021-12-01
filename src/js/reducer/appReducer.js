@@ -3,7 +3,7 @@ const INITIAL_STATE = {
 	user: JSON.parse(sessionStorage.getItem('user')) || null,
 	posts: [],
 	post: {},
-	categories: [],
+	categories: JSON.parse(sessionStorage.getItem('categories')) || [],
 	isfetching: false,
 	error: false,
 	errorMessage: {},
@@ -77,6 +77,13 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				error: true,
+			};
+		}
+
+		case types.CLEAR_POST: {
+			return {
+				...state,
+				post: {},
 			};
 		}
 

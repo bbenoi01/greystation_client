@@ -35,11 +35,30 @@ const Navbar = ({ dispatch, user }) => {
 										Create
 									</Link>
 								</li>
-								{/* <li className='nav-item'>
-									<Link to='/settings' className='link'>
-										Settings
-									</Link>
-								</li> */}
+								{user.isAdmin && (
+									<>
+										<li className='nav-item'>
+											<Link to='/authors' className='link'>
+												Authors
+											</Link>
+										</li>
+										<li className='nav-item'>
+											<Link to='/category-management' className='link'>
+												Category Management
+											</Link>
+										</li>
+										<li className='nav-item'>
+											<Link to='/about' className='link'>
+												About
+											</Link>
+										</li>
+										<li className='nav-item'>
+											<Link to='/settings' className='link'>
+												Settings
+											</Link>
+										</li>
+									</>
+								)}
 								<li className='nav-item'>
 									<Link to='/' className='link' onClick={handleLogout}>
 										Logout

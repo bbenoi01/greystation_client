@@ -1,0 +1,29 @@
+.category-list {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: inherit;
+}
+
+.category-list-card {
+	width: calc(100% - 75px);
+}
+
+.category-list-card-body {
+	height: calc(100vh - 600px);
+	padding: 25px;
+	overflow: auto;
+}
+
+.category-list-item {
+	margin-top: 5px;
+	background-color: steelblue;
+	color: whitesmoke;
+	border-bottom: 1px solid black;
+	cursor: pointer;
+}
+
+.category-list-item:hover {
+	background-color: red;
+}
