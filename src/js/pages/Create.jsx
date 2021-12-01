@@ -2,8 +2,9 @@ import '../../css/create.css';
 import { connect } from 'react-redux';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import blogApi from '../api/blogApi';
 
-import { upload, submitPost } from '../actions/actions';
+import { submitPost } from '../actions/actions';
 
 const Create = ({ dispatch, user }) => {
 	const [title, setTitle] = useState('');
@@ -22,16 +23,25 @@ const Create = ({ dispatch, user }) => {
 			blogType,
 		};
 		if (file) {
-			const data = new FormData();
-			const filename = Date.now() + '-' + file.name;
-			const PF = 'https://greystation-api.herokuapp.com/images/';
+			let data = new FormData();
+			const filename = file.name;
 			data.append('name', filename);
 			data.append('file', file);
-			newPost.media = PF + filename;
 
-			dispatch(upload(data));
+			blogApi
+				.post('/upload', data)
+				.then((res) => {
+					newPost.media = res.data;
+				})
+				.then(() => {
+					dispatch(submitPost(newPost));
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
+			dispatch(submitPost(newPost));
 		}
-		dispatch(submitPost(newPost));
 	};
 
 	const handleVlogSubmit = (e) => {

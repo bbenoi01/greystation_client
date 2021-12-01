@@ -148,14 +148,6 @@ export function getCategories() {
 	};
 }
 
-export function upload(data) {
-	return () => {
-		blogApi.post('/upload', data).catch((err) => {
-			console.log(err);
-		});
-	};
-}
-
 export function submitPost(newPost) {
 	return () => {
 		blogApi
