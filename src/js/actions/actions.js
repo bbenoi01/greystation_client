@@ -148,7 +148,6 @@ export function getCategories() {
 			});
 	};
 }
-
 export function addCategory(category) {
 	return (dispatch) => {
 		blogApi
@@ -170,7 +169,6 @@ export function upload(data) {
 		});
 	};
 }
-
 export function submitPost(newPost) {
 	return () => {
 		blogApi
