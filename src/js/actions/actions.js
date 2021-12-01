@@ -102,14 +102,23 @@ export function getPost(path) {
 }
 
 export function deletePost(id) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.DELETE_POST_START,
+		});
 		blogApi
 			.delete(`/api/posts/${id}`)
 			.then((res) => {
+				dispatch({
+					type: types.DELETE_POST_SUCCESS,
+				});
 				window.location.replace('/');
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.DELETE_POST_FAILURE,
+					payload: err,
+				});
 			});
 	};
 }
@@ -162,6 +171,19 @@ export function addCategory(category) {
 	};
 }
 
+export function deleteCategory(id) {
+	return (dispatch) => {
+		blogApi
+			.delete(`/api/category/${id}`)
+			.then(() => {
+				dispatch(getCategories());
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
+
 export function upload(data) {
 	return () => {
 		blogApi.post('/upload', data).catch((err) => {
@@ -170,14 +192,24 @@ export function upload(data) {
 	};
 }
 export function submitPost(newPost) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.SUBMIT_POST_START,
+		});
 		blogApi
-			.post('/post', newPost)
+			.post('/api/posts', newPost)
 			.then((res) => {
+				dispatch({
+					type: types.SUBMIT_POST_SUCCESS,
+					payload: res.data,
+				});
 				window.location.replace('/post/' + res.data._id);
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.SUBMIT_POST_FAILURE,
+					payload: err,
+				});
 			});
 	};
 }

@@ -2,13 +2,14 @@ import '../../css/create.css';
 import { connect } from 'react-redux';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import blogApi from '../api/blogApi';
+// import blogApi from '../api/blogApi';
 
 import { submitPost } from '../actions/actions';
 
-const Create = ({ dispatch, user }) => {
+const Create = ({ dispatch, user, categories }) => {
 	const [title, setTitle] = useState('');
-	const [desc, setDesc] = useState('');
+	const [category, setCategory] = useState('');
+	const [description, setDescription] = useState('');
 	const [file, setFile] = useState(null);
 	const [blogType, setBlogType] = useState('');
 	const [videoAddress, setVideoAddress] = useState('');
@@ -16,41 +17,42 @@ const Create = ({ dispatch, user }) => {
 	const handleBlogSubmit = (e) => {
 		e.preventDefault();
 		const newPost = {
-			username: user.username,
+			handle: user.handle,
 			title,
-			desc,
-			userId: user._id,
+			category,
+			description,
 			blogType,
 		};
-		if (file) {
-			let data = new FormData();
-			const filename = file.name;
-			data.append('name', filename);
-			data.append('file', file);
+		// if (file) {
+		// 	let data = new FormData();
+		// 	const filename = file.name;
+		// 	data.append('name', filename);
+		// 	data.append('file', file);
 
-			blogApi
-				.post('/upload', data)
-				.then((res) => {
-					newPost.media = res.data;
-				})
-				.then(() => {
-					dispatch(submitPost(newPost));
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		} else {
-			dispatch(submitPost(newPost));
-		}
+		// 	blogApi
+		// 		.post('/upload', data)
+		// 		.then((res) => {
+		// 			newPost.media = res.data;
+		// 		})
+		// 		.then(() => {
+		// 			dispatch(submitPost(newPost));
+		// 		})
+		// 		.catch((err) => {
+		// 			console.log(err);
+		// 		});
+		// } else {
+		dispatch(submitPost(newPost));
+		// }
 	};
 
 	const handleVlogSubmit = (e) => {
 		e.preventDefault();
 		const newPost = {
-			username: user.username,
+			handle: user.handle,
 			title,
+			category,
+			description: 'VLOG',
 			media: videoAddress,
-			userId: user._id,
 			blogType,
 		};
 
@@ -137,12 +139,26 @@ const Create = ({ dispatch, user }) => {
 							</div>
 						</div>
 						<div className='create-form-group'>
+							<select
+								className='form-select'
+								onChange={(e) => setCategory(e.target.value)}
+							>
+								<option selected>Choose a Category...</option>
+								{categories &&
+									categories.map((cat) => (
+										<option key={cat._id} value={cat.title}>
+											{cat.title}
+										</option>
+									))}
+							</select>
+						</div>
+						<div className='create-form-group'>
 							<textarea
 								cols='50'
 								rows='10'
 								placeholder='Tell your story...'
 								className='create-input create-text'
-								onChange={(e) => setDesc(e.target.value)}
+								onChange={(e) => setDescription(e.target.value)}
 							/>
 						</div>
 					</>
@@ -178,6 +194,20 @@ const Create = ({ dispatch, user }) => {
 								/>
 							</div>
 						</div>
+						<div className='create-form-group'>
+							<select
+								className='form-select'
+								onChange={(e) => setCategory(e.target.value)}
+							>
+								<option selected>Choose a Category...</option>
+								{categories &&
+									categories.map((cat) => (
+										<option key={cat._id} value={cat.title}>
+											{cat.title}
+										</option>
+									))}
+							</select>
+						</div>
 					</>
 				) : null}
 			</form>
@@ -188,6 +218,7 @@ const Create = ({ dispatch, user }) => {
 function mapStoreToProps(store) {
 	return {
 		user: store.app.user,
+		categories: store.app.categories,
 	};
 }
 
