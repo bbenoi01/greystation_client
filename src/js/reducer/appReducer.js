@@ -4,7 +4,7 @@ const INITIAL_STATE = {
 	posts: [],
 	post: {},
 	categories: JSON.parse(sessionStorage.getItem('categories')) || [],
-	isfetching: false,
+	isFetching: false,
 	error: false,
 	errorMessage: {},
 };
@@ -16,7 +16,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		case types.LOGIN_START: {
 			return {
 				...state,
-				isfetching: true,
+				isFetching: true,
 			};
 		}
 
@@ -24,7 +24,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				user: payload,
-				isfetching: false,
+				isFetching: false,
 				error: false,
 			};
 		}
@@ -39,7 +39,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		case types.GET_POSTS_START: {
 			return {
 				...state,
-				isfetching: true,
+				isFetching: true,
 			};
 		}
 
@@ -47,7 +47,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				posts: payload,
-				isfetching: false,
+				isFetching: false,
 			};
 		}
 
@@ -61,7 +61,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		case types.GET_POST_START: {
 			return {
 				...state,
-				isfetching: true,
+				isFetching: true,
 			};
 		}
 
@@ -69,11 +69,76 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				post: payload,
-				isfetching: false,
+				isFetching: false,
 			};
 		}
 
 		case types.GET_POST_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
+		case types.SUBMIT_POST_START: {
+			return {
+				...state,
+				isFetching: true,
+			};
+		}
+
+		case types.SUBMIT_POST_SUCCESS: {
+			return {
+				...state,
+				post: payload,
+				isFetching: false,
+			};
+		}
+
+		case types.SUBMIT_POST_FAILURE: {
+			return {
+				...state,
+				errorMessage: payload,
+			};
+		}
+
+		case types.DELETE_POST_START: {
+			return {
+				...state,
+				isFetching: true,
+			};
+		}
+
+		case types.DELETE_POST_SUCCESS: {
+			return {
+				...state,
+				isFetching: false,
+			};
+		}
+
+		case types.DELETE_POST_FAILURE: {
+			return {
+				...state,
+				errorMessage: payload,
+			};
+		}
+
+		case types.GET_CATEGORIES_START: {
+			return {
+				...state,
+				isFetching: true,
+			};
+		}
+
+		case types.GET_CATEGORIES_SUCCESS: {
+			return {
+				...state,
+				categories: payload,
+				isFetching: false,
+			};
+		}
+
+		case types.GET_CATEGORIES_FAILURE: {
 			return {
 				...state,
 				error: true,
@@ -87,32 +152,10 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			};
 		}
 
-		case types.GET_CATEGORIES_START: {
-			return {
-				...state,
-				isfetching: true,
-			};
-		}
-
-		case types.GET_CATEGORIES_SUCCESS: {
-			return {
-				...state,
-				categories: payload,
-				isfetching: false,
-			};
-		}
-
-		case types.GET_CATEGORIES_FAILURE: {
-			return {
-				...state,
-				error: true,
-			};
-		}
-
 		case types.UPDATE_START: {
 			return {
 				...state,
-				isfetching: true,
+				isFetching: true,
 			};
 		}
 
@@ -135,7 +178,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				user: null,
-				isfetching: false,
+				isFetching: false,
 				error: false,
 			};
 		}

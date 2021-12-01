@@ -14,6 +14,7 @@ import {
 	faSearch,
 	faEdit,
 	faTrashAlt,
+	faUndo,
 	faPlus,
 	faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
@@ -27,7 +28,16 @@ import CategoryManagement from './pages/CategoryManagement';
 import Settings from './pages/Settings';
 import Auth from './pages/Auth';
 
-library.add(fab, faGamepad, faSearch, faEdit, faTrashAlt, faPlus, faUserCircle);
+library.add(
+	fab,
+	faGamepad,
+	faSearch,
+	faEdit,
+	faTrashAlt,
+	faUndo,
+	faPlus,
+	faUserCircle
+);
 
 const App = ({ user }) => {
 	return (
