@@ -2,15 +2,15 @@ import '../../css/post.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Post = ({ post }) => {
+const Post = ({ singlePost }) => {
 	return (
 		<div className='post'>
-			{post.media && post.blogType === 'blog' ? (
-				<img src={post.media} alt='' className='post-img' />
-			) : post.media && post.blogType === 'vlog' ? (
+			{singlePost.media && singlePost.blogType === 'blog' ? (
+				<img src={singlePost.media} alt='' className='post-img' />
+			) : singlePost.media && singlePost.blogType === 'vlog' ? (
 				<iframe
 					title='Vlog Post'
-					src={post.media}
+					src={singlePost.media}
 					frameBorder='0'
 					controls='0'
 					allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
@@ -20,19 +20,19 @@ const Post = ({ post }) => {
 			) : null}
 			<div className='post-info'>
 				<div className='post-categories'>
-					{post.categories.map((category) => (
+					{/* {singlePost.categories.map((category) => (
 						<span className='post-category'>{category.name}</span>
-					))}
+					))} */}
 					<span className='post-category'>Cool Stuff</span>
 				</div>
-				<Link to={`/post/${post._id}`} className='link'>
-					<span className='post-title'>{post.title}</span>
+				<Link to={`/post/${singlePost._id}`} className='link'>
+					<span className='post-title'>{singlePost.title}</span>
 				</Link>
 				<span className='post-date'>
-					{new Date(post.createdAt).toDateString()}
+					{new Date(singlePost.createdAt).toDateString()}
 				</span>
 			</div>
-			<p className='post-desc'>{post.desc}</p>
+			<p className='post-desc'>{singlePost.description}</p>
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
 import '../../css/home.css';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router';
 import Header from '../components/Header';
@@ -11,16 +11,21 @@ import { getPosts } from '../actions/actions';
 const Home = ({ dispatch, posts }) => {
 	const { search } = useLocation();
 
-	useEffect(() => {
+	const pullPosts = useCallback(() => {
 		dispatch(getPosts(search));
-	}, [search]);
+	}, [dispatch, search]);
 
+	useEffect(() => {
+		pullPosts();
+	}, [pullPosts]);
+
+	console.log('Home Posts', posts);
 	return (
 		<>
 			<div className='home'>
 				<Header />
 				<div className='h-bottom'>
-					<Posts posts={posts} />
+					<Posts allPosts={posts} />
 					<Sidebar />
 				</div>
 			</div>

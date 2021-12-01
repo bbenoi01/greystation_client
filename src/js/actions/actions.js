@@ -7,10 +7,10 @@ export function register(userCredentials) {
 			type: types.LOGIN_START,
 		});
 		blogApi
-			.post('/signup', userCredentials)
+			.post('/api/users/register', userCredentials)
 			.then((res) => {
 				const { token, ...others } = res.data;
-				sessionStorage.setItem('token', res.data.token);
+				sessionStorage.setItem('token', token);
 				sessionStorage.setItem('user', JSON.stringify(others));
 				dispatch({
 					type: types.LOGIN_SUCCESS,
@@ -31,10 +31,10 @@ export function login(userCredentials) {
 			type: types.LOGIN_START,
 		});
 		blogApi
-			.post('/signin', userCredentials)
+			.post('/api/users/login', userCredentials)
 			.then((res) => {
 				const { token, ...others } = res.data;
-				sessionStorage.setItem('token', res.data.token);
+				sessionStorage.setItem('token', token);
 				sessionStorage.setItem('user', JSON.stringify(others));
 				dispatch({
 					type: types.LOGIN_SUCCESS,
@@ -65,7 +65,7 @@ export function getPosts(search) {
 			type: types.GET_POSTS_START,
 		});
 		blogApi
-			.get('/posts' + search)
+			.get('/api/posts' + search)
 			.then((res) => {
 				dispatch({
 					type: types.GET_POSTS_SUCCESS,
@@ -86,7 +86,7 @@ export function getPost(path) {
 			type: types.GET_POST_START,
 		});
 		blogApi
-			.get('/post/' + path)
+			.get('/api/posts/' + path)
 			.then((res) => {
 				dispatch({
 					type: types.GET_POST_SUCCESS,
@@ -104,7 +104,7 @@ export function getPost(path) {
 export function deletePost(id) {
 	return () => {
 		blogApi
-			.delete(`/post/${id}`)
+			.delete(`/api/posts/${id}`)
 			.then((res) => {
 				window.location.replace('/');
 			})
@@ -117,7 +117,7 @@ export function deletePost(id) {
 export function updatePost(id, postDetails) {
 	return () => {
 		blogApi
-			.put(`/post/${id}`, postDetails)
+			.put(`/api/posts/${id}`, postDetails)
 			.then((res) => {
 				window.location.replace('/post/' + res.data._id);
 			})
@@ -133,7 +133,7 @@ export function getCategories() {
 			type: types.GET_CATEGORIES_START,
 		});
 		blogApi
-			.get('/categories')
+			.get('/api/category')
 			.then((res) => {
 				dispatch({
 					type: types.GET_CATEGORIES_SUCCESS,
