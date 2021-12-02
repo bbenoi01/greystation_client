@@ -184,13 +184,6 @@ export function deleteCategory(id) {
 	};
 }
 
-export function upload(data) {
-	return () => {
-		blogApi.post('/upload', data).catch((err) => {
-			console.log(err);
-		});
-	};
-}
 export function submitPost(newPost) {
 	return (dispatch) => {
 		dispatch({

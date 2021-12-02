@@ -9,8 +9,37 @@
 .single-post-img {
 	width: 100%;
 	height: 200px;
-	border-radius: 5px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 	object-fit: cover;
+}
+
+.single-post-feedback {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	background-color: black;
+	padding: 5px;
+	color: whitesmoke;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.single-post-feedback-icon {
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.single-post-feedback-icon.like {
+	color: green;
+}
+
+.single-post-feedback-icon.dislike {
+	color: red;
+}
+
+.single-post-feedback-icon.views {
+	color: steelblue;
 }
 
 .single-post-title {
@@ -47,7 +76,7 @@
 
 .single-post-edit {
 	float: right;
-	font-size: 15px;
+	font-size: 20px;
 }
 
 .single-post-icon {
@@ -91,16 +120,21 @@
 	outline: none;
 }
 
-.single-post-btn {
+.single-post-update-btn,
+.single-post-undo-btn {
 	width: 100px;
 	border: none;
 	background-color: teal;
 	padding: 5px;
 	color: white;
-	border-radius: 5px;
+	border-radius: 10px;
 	cursor: pointer;
-	align-self: flex-end;
 	margin-top: 20px;
+}
+
+.single-post-undo-btn {
+	background-color: red;
+	margin-right: 10px;
 }
 
 @media only screen and (min-width: 320px) {
@@ -120,7 +154,6 @@
 
 	.single-post-img {
 		height: 400px;
-		margin-bottom: 20px;
 	}
 
 	.single-post-title {

@@ -2,7 +2,6 @@ import '../../css/create.css';
 import { connect } from 'react-redux';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import blogApi from '../api/blogApi';
 
 import { submitPost } from '../actions/actions';
 
@@ -16,33 +15,27 @@ const Create = ({ dispatch, user, categories }) => {
 
 	const handleBlogSubmit = (e) => {
 		e.preventDefault();
-		const newPost = {
-			handle: user.handle,
-			title,
-			category,
-			description,
-			blogType,
-		};
-		// if (file) {
-		// 	let data = new FormData();
-		// 	const filename = file.name;
-		// 	data.append('name', filename);
-		// 	data.append('file', file);
-
-		// 	blogApi
-		// 		.post('/upload', data)
-		// 		.then((res) => {
-		// 			newPost.media = res.data;
-		// 		})
-		// 		.then(() => {
-		// 			dispatch(submitPost(newPost));
-		// 		})
-		// 		.catch((err) => {
-		// 			console.log(err);
-		// 		});
-		// } else {
+		let newPost;
+		if (file) {
+			newPost = new FormData();
+			const filename = file.name;
+			newPost.append('name', filename);
+			newPost.append('file', file);
+			newPost.append('handle', user.handle);
+			newPost.append('title', title);
+			newPost.append('category', category);
+			newPost.append('description', description);
+			newPost.append('blogType', blogType);
+		} else {
+			newPost = {
+				handle: user.handle,
+				title,
+				category,
+				description,
+				blogType,
+			};
+		}
 		dispatch(submitPost(newPost));
-		// }
 	};
 
 	const handleVlogSubmit = (e) => {
@@ -143,7 +136,7 @@ const Create = ({ dispatch, user, categories }) => {
 								className='form-select'
 								onChange={(e) => setCategory(e.target.value)}
 							>
-								<option selected>Choose a Category...</option>
+								<option defaultValue>Choose a Category...</option>
 								{categories &&
 									categories.map((cat) => (
 										<option key={cat._id} value={cat.title}>
@@ -199,7 +192,7 @@ const Create = ({ dispatch, user, categories }) => {
 								className='form-select'
 								onChange={(e) => setCategory(e.target.value)}
 							>
-								<option selected>Choose a Category...</option>
+								<option defaultValue>Choose a Category...</option>
 								{categories &&
 									categories.map((cat) => (
 										<option key={cat._id} value={cat.title}>

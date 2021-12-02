@@ -34,7 +34,11 @@ const Sidebar = ({ dispatch, categories }) => {
 				<div className='sidebar-title'>CATEGORIES</div>
 				<ul className='sidebar-list'>
 					{categories.map((category) => (
-						<Link to={`/?category=${category.title}`} className='link'>
+						<Link
+							to={`/?category=${category.title}`}
+							key={category._id}
+							className='link'
+						>
 							<li className='sidebar-list-item'>{category.title}</li>
 						</Link>
 					))}

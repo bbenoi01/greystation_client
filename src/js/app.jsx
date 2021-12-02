@@ -17,6 +17,9 @@ import {
 	faUndo,
 	faPlus,
 	faUserCircle,
+	faThumbsUp,
+	faThumbsDown,
+	faEye,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Navbar from './components/Navbar';
@@ -36,7 +39,10 @@ library.add(
 	faTrashAlt,
 	faUndo,
 	faPlus,
-	faUserCircle
+	faUserCircle,
+	faThumbsUp,
+	faThumbsDown,
+	faEye
 );
 
 const App = ({ user }) => {
@@ -57,10 +63,10 @@ const App = ({ user }) => {
 					{user ? <Create /> : <Auth />}
 				</Route>
 				<Route exact path='/category-management'>
-					{user ? <CategoryManagement /> : <Auth />}
+					{user && user.isAdmin ? <CategoryManagement /> : <Auth />}
 				</Route>
 				<Route exact path='/settings'>
-					{user ? <Settings /> : <Auth />}
+					{user && user.isAdmin ? <Settings /> : <Auth />}
 				</Route>
 				<Route exact path='/auth'>
 					{user ? <Redirect to='/' /> : <Auth />}
