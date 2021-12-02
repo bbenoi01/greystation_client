@@ -1,28 +1,35 @@
 import '../../css/singlePost.css';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import blogApi from '../api/blogApi';
 
-import { getPost, deletePost, updatePost } from '../actions/actions';
+import { deletePost, updatePost } from '../actions/actions';
 
-const SinglePost = ({ dispatch, user, post }) => {
+const SinglePost = ({ dispatch, user }) => {
 	const location = useLocation();
 	const path = location.pathname.split('/')[2];
+	const [post, setPost] = useState({});
 	const [title, setTitle] = useState('');
 	const [desc, setDesc] = useState('');
 	const [updateMode, setUpdateMode] = useState(false);
 
-	const pullPost = useCallback(() => {
-		dispatch(getPost(path));
-	}, [dispatch, path]);
-
 	useEffect(() => {
-		setTitle(post.title);
-		setDesc(post.description);
+		const pullPost = async () => {
+			const res = await blogApi.get('/api/posts/' + path);
+			setPost(res.data);
+			setTitle(res.data.title);
+			setDesc(res.data.description);
+		};
 		pullPost();
-	}, [post.title, post.description, pullPost]);
+		return () => {
+			setPost({});
+			setTitle('');
+			setDesc('');
+		};
+	}, [path]);
 
 	const handleDelete = () => {
 		dispatch(deletePost(post._id));
@@ -54,6 +61,29 @@ const SinglePost = ({ dispatch, user, post }) => {
 						className='single-post-img'
 					/>
 				) : null}
+				<div className='single-post-feedback'>
+					<div>
+						<FontAwesomeIcon
+							icon='thumbs-up'
+							className='single-post-feedback-icon like'
+						/>
+						{' ' + post?.likes?.length}
+					</div>
+					<div>
+						<FontAwesomeIcon
+							icon='thumbs-down'
+							className='single-post-feedback-icon dislike'
+						/>
+						{' ' + post?.dislikes?.length}
+					</div>
+					<div>
+						<FontAwesomeIcon
+							icon='eye'
+							className='single-post-feedback-icon views'
+						/>
+						{' ' + post?.numViews}
+					</div>
+				</div>
 				{updateMode ? (
 					<input
 						type='text'
@@ -64,7 +94,7 @@ const SinglePost = ({ dispatch, user, post }) => {
 				) : (
 					<h1 className='single-post-title'>
 						{post.title}
-						{post?.user?.handle === user?.handle && (
+						{user?.isAdmin || post?.user?.handle === user?.handle ? (
 							<div className='single-post-edit'>
 								<FontAwesomeIcon
 									icon='edit'
@@ -77,7 +107,7 @@ const SinglePost = ({ dispatch, user, post }) => {
 									onClick={handleDelete}
 								/>
 							</div>
-						)}
+						) : null}
 					</h1>
 				)}
 				<div className='single-post-info'>
@@ -105,9 +135,22 @@ const SinglePost = ({ dispatch, user, post }) => {
 					<p className='single-post-desc'>{post.description}</p>
 				)}
 				{updateMode && (
-					<button className='single-post-btn' onClick={handleUpdate}>
-						Update
-					</button>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'right',
+						}}
+					>
+						<button
+							className='single-post-undo-btn'
+							onClick={() => setUpdateMode(false)}
+						>
+							Undo
+						</button>
+						<button className='single-post-update-btn' onClick={handleUpdate}>
+							Update
+						</button>
+					</div>
 				)}
 			</div>
 		</div>
@@ -117,7 +160,6 @@ const SinglePost = ({ dispatch, user, post }) => {
 function mapStoreToProps(store) {
 	return {
 		user: store.app.user,
-		post: store.app.post,
 	};
 }
 

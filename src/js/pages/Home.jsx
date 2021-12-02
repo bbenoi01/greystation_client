@@ -8,7 +8,7 @@ import Sidebar from '../components/Sidebar';
 
 import { getPosts } from '../actions/actions';
 
-const Home = ({ dispatch, posts }) => {
+const Home = ({ dispatch, allPosts }) => {
 	const { search } = useLocation();
 
 	const pullPosts = useCallback(() => {
@@ -19,13 +19,13 @@ const Home = ({ dispatch, posts }) => {
 		pullPosts();
 	}, [pullPosts]);
 
-	console.log('Home Posts', posts);
+	// console.log('Home, All Posts', allPosts);
 	return (
 		<>
 			<div className='home'>
 				<Header />
 				<div className='h-bottom'>
-					<Posts allPosts={posts} />
+					<Posts allPosts={allPosts} />
 					<Sidebar />
 				</div>
 			</div>
@@ -35,7 +35,7 @@ const Home = ({ dispatch, posts }) => {
 
 function mapStoreToProps(store) {
 	return {
-		posts: store.app.posts,
+		allPosts: store.app.posts,
 	};
 }
 
