@@ -37,7 +37,7 @@ const Sidebar = ({ dispatch, categories }) => {
 						<Link
 							to={`/?category=${category.title}`}
 							key={category._id}
-							className='link'
+							className='sidebar-list-item-link'
 						>
 							<li className='sidebar-list-item'>{category.title}</li>
 						</Link>

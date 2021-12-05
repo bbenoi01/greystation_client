@@ -1,5 +1,4 @@
-// import '../css/style.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
 	BrowserRouter as Router,
@@ -46,6 +45,19 @@ library.add(
 );
 
 const App = ({ user }) => {
+	useEffect(() => {
+		const getAnnonId = (size) =>
+			[...Array(size)]
+				.map(() => Math.floor(Math.random() * 16).toString(16))
+				.join('');
+		const annonId = localStorage.getItem('annonId');
+		if (!annonId) {
+			localStorage.setItem('annonId', getAnnonId(24));
+		} else {
+			console.log('Annon ID already exists');
+		}
+	});
+
 	return (
 		<Router>
 			<Navbar />

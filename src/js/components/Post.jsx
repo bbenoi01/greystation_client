@@ -1,10 +1,59 @@
 import '../../css/post.css';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Post = ({ post }) => {
+import {
+	toggleLike,
+	annonLikeToggle,
+	toggleDislike,
+	annonDislikeToggle,
+} from '../actions/actions';
+
+const Post = ({ dispatch, user, post }) => {
 	// console.log('Post', post);
+
+	const handleLike = () => {
+		const annonId = localStorage.getItem('annonId');
+		let likedPost;
+
+		if (user) {
+			likedPost = {
+				postId: post.id,
+			};
+
+			dispatch(toggleLike(likedPost));
+		} else {
+			const annonData = {
+				postId: post.id,
+				annonId,
+			};
+
+			dispatch(annonLikeToggle(annonData));
+		}
+	};
+
+	const handleDislike = () => {
+		const annonId = localStorage.getItem('annonId');
+		let dislikedPost;
+
+		if (user) {
+			dislikedPost = {
+				postId: post.id,
+			};
+
+			dispatch(toggleDislike(dislikedPost));
+		} else {
+			const annonData = {
+				postId: post.id,
+				annonId,
+			};
+
+			dispatch(annonDislikeToggle(annonData));
+		}
+	};
+
 	return (
 		<div className='post'>
 			{post.media && post.blogType === 'blog' ? (
@@ -25,6 +74,7 @@ const Post = ({ post }) => {
 					<FontAwesomeIcon
 						icon='thumbs-up'
 						className='post-feedback-icon like'
+						onClick={handleLike}
 					/>
 					{' ' + post.likes.length}
 				</div>
@@ -32,6 +82,7 @@ const Post = ({ post }) => {
 					<FontAwesomeIcon
 						icon='thumbs-down'
 						className='post-feedback-icon dislike'
+						onClick={handleDislike}
 					/>
 					{' ' + post.dislikes.length}
 				</div>
@@ -56,4 +107,10 @@ const Post = ({ post }) => {
 	);
 };
 
-export default Post;
+function mapStoreToProps(store) {
+	return {
+		user: store.app.user,
+	};
+}
+
+export default connect(mapStoreToProps)(Post);

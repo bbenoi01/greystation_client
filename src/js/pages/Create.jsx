@@ -21,14 +21,12 @@ const Create = ({ dispatch, user, categories }) => {
 			const filename = file.name;
 			newPost.append('name', filename);
 			newPost.append('file', file);
-			newPost.append('handle', user.handle);
 			newPost.append('title', title);
 			newPost.append('category', category);
 			newPost.append('description', description);
 			newPost.append('blogType', blogType);
 		} else {
 			newPost = {
-				handle: user.handle,
 				title,
 				category,
 				description,
