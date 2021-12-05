@@ -53,7 +53,9 @@ const CategoryList = ({ dispatch, categories }) => {
 							onClick={handleDelete}
 						/>
 						{selectedCategory && (
-							<p>Are you sure you want to delete {selectedCategory.title}?</p>
+							<p className='category-list-warning'>
+								Are you sure you want to delete {selectedCategory.title}?
+							</p>
 						)}
 					</div>
 				</div>

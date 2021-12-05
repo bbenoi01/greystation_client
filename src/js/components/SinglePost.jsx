@@ -6,14 +6,21 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import blogApi from '../api/blogApi';
 
-import { deletePost, updatePost } from '../actions/actions';
+import {
+	deletePost,
+	updatePost,
+	toggleLike,
+	annonLikeToggle,
+	toggleDislike,
+	annonDislikeToggle,
+} from '../actions/actions';
 
 const SinglePost = ({ dispatch, user }) => {
 	const location = useLocation();
 	const path = location.pathname.split('/')[2];
 	const [post, setPost] = useState({});
 	const [title, setTitle] = useState('');
-	const [desc, setDesc] = useState('');
+	const [description, setDescription] = useState('');
 	const [updateMode, setUpdateMode] = useState(false);
 
 	useEffect(() => {
@@ -21,13 +28,13 @@ const SinglePost = ({ dispatch, user }) => {
 			const res = await blogApi.get('/api/posts/' + path);
 			setPost(res.data);
 			setTitle(res.data.title);
-			setDesc(res.data.description);
+			setDescription(res.data.description);
 		};
 		pullPost();
 		return () => {
 			setPost({});
 			setTitle('');
-			setDesc('');
+			setDescription('');
 		};
 	}, [path]);
 
@@ -37,12 +44,51 @@ const SinglePost = ({ dispatch, user }) => {
 
 	const handleUpdate = () => {
 		const postDetails = {
-			username: user.username,
 			title,
-			desc,
+			description,
 		};
 		dispatch(updatePost(post._id, postDetails));
 		setUpdateMode(false);
+	};
+
+	const handleLike = () => {
+		const annonId = localStorage.getItem('annonId');
+		let likedPost;
+
+		if (user) {
+			likedPost = {
+				postId: post.id,
+			};
+
+			dispatch(toggleLike(likedPost));
+		} else {
+			const annonData = {
+				postId: post.id,
+				annonId,
+			};
+
+			dispatch(annonLikeToggle(annonData));
+		}
+	};
+
+	const handleDislike = () => {
+		const annonId = localStorage.getItem('annonId');
+		let dislikedPost;
+
+		if (user) {
+			dislikedPost = {
+				postId: post.id,
+			};
+
+			dispatch(toggleDislike(dislikedPost));
+		} else {
+			const annonData = {
+				postId: post.id,
+				annonId,
+			};
+
+			dispatch(annonDislikeToggle(annonData));
+		}
 	};
 
 	return (
@@ -66,6 +112,7 @@ const SinglePost = ({ dispatch, user }) => {
 						<FontAwesomeIcon
 							icon='thumbs-up'
 							className='single-post-feedback-icon like'
+							onClick={handleLike}
 						/>
 						{' ' + post?.likes?.length}
 					</div>
@@ -73,6 +120,7 @@ const SinglePost = ({ dispatch, user }) => {
 						<FontAwesomeIcon
 							icon='thumbs-down'
 							className='single-post-feedback-icon dislike'
+							onClick={handleDislike}
 						/>
 						{' ' + post?.dislikes?.length}
 					</div>
@@ -113,7 +161,7 @@ const SinglePost = ({ dispatch, user }) => {
 				<div className='single-post-info'>
 					<span className='single-post-author'>
 						Author:{' '}
-						<Link to={`/?user=${post?.user?.handle}`} className='link'>
+						<Link to={`/?handle=${post?.user?.handle}`} className='link'>
 							<b>{post?.user?.handle}</b>
 						</Link>
 					</span>
@@ -128,8 +176,8 @@ const SinglePost = ({ dispatch, user }) => {
 						cols='30'
 						rows='7'
 						className='single-post-desc-input'
-						value={desc}
-						onChange={(e) => setDesc(e.target.value)}
+						value={description}
+						onChange={(e) => setDescription(e.target.value)}
 					/>
 				) : (
 					<p className='single-post-desc'>{post.description}</p>

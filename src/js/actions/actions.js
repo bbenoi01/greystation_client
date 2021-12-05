@@ -101,6 +101,58 @@ export function getPost(path) {
 	};
 }
 
+export function toggleLike(id) {
+	return () => {
+		blogApi
+			.put('/api/posts/like', id)
+			.then(() => {
+				window.location.reload();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
+
+export function annonLikeToggle(annonData) {
+	return () => {
+		blogApi
+			.put('/api/posts/like/annon', annonData)
+			.then(() => {
+				window.location.reload();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
+
+export function toggleDislike(id) {
+	return () => {
+		blogApi
+			.put('/api/posts/dislike', id)
+			.then(() => {
+				window.location.reload();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
+
+export function annonDislikeToggle(annonData) {
+	return () => {
+		blogApi
+			.put('/api/posts/dislike/annon', annonData)
+			.then(() => {
+				window.location.reload();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
+
 export function deletePost(id) {
 	return (dispatch) => {
 		dispatch({

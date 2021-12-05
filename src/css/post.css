@@ -26,10 +26,12 @@
 
 .post-feedback-icon.like {
 	color: green;
+	cursor: pointer;
 }
 
 .post-feedback-icon.dislike {
 	color: red;
+	cursor: pointer;
 }
 
 .post-feedback-icon.views {

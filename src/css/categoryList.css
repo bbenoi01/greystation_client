@@ -1,7 +1,3 @@
-p {
-	color: yellow;
-}
-
 .category-list {
 	display: flex;
 	flex-direction: column;
@@ -18,6 +14,10 @@ p {
 	max-height: 500px;
 	padding: 25px;
 	overflow: auto;
+}
+
+.category-list-card-body::-webkit-scrollbar {
+	display: none;
 }
 
 .category-list-item {
@@ -37,7 +37,7 @@ p {
 }
 
 .category-list-icon {
-	font-size: 25px;
+	font-size: 20px;
 	margin: 10px;
 	cursor: pointer;
 }
@@ -48,4 +48,8 @@ p {
 
 .category-list-icon:nth-child(2) {
 	color: tomato;
+}
+
+.category-list-warning {
+	color: yellow;
 }
