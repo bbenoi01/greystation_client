@@ -1,4 +1,13 @@
 /* Single Post */
+.single-post {
+	height: inherit;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.single-post::-webkit-scrollbar {
+	display: none;
+}
 
 .single-post-wrapper {
 	padding: 20px;
@@ -135,6 +144,28 @@
 .single-post-undo-btn {
 	background-color: red;
 	margin-right: 10px;
+}
+
+.single-post-comment-form {
+	justify-content: center;
+}
+
+.single-post-comment-input {
+	margin: 5px 0;
+}
+
+.single-post-comment-submit {
+	margin: 5px 0;
+}
+
+.single-post-comment-list {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.single-post-comment-card {
+	margin-bottom: 5px;
 }
 
 @media only screen and (min-width: 320px) {
