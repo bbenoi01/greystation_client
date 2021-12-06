@@ -259,11 +259,16 @@ export function submitPost(newPost) {
 	};
 }
 
-export function clearLoadedPost() {
-	return (dispatch) => {
-		dispatch({
-			type: types.CLEAR_POST,
-		});
+export function submitComment(commentData) {
+	return () => {
+		blogApi
+			.post('/api/comments', commentData)
+			.then(() => {
+				window.location.reload();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 }
 

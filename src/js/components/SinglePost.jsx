@@ -13,6 +13,7 @@ import {
 	annonLikeToggle,
 	toggleDislike,
 	annonDislikeToggle,
+	submitComment,
 } from '../actions/actions';
 
 const SinglePost = ({ dispatch, user }) => {
@@ -22,6 +23,7 @@ const SinglePost = ({ dispatch, user }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [updateMode, setUpdateMode] = useState(false);
+	const [comment, setComment] = useState('');
 
 	useEffect(() => {
 		const pullPost = async () => {
@@ -89,6 +91,16 @@ const SinglePost = ({ dispatch, user }) => {
 
 			dispatch(annonDislikeToggle(annonData));
 		}
+	};
+
+	const handleAddComment = (e) => {
+		e.preventDefault();
+		const commentData = {
+			post: post._id,
+			description: comment,
+		};
+		dispatch(submitComment(commentData));
+		document.getElementById('comment-input').reset();
 	};
 
 	return (
@@ -200,6 +212,55 @@ const SinglePost = ({ dispatch, user }) => {
 						</button>
 					</div>
 				)}
+				<div className='single-post-comments'>
+					<form
+						className='single-post-comment-form row'
+						id='comment-input'
+						onSubmit={handleAddComment}
+					>
+						<div className='col-sm-4'>
+							<input
+								type='text'
+								className='single-post-comment-input form-control'
+								placeholder='Enter comment'
+								onChange={(e) => setComment(e.target.value)}
+							/>
+						</div>
+						<div className='col-auto'>
+							{user ? (
+								<button
+									type='submit'
+									className='single-post-comment-submit btn btn-primary'
+								>
+									Submit
+								</button>
+							) : (
+								<button
+									type='submit'
+									className='single-post-comment-submit btn btn-primary'
+									disabled
+								>
+									Submit
+								</button>
+							)}
+						</div>
+					</form>
+					<div className='single-post-comment-list'>
+						<div className='col-xs-12 col-sm-5'>
+							{post?.comments ? (
+								<div className='card single-post-comment-card'>
+									<div className='card-header'>Comment Auhtor Date Posted</div>
+									<div className='card-body'>
+										<p className='card-text'>Comment content</p>
+									</div>
+									<div className='card-footer'>edit and delete buttons</div>
+								</div>
+							) : (
+								'No Comments'
+							)}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
