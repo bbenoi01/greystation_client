@@ -52,11 +52,6 @@ const Navbar = ({ dispatch, user }) => {
 												About
 											</Link>
 										</li>
-										<li className='nav-item'>
-											<Link to='/settings' className='link'>
-												Settings
-											</Link>
-										</li>
 									</>
 								)}
 								<li className='nav-item'>
@@ -65,6 +60,13 @@ const Navbar = ({ dispatch, user }) => {
 									</Link>
 								</li>
 							</ul>
+							<Link to={`/profile/${user._id}`}>
+								<img
+									src={user.profilePhoto}
+									alt='Profile'
+									className='nav-profile'
+								/>
+							</Link>
 						</div>
 					</>
 				) : (

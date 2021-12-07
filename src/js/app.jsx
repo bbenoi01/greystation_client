@@ -27,7 +27,7 @@ import Single from './pages/Single';
 import Create from './pages/Create';
 import About from './pages/About';
 import CategoryManagement from './pages/CategoryManagement';
-import Settings from './pages/Settings';
+import Profile from './pages/Profile';
 import Auth from './pages/Auth';
 
 library.add(
@@ -77,8 +77,8 @@ const App = ({ user }) => {
 				<Route exact path='/category-management'>
 					{user && user.isAdmin ? <CategoryManagement /> : <Auth />}
 				</Route>
-				<Route exact path='/settings'>
-					{user && user.isAdmin ? <Settings /> : <Auth />}
+				<Route exact path='/profile/:id'>
+					{user ? <Profile /> : <Auth />}
 				</Route>
 				<Route exact path='/auth'>
 					{user ? <Redirect to='/' /> : <Auth />}

@@ -166,6 +166,26 @@
 
 .single-post-comment-card {
 	margin-bottom: 5px;
+	background-color: lightgrey;
+}
+
+.single-post-comment-card-header {
+	display: flex;
+	justify-content: space-between;
+	border-bottom-color: darkgrey;
+}
+
+.single-post-comment-handle {
+	font-size: 15px;
+}
+
+.single-post-comment-date {
+	font-size: 13px;
+}
+
+.single-post-comment-card-footer {
+	text-align: end;
+	border-top-color: darkgrey;
 }
 
 @media only screen and (min-width: 320px) {
