@@ -1,8 +1,10 @@
 /* Home */
-.home {
-	height: calc(100vh - 40px);
-	width: 100vw;
+body {
 	overflow-x: hidden;
+}
+
+.home {
+	height: calc(100vh - 50px);
 }
 
 .h-bottom {

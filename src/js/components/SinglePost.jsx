@@ -5,6 +5,7 @@ import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import blogApi from '../api/blogApi';
+import dayjs from 'dayjs';
 
 import {
 	deletePost,
@@ -14,7 +15,11 @@ import {
 	toggleDislike,
 	annonDislikeToggle,
 	submitComment,
+	// updateComment,
+	deleteComment,
 } from '../actions/actions';
+
+const relativeTime = require('dayjs/plugin/relativeTime');
 
 const SinglePost = ({ dispatch, user }) => {
 	const location = useLocation();
@@ -40,11 +45,11 @@ const SinglePost = ({ dispatch, user }) => {
 		};
 	}, [path]);
 
-	const handleDelete = () => {
+	const handleDeletePost = () => {
 		dispatch(deletePost(post._id));
 	};
 
-	const handleUpdate = () => {
+	const handleUpdatePost = () => {
 		const postDetails = {
 			title,
 			description,
@@ -96,12 +101,26 @@ const SinglePost = ({ dispatch, user }) => {
 	const handleAddComment = (e) => {
 		e.preventDefault();
 		const commentData = {
-			post: post._id,
+			postId: post._id,
 			description: comment,
 		};
+		console.log(commentData);
 		dispatch(submitComment(commentData));
 		document.getElementById('comment-input').reset();
 	};
+
+	// const handleUpdateComment = () => {
+	// 	const commentData = {
+	// 		description: comment,
+	// 	};
+	// 	dispatch(updateComment(post._id, commentData));
+	// };
+
+	const handleDeleteComment = (commentId) => {
+		dispatch(deleteComment(commentId, post._id));
+	};
+
+	dayjs.extend(relativeTime);
 
 	return (
 		<div className='single-post'>
@@ -164,7 +183,7 @@ const SinglePost = ({ dispatch, user }) => {
 								<FontAwesomeIcon
 									icon='trash-alt'
 									className='single-post-icon trash'
-									onClick={handleDelete}
+									onClick={handleDeletePost}
 								/>
 							</div>
 						) : null}
@@ -207,7 +226,10 @@ const SinglePost = ({ dispatch, user }) => {
 						>
 							Undo
 						</button>
-						<button className='single-post-update-btn' onClick={handleUpdate}>
+						<button
+							className='single-post-update-btn'
+							onClick={handleUpdatePost}
+						>
 							Update
 						</button>
 					</div>
@@ -218,7 +240,7 @@ const SinglePost = ({ dispatch, user }) => {
 						id='comment-input'
 						onSubmit={handleAddComment}
 					>
-						<div className='col-sm-4'>
+						<div className='col-sm-3'>
 							<input
 								type='text'
 								className='single-post-comment-input form-control'
@@ -248,15 +270,48 @@ const SinglePost = ({ dispatch, user }) => {
 					<div className='single-post-comment-list'>
 						<div className='col-xs-12 col-sm-5'>
 							{post?.comments ? (
-								<div className='card single-post-comment-card'>
-									<div className='card-header'>Comment Auhtor Date Posted</div>
-									<div className='card-body'>
-										<p className='card-text'>Comment content</p>
+								post?.comments.map((comment) => (
+									<div
+										className='card single-post-comment-card'
+										key={comment._id}
+									>
+										<div className='card-header single-post-comment-card-header'>
+											<p className='single-post-comment-handle'>
+												{comment.user.handle}
+											</p>
+											<p className='single-post-comment-date'>
+												{dayjs(comment.createdAt).fromNow()}
+											</p>
+										</div>
+										<div className='card-body'>
+											<p className='card-text'>{comment.description}</p>
+										</div>
+										<div className='card-footer single-post-comment-card-footer'>
+											{user?.isAdmin ? (
+												<div className='single-post-edit'>
+													<FontAwesomeIcon
+														icon='edit'
+														className='single-post-icon edit'
+														onClick={() => setUpdateMode(true)}
+													/>
+													<FontAwesomeIcon
+														icon='trash-alt'
+														className='single-post-icon trash'
+														onClick={() => handleDeleteComment(comment._id)}
+													/>
+												</div>
+											) : null}
+										</div>
 									</div>
-									<div className='card-footer'>edit and delete buttons</div>
-								</div>
+								))
 							) : (
-								'No Comments'
+								<p
+									style={{
+										textAlign: 'center',
+									}}
+								>
+									No Comments
+								</p>
 							)}
 						</div>
 					</div>

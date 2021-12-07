@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Sidebar from '../components/Sidebar';
 
-const Settings = () => {
+const Profile = () => {
 	const [file, setFile] = useState(null);
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
@@ -72,4 +72,4 @@ const Settings = () => {
 	);
 };
 
-export default Settings;
+export default Profile;

@@ -272,6 +272,32 @@ export function submitComment(commentData) {
 	};
 }
 
+export function updateComment(id, commentData) {
+	return () => {
+		blogApi
+			.put(`/api/comments/${id}`, commentData)
+			.then(() => {
+				window.location.reload();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
+
+export function deleteComment(commentId) {
+	return () => {
+		blogApi
+			.delete(`/api/comments/${commentId}`)
+			.then((res) => {
+				window.location.reload();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+}
+
 export const updateStart = (userCredentials) => ({
 	type: types.UPDATE_START,
 });
