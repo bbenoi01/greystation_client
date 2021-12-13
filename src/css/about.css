@@ -1,6 +1,6 @@
 .about {
 	padding: 20px;
-	height: calc(100vh - 50px);
+	height: calc(100vh - 60px);
 	background-color: burlywood;
 	display: flex;
 	flex-direction: column;

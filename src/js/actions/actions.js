@@ -298,6 +298,17 @@ export function deleteComment(commentId) {
 	};
 }
 
+export function uploadProfilePhoto(file) {
+	return () => {
+		blogApi
+			.put(`profilephoto-upload`, file)
+			.then(() => {
+				window.location.reload();
+			})
+			.catch((err) => console.log(err));
+	};
+}
+
 export const updateStart = (userCredentials) => ({
 	type: types.UPDATE_START,
 });

@@ -4,6 +4,7 @@ import Post from './Post';
 
 const Posts = ({ allPosts }) => {
 	// console.log('Posts, All Posts', allPosts);
+
 	return (
 		<div className='posts'>
 			<div className='row'>

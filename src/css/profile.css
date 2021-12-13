@@ -23,91 +23,131 @@
 	/* .example {background: pink;} */
 }
 
-/* Settings */
-.settings {
-	display: flex;
-}
+/* Profile */
 
-.settings-wrapper {
-	flex: 9;
-	padding: 20px;
-}
-
-.settings-title {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.settings-update-title {
-	font-size: 30px;
-	margin-bottom: 20px;
-	color: lightcoral;
-}
-
-.settings-delete-title {
-	color: red;
-	font-size: 12px;
-	cursor: pointer;
-}
-
-.settings-form {
-	display: flex;
-	flex-direction: column;
-}
-
-.settings-profile-picture {
-	display: flex;
-	align-items: center;
-	margin: 10px 0;
-}
-
-.settings-profile-picture > img {
-	width: 70px;
-	height: 70px;
-	border-radius: 20px;
+.profile-image-hero {
 	object-fit: cover;
 }
 
-.settings-profile-picture-icon {
-	width: 25px;
-	height: 25px;
-	border-radius: 50%;
-	background-color: lightcoral;
-	color: whitesmoke;
+.profile-wrapper {
+	padding: 0px 15%;
+}
+
+.profile-verification-alert {
+	height: 30px;
+	width: fit-content;
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	margin-left: 10px;
-	cursor: pointer;
-}
-
-.settings-form > label {
-	font-size: 20px;
-	margin-top: 20px;
-}
-
-.settings-form > input {
-	color: grey;
-	margin: 10px 0;
-	border: none;
-	border-bottom: 1px solid lightgrey;
-}
-
-.settings-submit {
-	width: 150px;
-	align-self: center;
-	border: none;
-	border-radius: 10px;
 	color: whitesmoke;
-	background-color: teal;
-	padding: 10px;
-	margin-top: 20px;
-	cursor: pointer;
 }
 
-.success-banner {
+.profile-verification-alert.verified {
+	background-color: green;
+}
+
+.profile-verification-alert.unverified {
+	background-color: red;
+}
+
+.profile-action-area {
+	display: flex;
+	justify-content: space-between;
+}
+
+.profile-created-date {
+	display: inline-flex;
+}
+
+.profile-button-icon {
+	margin-right: 5px;
+}
+
+.unfollow-button:hover > .profile-button-icon.frown {
+	color: blue;
+}
+
+.follow-button:hover > .profile-button-icon.heart {
+	color: red;
+}
+
+.update-button:hover > .profile-button-icon.user {
 	color: green;
-	text-align: center;
-	margin-top: 20px;
+}
+
+.message-button:hover > .profile-button-icon.envelope {
+	color: yellow;
+}
+
+.profile-photo-update-area {
+	display: flex;
+}
+
+.profile-photo-preview {
+	height: 250px;
+	width: 250px;
+	border-radius: 50%;
+	border: 2px solid purple;
+	margin-right: 8px;
+	object-fit: cover;
+}
+
+.profile-stats {
+	margin: 0 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.profile-update-form {
+	width: 40%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 20px;
+}
+
+.profile-update-form.hidden {
+	display: none;
+}
+
+.profile-content {
+	display: flex;
+}
+
+.profile-users {
+	flex: 4;
+	padding: 0px 15px 5px 15px;
+	border: 2px solid red;
+}
+
+.profile-posts {
+	flex: 8;
+	padding: 0px 15px 5px 15px;
+	border: 2px solid purple;
+}
+
+.profile-post {
+	width: 100%;
+	display: flex;
+	margin-bottom: 15px;
+}
+
+.profile-post-media {
+	flex: 3;
+	width: 100px;
+	border-radius: 20px;
+	margin-right: 15px;
+}
+
+.profile-post-data {
+	flex: 9;
+	padding: 10px;
+}
+
+.profile-post-desc {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }

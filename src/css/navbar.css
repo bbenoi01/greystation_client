@@ -22,7 +22,7 @@
 
 /* Navbar */
 .navbar {
-	height: 50px;
+	height: 60px;
 }
 
 .nav-profile {
@@ -31,6 +31,7 @@
 	margin-left: 15px;
 	border: 1px solid steelblue;
 	border-radius: 50%;
+	object-fit: cover;
 }
 
 /* Extra small devices (phones, 600px and down) */

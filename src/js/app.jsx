@@ -15,10 +15,15 @@ import {
 	faTrashAlt,
 	faUndo,
 	faPlus,
+	faUser,
 	faUserCircle,
 	faThumbsUp,
 	faThumbsDown,
 	faEye,
+	faFrown,
+	faHeart,
+	faEnvelope,
+	faUpload,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Navbar from './components/Navbar';
@@ -38,10 +43,15 @@ library.add(
 	faTrashAlt,
 	faUndo,
 	faPlus,
+	faUser,
 	faUserCircle,
 	faThumbsUp,
 	faThumbsDown,
-	faEye
+	faEye,
+	faFrown,
+	faHeart,
+	faEnvelope,
+	faUpload
 );
 
 const App = ({ user }) => {
