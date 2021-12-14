@@ -309,6 +309,80 @@ export function uploadProfilePhoto(file) {
 	};
 }
 
+export function followUser(userToFollow) {
+	const userData = {
+		followId: userToFollow,
+	};
+	return (dispatch) => {
+		dispatch({
+			type: types.FOLLOW_USER_START,
+		});
+		blogApi
+			.put('/api/users/follow', userData)
+			.then((res) => {
+				dispatch({
+					type: types.FOLLOW_USER_SUCCESS,
+					payload: res.data,
+				});
+				window.location.reload();
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.FOLLOW_USER_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
+export function unfollowUser(userToUnfollow) {
+	const userData = {
+		unfollowId: userToUnfollow,
+	};
+	return (dispatch) => {
+		dispatch({
+			type: types.UNFOLLOW_USER_START,
+		});
+		blogApi
+			.put('api/users/unfollow', userData)
+			.then((res) => {
+				dispatch({
+					type: types.UNFOLLOW_USER_SUCCESS,
+					payload: res.data,
+				});
+				window.location.reload();
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.UNFOLLOW_USER_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
+export function sendEmail(emailData) {
+	return (dispatch) => {
+		dispatch({
+			type: types.SEND_EMAIL_START,
+		});
+		blogApi
+			.post('/api/email', emailData)
+			.then((res) => {
+				dispatch({
+					type: types.SEND_EMAIL_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.SEND_EMAIL_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
 export const updateStart = (userCredentials) => ({
 	type: types.UPDATE_START,
 });

@@ -6,7 +6,12 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import blogApi from '../api/blogApi';
 
-import { uploadProfilePhoto } from '../actions/actions';
+import {
+	uploadProfilePhoto,
+	followUser,
+	unfollowUser,
+	sendEmail,
+} from '../actions/actions';
 
 const Profile = ({ dispatch }) => {
 	const location = useLocation();
@@ -20,6 +25,12 @@ const Profile = ({ dispatch }) => {
 	const [following, setFollowing] = useState([]);
 	const [file, setFile] = useState(null);
 	const [updateMode, setUpdateMode] = useState(false);
+	const [emailSubject, setEmailSubject] = useState('');
+	const [emailMessage, setEmailMessage] = useState('');
+	const currentUser = user._id;
+	const alreadyFollowing = user?.following?.find(
+		() => currentUser === user?._id
+	);
 
 	useEffect(() => {
 		const getUserProfile = async () => {
@@ -56,6 +67,28 @@ const Profile = ({ dispatch }) => {
 		setUpdateMode(false);
 	};
 
+	const handleFollow = () => {
+		dispatch(followUser(user._id));
+	};
+
+	const handleUnFollow = () => {
+		dispatch(unfollowUser(user._id));
+	};
+
+	const handleSendEmail = (e) => {
+		e.preventDefault();
+		const emailData = {
+			to: user?.email,
+			subject: emailSubject,
+			message: emailMessage,
+		};
+
+		dispatch(sendEmail(emailData));
+		document.getElementById('send-email-form').reset();
+		setEmailSubject('');
+		setEmailMessage('');
+	};
+
 	return (
 		<div className='profile'>
 			<img
@@ -68,19 +101,9 @@ const Profile = ({ dispatch }) => {
 			<div className='profile-wrapper'>
 				<div className='profile-handle'>{user.handle}</div>
 				{user.isVerified ? (
-					<div
-						className='alert alert-success profile-verification-alert verified'
-						role='alert'
-					>
-						Account Verified
-					</div>
+					<span className='badge rounded-pill bg-success'>Verified</span>
 				) : (
-					<div
-						className='alert alert-danger profile-verification-alert unverified'
-						role='alert'
-					>
-						Unverified Account
-					</div>
+					<span className='badge rounded-pill bg-danger'>Unverified</span>
 				)}
 				<div className='profile-action-area'>
 					<div className='profile-created-date'>
@@ -89,24 +112,29 @@ const Profile = ({ dispatch }) => {
 						</span>
 					</div>
 					<div className='profile-follow-unfollow'>
-						<button
-							type='button'
-							className='btn btn-outline-secondary unfollow-button'
-						>
-							<span className='profile-button-icon frown'>
-								<FontAwesomeIcon icon='frown' />
-							</span>
-							Unfollow
-						</button>
-						<button
-							type='button'
-							className='btn btn-outline-secondary follow-button'
-						>
-							<span className='profile-button-icon heart'>
-								<FontAwesomeIcon icon='heart' />
-							</span>
-							Follow
-						</button>
+						{alreadyFollowing ? (
+							<button
+								type='button'
+								className='btn btn-outline-secondary unfollow-button'
+								onClick={handleUnFollow}
+							>
+								<span className='profile-button-icon frown'>
+									<FontAwesomeIcon icon='frown' />
+								</span>
+								Unfollow
+							</button>
+						) : (
+							<button
+								type='button'
+								className='btn btn-outline-secondary follow-button'
+								onClick={handleFollow}
+							>
+								<span className='profile-button-icon heart'>
+									<FontAwesomeIcon icon='heart' />
+								</span>
+								Follow
+							</button>
+						)}
 					</div>
 					<div className='profile-update-button'>
 						<button
@@ -120,14 +148,81 @@ const Profile = ({ dispatch }) => {
 							Update Profile
 						</button>
 					</div>
-					<div className='profile-message-button'>
-						<button type='button' className='btn btn-info message-button'>
-							<span className='profile-button-icon envelope'>
-								<FontAwesomeIcon icon='envelope' />
-							</span>
-							Send Message
-						</button>
-					</div>
+					{user?.isAdmin && (
+						<div className='profile-message-button'>
+							<button
+								type='button'
+								className='btn btn-primary message-button'
+								data-bs-toggle='modal'
+								data-bs-target='#email-modal'
+							>
+								<span className='profile-button-icon envelope'>
+									<FontAwesomeIcon icon='envelope' />
+								</span>
+								Send Message
+							</button>
+							<div
+								className='modal fade'
+								id='email-modal'
+								data-bs-backdrop='static'
+								data-bs-keyboard='false'
+								tabindex='-1'
+							>
+								<div className='modal-dialog modal-dialog-centered'>
+									<div className='modal-content'>
+										<form id='send-email-form' onSubmit={handleSendEmail}>
+											<div className='modal-body'>
+												<div className='mb-3'>
+													<label htmlFor='to' className='form-label'>
+														To:
+													</label>
+													<input
+														type='text'
+														className='form-control'
+														id='to'
+														value={user.handle}
+														disabled
+													/>
+												</div>
+												<div className='mb-3'>
+													<label htmlFor='subject' className='form-label'>
+														Subject:
+													</label>
+													<input
+														type='text'
+														className='form-control'
+														id='subject'
+														onChange={(e) => setEmailSubject(e.target.value)}
+													/>
+												</div>
+												<div className='mb-3'>
+													<label htmlFor='message' className='form-label'>
+														Message:
+													</label>
+													<textarea
+														type='text'
+														className='form-control'
+														id='message'
+														rows='5'
+														onChange={(e) => setEmailMessage(e.target.value)}
+													/>
+												</div>
+											</div>
+											<div className='modal-footer'>
+												<button
+													type='submit'
+													className='btn btn-primary'
+													data-bs-dismiss='modal'
+												>
+													Send
+												</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					)}
 				</div>
 				<div className='profile-photo-update-area'>
 					<label htmlFor='file-input'>
@@ -205,7 +300,9 @@ const Profile = ({ dispatch }) => {
 				<div className='profile-posts'>
 					My Posts: {posts.length}
 					<hr />
-					{posts &&
+					{posts.length <= 0 ? (
+						<h2>No Posts Found</h2>
+					) : (
 						posts.map((post) => (
 							<div className='profile-post' key={post._id}>
 								<img src={post.media} alt='' className='profile-post-media' />
@@ -217,7 +314,8 @@ const Profile = ({ dispatch }) => {
 									</Link>
 								</div>
 							</div>
-						))}
+						))
+					)}
 				</div>
 			</div>
 		</div>

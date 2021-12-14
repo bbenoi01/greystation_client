@@ -4,7 +4,7 @@ const INITIAL_STATE = {
 	posts: [],
 	post: {},
 	categories: JSON.parse(sessionStorage.getItem('categories')) || [],
-	isFetching: false,
+	loading: false,
 	error: false,
 	errorMessage: {},
 };
@@ -16,7 +16,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		case types.LOGIN_START: {
 			return {
 				...state,
-				isFetching: true,
+				loading: true,
 			};
 		}
 
@@ -24,7 +24,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				user: payload,
-				isFetching: false,
+				loading: false,
 				error: false,
 			};
 		}
@@ -39,7 +39,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		case types.GET_POSTS_START: {
 			return {
 				...state,
-				isFetching: true,
+				loading: true,
 			};
 		}
 
@@ -47,7 +47,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				posts: payload,
-				isFetching: false,
+				loading: false,
 			};
 		}
 
@@ -61,7 +61,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		case types.GET_POST_START: {
 			return {
 				...state,
-				isFetching: true,
+				loading: true,
 			};
 		}
 
@@ -69,7 +69,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				post: payload,
-				isFetching: false,
+				loading: false,
 			};
 		}
 
@@ -83,7 +83,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		case types.SUBMIT_POST_START: {
 			return {
 				...state,
-				isFetching: true,
+				loading: true,
 			};
 		}
 
@@ -91,7 +91,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				post: payload,
-				isFetching: false,
+				loading: false,
 			};
 		}
 
@@ -105,14 +105,14 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		case types.DELETE_POST_START: {
 			return {
 				...state,
-				isFetching: true,
+				loading: true,
 			};
 		}
 
 		case types.DELETE_POST_SUCCESS: {
 			return {
 				...state,
-				isFetching: false,
+				loading: false,
 			};
 		}
 
@@ -126,7 +126,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		case types.GET_CATEGORIES_START: {
 			return {
 				...state,
-				isFetching: true,
+				loading: true,
 			};
 		}
 
@@ -134,7 +134,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				categories: payload,
-				isFetching: false,
+				loading: false,
 			};
 		}
 
@@ -152,10 +152,73 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			};
 		}
 
+		case types.FOLLOW_USER_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.FOLLOW_USER_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+			};
+		}
+
+		case types.FOLLOW_USER_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
+		case types.UNFOLLOW_USER_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.UNFOLLOW_USER_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+			};
+		}
+
+		case types.UNFOLLOW_USER_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
+		case types.SEND_EMAIL_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.SEND_EMAIL_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+			};
+		}
+
+		case types.SEND_EMAIL_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
 		case types.UPDATE_START: {
 			return {
 				...state,
-				isFetching: true,
+				loading: true,
 			};
 		}
 
@@ -178,7 +241,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				user: null,
-				isFetching: false,
+				loading: false,
 				error: false,
 			};
 		}
