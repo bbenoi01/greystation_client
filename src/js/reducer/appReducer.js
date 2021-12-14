@@ -1,6 +1,6 @@
 import { types } from '../types';
 const INITIAL_STATE = {
-	user: JSON.parse(sessionStorage.getItem('user')) || null,
+	user: JSON.parse(localStorage.getItem('user')) || null,
 	posts: [],
 	post: {},
 	categories: JSON.parse(sessionStorage.getItem('categories')) || [],
@@ -209,6 +209,27 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		}
 
 		case types.SEND_EMAIL_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
+		case types.GENERATE_VERIFICATION_TOKEN_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.GENERATE_VERIFICATION_TOKEN_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+			};
+		}
+
+		case types.GENERATE_VERIFICATION_TOKEN_FAILURE: {
 			return {
 				...state,
 				error: true,

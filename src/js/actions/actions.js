@@ -10,8 +10,8 @@ export function register(userCredentials) {
 			.post('/api/users/register', userCredentials)
 			.then((res) => {
 				const { token, ...others } = res.data;
-				sessionStorage.setItem('token', token);
-				sessionStorage.setItem('user', JSON.stringify(others));
+				localStorage.setItem('token', token);
+				localStorage.setItem('user', JSON.stringify(others));
 				dispatch({
 					type: types.LOGIN_SUCCESS,
 					payload: others,
@@ -34,8 +34,8 @@ export function login(userCredentials) {
 			.post('/api/users/login', userCredentials)
 			.then((res) => {
 				const { token, ...others } = res.data;
-				sessionStorage.setItem('token', token);
-				sessionStorage.setItem('user', JSON.stringify(others));
+				localStorage.setItem('token', token);
+				localStorage.setItem('user', JSON.stringify(others));
 				dispatch({
 					type: types.LOGIN_SUCCESS,
 					payload: others,
@@ -51,8 +51,8 @@ export function login(userCredentials) {
 
 export function logout() {
 	return (dispatch) => {
-		sessionStorage.removeItem('token');
-		sessionStorage.removeItem('user');
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
 		dispatch({
 			type: types.LOGOUT,
 		});
@@ -209,6 +209,7 @@ export function getCategories() {
 			});
 	};
 }
+
 export function addCategory(category) {
 	return (dispatch) => {
 		blogApi
@@ -377,6 +378,29 @@ export function sendEmail(emailData) {
 			.catch((err) => {
 				dispatch({
 					type: types.SEND_EMAIL_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
+export function generateAcctVerificationToken() {
+	return (dispatch) => {
+		dispatch({
+			type: types.GENERATE_VERIFICATION_TOKEN_START,
+		});
+		blogApi
+			.post('/api/users/send-verification-request')
+			.then((res) => {
+				dispatch({
+					type: types.GENERATE_VERIFICATION_TOKEN_SUCCESS,
+					payload: res.data,
+				});
+				alert('Verification Email Sent, Please Check Your Inbox');
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.GET_CATEGORIES_FAILURE,
 					payload: err,
 				});
 			});
