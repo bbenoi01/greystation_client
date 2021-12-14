@@ -1,0 +1,10 @@
+/* Verification success */
+
+.v-success {
+	z-index: 1;
+	margin: 0;
+}
+
+.v-success-icon {
+	margin-right: 15px;
+}

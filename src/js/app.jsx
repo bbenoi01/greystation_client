@@ -25,8 +25,8 @@ import {
 	faEnvelope,
 	faUpload,
 	faExclamationTriangle,
+	faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -36,6 +36,8 @@ import About from './pages/About';
 import CategoryManagement from './pages/CategoryManagement';
 import Profile from './pages/Profile';
 import Auth from './pages/Auth';
+import VerificationAlert from './components/VerificationAlert';
+import VerifyAccount from './pages/VerifyAccount';
 
 library.add(
 	fab,
@@ -54,7 +56,8 @@ library.add(
 	faHeart,
 	faEnvelope,
 	faUpload,
-	faExclamationTriangle
+	faExclamationTriangle,
+	faCheckCircle
 );
 
 const App = ({ user }) => {
@@ -74,22 +77,7 @@ const App = ({ user }) => {
 	return (
 		<Router>
 			<Navbar />
-			{/* {user && !user.isVerified ? (
-				<div
-					className='alert alert-danger'
-					role='alert'
-					style={{ position: 'fixed', width: '100vw', zIndex: '1' }}
-				>
-					<FontAwesomeIcon
-						icon='exclamation-triangle'
-						style={{ marginRight: '15px' }}
-					/>{' '}
-					Your Account Is Not Verified.{' '}
-					<a href='#!' style={{ textDecoration: 'none' }}>
-						Click here to verify
-					</a>
-				</div>
-			) : null} */}
+			{user && !user.isVerified && <VerificationAlert />}
 			<Switch>
 				<Route exact path='/'>
 					<Home />
@@ -108,6 +96,9 @@ const App = ({ user }) => {
 				</Route>
 				<Route exact path='/profile/:id'>
 					{user ? <Profile /> : <Auth />}
+				</Route>
+				<Route exact path='/verify-account/:token'>
+					{user ? <VerifyAccount /> : <Auth />}
 				</Route>
 				<Route exact path='/auth'>
 					{user ? <Redirect to='/' /> : <Auth />}

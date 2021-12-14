@@ -1,0 +1,22 @@
+/* Verification Alert */
+
+.v-alert {
+	z-index: 1;
+	margin: 0;
+}
+
+.v-alert-icon {
+	margin-right: 15px;
+}
+
+.v-alert-btn {
+	border: none;
+	background-color: inherit;
+	cursor: pointer;
+	color: inherit;
+	margin-left: 5px;
+}
+
+.v-alert-btn:hover {
+	color: dodgerblue;
+}

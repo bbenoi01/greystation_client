@@ -1,0 +1,12 @@
+/* Verify Account */
+
+.verify-account {
+	height: calc(100vh - 118px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid dodgerblue;
+}
+
+.verify-account-card {
+}
