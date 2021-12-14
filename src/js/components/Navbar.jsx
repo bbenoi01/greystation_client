@@ -60,13 +60,20 @@ const Navbar = ({ dispatch, user }) => {
 									</Link>
 								</li>
 							</ul>
-							<Link to={`/profile/${user._id}`}>
+							<div className='dropdown'>
 								<img
 									src={user.profilePhoto}
 									alt='Profile'
-									className='nav-profile'
+									className='nav-profile dropdown-toggle'
+									data-bs-toggle='dropdown'
 								/>
-							</Link>
+								<ul className='dropdown-menu'>
+									<li>
+										<Link to={`/profile/${user?._id}`}>Your Profile</Link>
+									</li>
+									<li>Change Password</li>
+								</ul>
+							</div>
 						</div>
 					</>
 				) : (
