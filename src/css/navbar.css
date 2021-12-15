@@ -32,6 +32,7 @@
 	border: 1px solid steelblue;
 	border-radius: 50%;
 	object-fit: cover;
+	cursor: pointer;
 }
 
 /* Extra small devices (phones, 600px and down) */
