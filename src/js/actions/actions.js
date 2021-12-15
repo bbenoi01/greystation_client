@@ -407,6 +407,30 @@ export function generateAcctVerificationToken() {
 	};
 }
 
+export function verifyAccount(verificationToken) {
+	return (dispatch) => {
+		dispatch({
+			type: types.VERIFY_ACCOUNT_START,
+		});
+		blogApi
+			.put('/api/users/verify-account', verificationToken)
+			.then((res) => {
+				localStorage.setItem('user', JSON.stringify(res.data));
+				dispatch({
+					type: types.VERIFY_ACCOUNT_SUCCESS,
+					payload: res.data,
+				});
+				window.location.replace('/');
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.VERIFY_ACCOUNT_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
 export const updateStart = (userCredentials) => ({
 	type: types.UPDATE_START,
 });

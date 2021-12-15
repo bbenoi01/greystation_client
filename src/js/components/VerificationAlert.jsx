@@ -16,7 +16,7 @@ const VerificationAlert = () => {
 				className='v-alert-btn'
 				onClick={() => dispatch(generateAcctVerificationToken())}
 			>
-				Click here to verify
+				Click here for verification email.
 			</button>
 		</div>
 	);

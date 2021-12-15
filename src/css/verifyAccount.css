@@ -5,8 +5,9 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 2px solid dodgerblue;
 }
 
-.verify-account-card {
+.verify-account-card-icon {
+	font-size: 40px;
+	color: seagreen;
 }

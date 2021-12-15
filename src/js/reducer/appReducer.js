@@ -236,6 +236,28 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			};
 		}
 
+		case types.VERIFY_ACCOUNT_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.VERIFY_ACCOUNT_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				user: payload,
+			};
+		}
+
+		case types.VERIFY_ACCOUNT_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
 		case types.UPDATE_START: {
 			return {
 				...state,
