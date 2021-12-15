@@ -9,6 +9,7 @@ import {
 	annonLikeToggle,
 	toggleDislike,
 	annonDislikeToggle,
+	getPost,
 } from '../actions/actions';
 
 const Post = ({ dispatch, user, post }) => {
@@ -54,6 +55,10 @@ const Post = ({ dispatch, user, post }) => {
 		}
 	};
 
+	const handleGetPost = () => {
+		dispatch(getPost(post.id));
+	};
+
 	return (
 		<div className='post'>
 			{post.media && post.blogType === 'blog' ? (
@@ -95,7 +100,7 @@ const Post = ({ dispatch, user, post }) => {
 				<div className='post-categories'>
 					<span className='post-category'>{post.category}</span>
 				</div>
-				<Link to={`/post/${post._id}`} className='link'>
+				<Link to={`/post/${post._id}`} className='link' onClick={handleGetPost}>
 					<span className='post-title'>{post.title}</span>
 				</Link>
 				<span className='post-date'>

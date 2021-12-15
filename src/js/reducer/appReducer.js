@@ -1,6 +1,7 @@
 import { types } from '../types';
 const INITIAL_STATE = {
 	user: JSON.parse(localStorage.getItem('user')) || null,
+	profile: {},
 	posts: [],
 	post: {},
 	categories: JSON.parse(sessionStorage.getItem('categories')) || [],
@@ -163,6 +164,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
+				user: payload,
 			};
 		}
 
@@ -184,6 +186,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
+				user: payload,
 			};
 		}
 
@@ -252,6 +255,28 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		}
 
 		case types.VERIFY_ACCOUNT_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
+		case types.PROFILE_PHOTO_UPLOAD_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.PROFILE_PHOTO_UPLOAD_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				user: payload,
+			};
+		}
+
+		case types.PROFILE_PHOTO_UPLOAD_FAILURE: {
 			return {
 				...state,
 				error: true,
