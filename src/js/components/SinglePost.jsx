@@ -192,7 +192,7 @@ const SinglePost = ({ dispatch, user }) => {
 				<div className='single-post-info'>
 					<span className='single-post-author'>
 						Author:{' '}
-						<Link to={`/?handle=${post?.user?.handle}`} className='link'>
+						<Link to={`/profile/${post?.user?._id}`} className='link'>
 							<b>{post?.user?.handle}</b>
 						</Link>
 					</span>
@@ -276,9 +276,11 @@ const SinglePost = ({ dispatch, user }) => {
 										key={comment._id}
 									>
 										<div className='card-header single-post-comment-card-header'>
-											<p className='single-post-comment-handle'>
-												{comment.user.handle}
-											</p>
+											<Link to={`/profile/${comment?.user?._id}`}>
+												<p className='single-post-comment-handle'>
+													{comment.user.handle}
+												</p>
+											</Link>
 											<p className='single-post-comment-date'>
 												{dayjs(comment.createdAt).fromNow()}
 											</p>

@@ -13,10 +13,10 @@ import {
 	sendEmail,
 } from '../actions/actions';
 
-const Profile = ({ dispatch }) => {
+const Profile = ({ dispatch, user }) => {
 	const location = useLocation();
 	const path = location.pathname.split('/')[2];
-	const [user, setUser] = useState({});
+	const [profile, setUser] = useState({});
 	const [handle, setHandle] = useState('');
 	const [email, setEmail] = useState('');
 	const [posts, setPosts] = useState([]);
@@ -28,8 +28,9 @@ const Profile = ({ dispatch }) => {
 	const [emailSubject, setEmailSubject] = useState('');
 	const [emailMessage, setEmailMessage] = useState('');
 	const currentUser = user._id;
+	const isSameUser = currentUser === profile._id;
 	const alreadyFollowing = user?.following?.find(
-		() => currentUser === user?._id
+		(user) => user === profile?._id
 	);
 
 	useEffect(() => {
@@ -68,17 +69,17 @@ const Profile = ({ dispatch }) => {
 	};
 
 	const handleFollow = () => {
-		dispatch(followUser(user._id));
+		dispatch(followUser(profile._id));
 	};
 
 	const handleUnFollow = () => {
-		dispatch(unfollowUser(user._id));
+		dispatch(unfollowUser(profile._id));
 	};
 
 	const handleSendEmail = (e) => {
 		e.preventDefault();
 		const emailData = {
-			to: user?.email,
+			to: profile?.email,
 			subject: emailSubject,
 			message: emailMessage,
 		};
@@ -92,15 +93,15 @@ const Profile = ({ dispatch }) => {
 	return (
 		<div className='profile'>
 			<img
-				src={user.profilePhoto}
+				src={profile.profilePhoto}
 				alt='Profile Hero'
 				height='250'
 				width='100%'
 				className='profile-image-hero'
 			/>
 			<div className='profile-wrapper'>
-				<div className='profile-handle'>{user.handle}</div>
-				{user.isVerified ? (
+				<div className='profile-handle'>{profile.handle}</div>
+				{profile.isVerified ? (
 					<span className='badge rounded-pill bg-success'>Verified</span>
 				) : (
 					<span className='badge rounded-pill bg-danger'>Unverified</span>
@@ -108,46 +109,50 @@ const Profile = ({ dispatch }) => {
 				<div className='profile-action-area'>
 					<div className='profile-created-date'>
 						<span>
-							<b>Date Joined:</b> {new Date(user.createdAt).toDateString()}
+							<b>Date Joined:</b> {new Date(profile.createdAt).toDateString()}
 						</span>
 					</div>
-					<div className='profile-follow-unfollow'>
-						{alreadyFollowing ? (
+					{!isSameUser && (
+						<div className='profile-follow-unfollow'>
+							{alreadyFollowing ? (
+								<button
+									type='button'
+									className='btn btn-outline-secondary unfollow-button'
+									onClick={handleUnFollow}
+								>
+									<span className='profile-button-icon frown'>
+										<FontAwesomeIcon icon='frown' />
+									</span>
+									Unfollow
+								</button>
+							) : (
+								<button
+									type='button'
+									className='btn btn-outline-secondary follow-button'
+									onClick={handleFollow}
+								>
+									<span className='profile-button-icon heart'>
+										<FontAwesomeIcon icon='heart' />
+									</span>
+									Follow
+								</button>
+							)}
+						</div>
+					)}
+					{isSameUser && (
+						<div className='profile-update-button'>
 							<button
 								type='button'
-								className='btn btn-outline-secondary unfollow-button'
-								onClick={handleUnFollow}
+								className='btn btn-outline-secondary update-button'
+								onClick={() => setUpdateMode(true)}
 							>
-								<span className='profile-button-icon frown'>
-									<FontAwesomeIcon icon='frown' />
+								<span className='profile-button-icon user'>
+									<FontAwesomeIcon icon='user' />
 								</span>
-								Unfollow
+								Update Profile
 							</button>
-						) : (
-							<button
-								type='button'
-								className='btn btn-outline-secondary follow-button'
-								onClick={handleFollow}
-							>
-								<span className='profile-button-icon heart'>
-									<FontAwesomeIcon icon='heart' />
-								</span>
-								Follow
-							</button>
-						)}
-					</div>
-					<div className='profile-update-button'>
-						<button
-							type='button'
-							className='btn btn-outline-secondary update-button'
-							onClick={() => setUpdateMode(true)}
-						>
-							<span className='profile-button-icon user'>
-								<FontAwesomeIcon icon='user' />
-							</span>
-							Update Profile
-						</button>
-					</div>
+						</div>
+					)}
 					{user?.isAdmin && (
 						<div className='profile-message-button'>
 							<button
@@ -166,7 +171,7 @@ const Profile = ({ dispatch }) => {
 								id='email-modal'
 								data-bs-backdrop='static'
 								data-bs-keyboard='false'
-								tabindex='-1'
+								tabIndex='-1'
 							>
 								<div className='modal-dialog modal-dialog-centered'>
 									<div className='modal-content'>
@@ -180,7 +185,7 @@ const Profile = ({ dispatch }) => {
 														type='text'
 														className='form-control'
 														id='to'
-														value={user.handle}
+														value={profile.handle}
 														disabled
 													/>
 												</div>
@@ -229,7 +234,7 @@ const Profile = ({ dispatch }) => {
 						<FontAwesomeIcon icon='plus' className='create-icon' />
 					</label>
 					<img
-						src={file ? URL.createObjectURL(file) : user.profilePhoto}
+						src={file ? URL.createObjectURL(file) : profile.profilePhoto}
 						alt='Profile'
 						className='profile-photo-preview'
 					/>
@@ -238,22 +243,35 @@ const Profile = ({ dispatch }) => {
 							{posts.length} posts {followers.length} followers{' '}
 							{following.length} following
 						</p>
-						<button
-							type='button'
-							className='btn btn-outline-secondary'
-							onClick={handleProfilePhoto}
-						>
-							<span className='profile-button-icon upload'>
-								<FontAwesomeIcon icon='upload' />
-							</span>
-							Upload Photo
-						</button>
-						<input
-							type='file'
-							name='file'
-							id='file-input'
-							onChange={(e) => setFile(e.target.files[0])}
-						/>
+						{isSameUser && (
+							<>
+								{file ? (
+									<button
+										type='button'
+										className='btn btn-outline-secondary'
+										onClick={handleProfilePhoto}
+									>
+										<span className='profile-button-icon upload'>
+											<FontAwesomeIcon icon='upload' />
+										</span>
+										Upload Photo
+									</button>
+								) : (
+									<button className='btn btn-outline-secondary' disabled>
+										<span className='profile-button-icon upload'>
+											<FontAwesomeIcon icon='upload' />
+										</span>
+										Upload Photo
+									</button>
+								)}
+								<input
+									type='file'
+									name='file'
+									id='file-input'
+									onChange={(e) => setFile(e.target.files[0])}
+								/>
+							</>
+						)}
 					</div>
 					<form
 						className={
@@ -323,7 +341,9 @@ const Profile = ({ dispatch }) => {
 };
 
 function mapStoreToProps(store) {
-	return {};
+	return {
+		user: store.app.user,
+	};
 }
 
 export default connect(mapStoreToProps)(Profile);

@@ -300,13 +300,24 @@ export function deleteComment(commentId) {
 }
 
 export function uploadProfilePhoto(file) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.PROFILE_PHOTO_UPLOAD_START,
+		});
 		blogApi
 			.put(`profilephoto-upload`, file)
-			.then(() => {
-				window.location.reload();
+			.then((res) => {
+				localStorage.setItem('user', JSON.stringify(res.data));
+				dispatch({
+					type: types.PROFILE_PHOTO_UPLOAD_SUCCESS,
+					payload: res.data,
+				});
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				dispatch({
+					type: types.PROFILE_PHOTO_UPLOAD_FAILURE,
+				});
+			});
 	};
 }
 
@@ -321,11 +332,11 @@ export function followUser(userToFollow) {
 		blogApi
 			.put('/api/users/follow', userData)
 			.then((res) => {
+				localStorage.setItem('user', JSON.stringify(res.data));
 				dispatch({
 					type: types.FOLLOW_USER_SUCCESS,
 					payload: res.data,
 				});
-				window.location.reload();
 			})
 			.catch((err) => {
 				dispatch({
@@ -347,11 +358,11 @@ export function unfollowUser(userToUnfollow) {
 		blogApi
 			.put('api/users/unfollow', userData)
 			.then((res) => {
+				localStorage.setItem('user', JSON.stringify(res.data));
 				dispatch({
 					type: types.UNFOLLOW_USER_SUCCESS,
 					payload: res.data,
 				});
-				window.location.reload();
 			})
 			.catch((err) => {
 				dispatch({
