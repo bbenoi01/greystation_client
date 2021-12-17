@@ -86,7 +86,7 @@
 	height: 250px;
 	width: 250px;
 	border-radius: 50%;
-	border: 2px solid purple;
+	border: 1px solid black;
 	margin-right: 8px;
 	object-fit: cover;
 }
@@ -117,13 +117,11 @@
 .profile-users {
 	flex: 4;
 	padding: 0px 15px 5px 15px;
-	border: 2px solid red;
 }
 
 .profile-posts {
 	flex: 8;
 	padding: 0px 15px 5px 15px;
-	border: 2px solid purple;
 }
 
 .profile-post {
@@ -150,4 +148,17 @@
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
+}
+
+.profile-viewer-item {
+	display: flex;
+	margin-bottom: 10px;
+}
+
+.profile-viewer-photo {
+	height: 75px;
+	width: 75px;
+	margin-right: 15px;
+	border-radius: 50%;
+	object-fit: cover;
 }

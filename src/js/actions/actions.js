@@ -59,6 +59,29 @@ export function logout() {
 	};
 }
 
+export function getUserProfile(path) {
+	return (dispatch) => {
+		dispatch({
+			type: types.GET_USER_PROFILE_START,
+		});
+		blogApi
+			.get(`/api/users/profile/${path}`)
+			.then((res) => {
+				sessionStorage.setItem('profile', JSON.stringify(res.data));
+				dispatch({
+					type: types.GET_USER_PROFILE_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.GET_USER_PROFILE_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
 export function getPosts(search) {
 	return (dispatch) => {
 		dispatch({
@@ -67,6 +90,7 @@ export function getPosts(search) {
 		blogApi
 			.get('/api/posts' + search)
 			.then((res) => {
+				sessionStorage.setItem('posts', JSON.stringify(res.data));
 				dispatch({
 					type: types.GET_POSTS_SUCCESS,
 					payload: res.data,
@@ -88,6 +112,7 @@ export function getPost(path) {
 		blogApi
 			.get('/api/posts/' + path)
 			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data));
 				dispatch({
 					type: types.GET_POST_SUCCESS,
 					payload: res.data,
@@ -102,53 +127,97 @@ export function getPost(path) {
 }
 
 export function toggleLike(id) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.LIKE_POST_START,
+		});
 		blogApi
 			.put('/api/posts/like', id)
-			.then(() => {
-				window.location.reload();
+			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data.post));
+				sessionStorage.setItem('posts', JSON.stringify(res.data.posts));
+				dispatch({
+					type: types.LIKE_POST_SUCCESS,
+					payload: res.data,
+				});
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.LIKE_POST_FAILURE,
+					payload: err,
+				});
 			});
 	};
 }
 
 export function annonLikeToggle(annonData) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.LIKE_POST_START,
+		});
 		blogApi
 			.put('/api/posts/like/annon', annonData)
-			.then(() => {
-				window.location.reload();
+			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data.post));
+				sessionStorage.setItem('posts', JSON.stringify(res.data.posts));
+				dispatch({
+					type: types.LIKE_POST_SUCCESS,
+					payload: res.data,
+				});
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.LIKE_POST_FAILURE,
+					payload: err,
+				});
 			});
 	};
 }
 
 export function toggleDislike(id) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.DISLIKE_POST_START,
+		});
 		blogApi
 			.put('/api/posts/dislike', id)
-			.then(() => {
-				window.location.reload();
+			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data.post));
+				sessionStorage.setItem('posts', JSON.stringify(res.data.posts));
+				dispatch({
+					type: types.DISLIKE_POST_SUCCESS,
+					payload: res.data,
+				});
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.DISLIKE_POST_FAILURE,
+					payload: err,
+				});
 			});
 	};
 }
 
 export function annonDislikeToggle(annonData) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.DISLIKE_POST_START,
+		});
 		blogApi
 			.put('/api/posts/dislike/annon', annonData)
-			.then(() => {
-				window.location.reload();
+			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data.post));
+				sessionStorage.setItem('posts', JSON.stringify(res.data.posts));
+				dispatch({
+					type: types.DISLIKE_POST_SUCCESS,
+					payload: res.data,
+				});
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.DISLIKE_POST_FAILURE,
+					payload: err,
+				});
 			});
 	};
 }
@@ -245,6 +314,7 @@ export function submitPost(newPost) {
 		blogApi
 			.post('/api/posts', newPost)
 			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data));
 				dispatch({
 					type: types.SUBMIT_POST_SUCCESS,
 					payload: res.data,
@@ -436,6 +506,98 @@ export function verifyAccount(verificationToken) {
 			.catch((err) => {
 				dispatch({
 					type: types.VERIFY_ACCOUNT_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
+export function getAllAuthors() {
+	return (dispatch) => {
+		dispatch({
+			type: types.GET_AUTHORS_START,
+		});
+		blogApi
+			.get('/api/users')
+			.then((res) => {
+				sessionStorage.setItem('authors', JSON.stringify(res.data));
+				dispatch({
+					type: types.GET_AUTHORS_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.GET_CATEGORIES_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
+export function blockUser(id) {
+	return (dispatch) => {
+		dispatch({
+			type: types.BLOCK_USER_START,
+		});
+		blogApi
+			.put(`/api/users/block-user/${id}`)
+			.then((res) => {
+				sessionStorage.setItem('authors', JSON.stringify(res.data));
+				dispatch({
+					type: types.BLOCK_USER_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.BLOCK_USER_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
+export function unblockUser(id) {
+	return (dispatch) => {
+		dispatch({
+			type: types.UNBLOCK_USER_START,
+		});
+		blogApi
+			.put(`/api/users/unblock-user/${id}`)
+			.then((res) => {
+				sessionStorage.setItem('authors', JSON.stringify(res.data));
+				dispatch({
+					type: types.UNBLOCK_USER_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.UNBLOCK_USER_FAILURE,
+					payload: err,
+				});
+			});
+	};
+}
+
+export function deleteUser(id) {
+	return (dispatch) => {
+		dispatch({
+			type: types.DELETE_USER_START,
+		});
+		blogApi
+			.delete(`/api/users/${id}`)
+			.then((res) => {
+				sessionStorage.setItem('authors', JSON.stringify(res.data));
+				dispatch({
+					type: types.DELETE_USER_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.DELETE_USER_FAILURE,
 					payload: err,
 				});
 			});
