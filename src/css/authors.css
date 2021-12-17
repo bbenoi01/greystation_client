@@ -1,0 +1,10 @@
+/* Authors */
+
+.authors {
+	height: calc(100vh - 60px);
+	background-color: black;
+}
+
+.authors-list {
+	padding: 35px 32px;
+}

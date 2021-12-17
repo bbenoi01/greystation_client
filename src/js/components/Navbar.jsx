@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { logout } from '../actions/actions';
+import { logout, getAllAuthors, getUserProfile } from '../actions/actions';
 
 const Navbar = ({ dispatch, user }) => {
 	const handleLogout = (e) => {
@@ -38,7 +38,11 @@ const Navbar = ({ dispatch, user }) => {
 								{user.isAdmin && (
 									<>
 										<li className='nav-item'>
-											<Link to='/authors' className='link'>
+											<Link
+												to='/authors'
+												className='link'
+												onClick={() => dispatch(getAllAuthors())}
+											>
 												Authors
 											</Link>
 										</li>
@@ -69,7 +73,12 @@ const Navbar = ({ dispatch, user }) => {
 								/>
 								<ul className='dropdown-menu'>
 									<li>
-										<Link to={`/profile/${user?._id}`}>Your Profile</Link>
+										<Link
+											to={`/profile/${user?._id}`}
+											onClick={() => dispatch(getUserProfile(user?._id))}
+										>
+											Your Profile
+										</Link>
 									</li>
 									<li>Change Password</li>
 								</ul>

@@ -1,10 +1,11 @@
 import { types } from '../types';
 const INITIAL_STATE = {
 	user: JSON.parse(localStorage.getItem('user')) || null,
-	profile: {},
-	posts: [],
-	post: {},
+	profile: JSON.parse(sessionStorage.getItem('profile')) || {},
+	posts: JSON.parse(sessionStorage.getItem('posts')) || [],
+	post: JSON.parse(sessionStorage.getItem('post')) || {},
 	categories: JSON.parse(sessionStorage.getItem('categories')) || [],
+	authors: JSON.parse(sessionStorage.getItem('authors')) || [],
 	loading: false,
 	error: false,
 	errorMessage: {},
@@ -31,6 +32,28 @@ const appReducer = (state = INITIAL_STATE, action) => {
 		}
 
 		case types.LOGIN_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
+		case types.GET_USER_PROFILE_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.GET_USER_PROFILE_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				profile: payload,
+			};
+		}
+
+		case types.GET_USER_PROFILE_FAILURE: {
 			return {
 				...state,
 				error: true,
@@ -78,6 +101,59 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				error: true,
+			};
+		}
+
+		case types.LIKE_POST_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.LIKE_POST_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				post: payload.post,
+				posts: payload.posts,
+			};
+		}
+
+		case types.LIKE_POST_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
+		case types.DISLIKE_POST_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.DISLIKE_POST_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				post: payload.post,
+				posts: payload.posts,
+			};
+		}
+
+		case types.DISLIKE_POST_FAILURE: {
+			return {
+				...state,
+				error: true,
+			};
+		}
+
+		case types.CLEAR_POST: {
+			return {
+				...state,
+				post: {},
 			};
 		}
 
@@ -143,13 +219,6 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				error: true,
-			};
-		}
-
-		case types.CLEAR_POST: {
-			return {
-				...state,
-				post: {},
 			};
 		}
 
@@ -283,24 +352,93 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			};
 		}
 
-		case types.UPDATE_START: {
+		case types.GET_AUTHORS_START: {
 			return {
 				...state,
 				loading: true,
 			};
 		}
 
-		case types.UPDATE_SUCCESS: {
+		case types.GET_AUTHORS_SUCCESS: {
 			return {
 				...state,
-				user: payload,
+				loading: false,
+				authors: payload,
 			};
 		}
 
-		case types.UPDATE_FAILURE: {
+		case types.GET_AUTHORS_FAILURE: {
 			return {
 				...state,
-				user: state.user,
+				error: true,
+			};
+		}
+
+		case types.DELETE_USER_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.DELETE_USER_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				authors: payload,
+			};
+		}
+
+		case types.DELETE_USER_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				error: true,
+			};
+		}
+
+		case types.BLOCK_USER_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.BLOCK_USER_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				authors: payload,
+			};
+		}
+
+		case types.BLOCK_USER_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				error: true,
+			};
+		}
+
+		case types.UNBLOCK_USER_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.UNBLOCK_USER_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				authors: payload,
+			};
+		}
+
+		case types.UNBLOCK_USER_FAILURE: {
+			return {
+				...state,
+				loading: false,
 				error: true,
 			};
 		}

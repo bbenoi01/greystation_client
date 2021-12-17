@@ -29,15 +29,16 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import Navbar from './components/Navbar';
+import VerificationAlert from './components/VerificationAlert';
+import Auth from './pages/Auth';
+import VerifyAccount from './pages/VerifyAccount';
 import Home from './pages/Home';
 import Single from './pages/Single';
 import Create from './pages/Create';
-import About from './pages/About';
+import Authors from './pages/Authors';
 import CategoryManagement from './pages/CategoryManagement';
+import About from './pages/About';
 import Profile from './pages/Profile';
-import Auth from './pages/Auth';
-import VerificationAlert from './components/VerificationAlert';
-import VerifyAccount from './pages/VerifyAccount';
 
 library.add(
 	fab,
@@ -79,11 +80,14 @@ const App = ({ user }) => {
 			<Navbar />
 			{user && !user.isVerified && <VerificationAlert />}
 			<Switch>
+				<Route exact path='/auth'>
+					{user ? <Redirect to='/' /> : <Auth />}
+				</Route>
+				<Route exact path='/verify-account/:token'>
+					{user ? <VerifyAccount /> : <Auth />}
+				</Route>
 				<Route exact path='/'>
 					<Home />
-				</Route>
-				<Route exact path='/about'>
-					<About />
 				</Route>
 				<Route exact path='/post/:postId'>
 					<Single />
@@ -91,17 +95,17 @@ const App = ({ user }) => {
 				<Route exact path='/create'>
 					{user ? <Create /> : <Auth />}
 				</Route>
+				<Route exact path='/authors'>
+					{user && user.isAdmin ? <Authors /> : <Auth />}
+				</Route>
 				<Route exact path='/category-management'>
 					{user && user.isAdmin ? <CategoryManagement /> : <Auth />}
 				</Route>
+				<Route exact path='/about'>
+					<About />
+				</Route>
 				<Route exact path='/profile/:id'>
 					{user ? <Profile /> : <Auth />}
-				</Route>
-				<Route exact path='/verify-account/:token'>
-					{user ? <VerifyAccount /> : <Auth />}
-				</Route>
-				<Route exact path='/auth'>
-					{user ? <Redirect to='/' /> : <Auth />}
 				</Route>
 			</Switch>
 		</Router>
