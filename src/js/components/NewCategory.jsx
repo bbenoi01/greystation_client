@@ -1,11 +1,12 @@
 import '../../css/newCategory.css';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { addCategory } from '../actions/actions';
 
-const NewCategory = ({ dispatch }) => {
+const NewCategory = () => {
 	const [title, setTitle] = useState('');
+	const dispatch = useDispatch();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -47,8 +48,4 @@ const NewCategory = ({ dispatch }) => {
 	);
 };
 
-function mapStoreToProps(store) {
-	return {};
-}
-
-export default connect(mapStoreToProps)(NewCategory);
+export default NewCategory;

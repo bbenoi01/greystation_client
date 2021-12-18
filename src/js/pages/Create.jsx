@@ -136,9 +136,9 @@ const Create = ({ dispatch, user, categories }) => {
 							>
 								<option defaultValue>Choose a Category...</option>
 								{categories &&
-									categories.map((cat) => (
-										<option key={cat._id} value={cat.title}>
-											{cat.title}
+									categories?.map((category) => (
+										<option key={category?._id} value={category?.title}>
+											{category?.title}
 										</option>
 									))}
 							</select>
@@ -192,9 +192,9 @@ const Create = ({ dispatch, user, categories }) => {
 							>
 								<option defaultValue>Choose a Category...</option>
 								{categories &&
-									categories.map((cat) => (
-										<option key={cat._id} value={cat.title}>
-											{cat.title}
+									categories?.map((category) => (
+										<option key={category?._id} value={category?.title}>
+											{category?.title}
 										</option>
 									))}
 							</select>

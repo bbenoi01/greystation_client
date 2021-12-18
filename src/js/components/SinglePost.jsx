@@ -21,7 +21,7 @@ import {
 
 const relativeTime = require('dayjs/plugin/relativeTime');
 
-const SinglePost = ({ dispatch, user, loading, post }) => {
+const SinglePost = ({ dispatch, user, post }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [updateMode, setUpdateMode] = useState(false);
@@ -38,7 +38,7 @@ const SinglePost = ({ dispatch, user, loading, post }) => {
 	}, [dispatch]);
 
 	const handleDeletePost = () => {
-		dispatch(deletePost(post._id));
+		dispatch(deletePost(post?._id));
 	};
 
 	const handleUpdatePost = () => {
@@ -46,7 +46,7 @@ const SinglePost = ({ dispatch, user, loading, post }) => {
 			title,
 			description,
 		};
-		dispatch(updatePost(post._id, postDetails));
+		dispatch(updatePost(post?._id, postDetails));
 		setUpdateMode(false);
 	};
 
@@ -56,13 +56,13 @@ const SinglePost = ({ dispatch, user, loading, post }) => {
 
 		if (user) {
 			likedPost = {
-				postId: post.id,
+				postId: post?._id,
 			};
 
 			dispatch(toggleLike(likedPost));
 		} else {
 			const annonData = {
-				postId: post.id,
+				postId: post?._id,
 				annonId,
 			};
 
@@ -70,19 +70,20 @@ const SinglePost = ({ dispatch, user, loading, post }) => {
 		}
 	};
 
-	const handleDislike = () => {
+	const handleDislike = (e) => {
+		e.preventDefault();
 		const annonId = localStorage.getItem('annonId');
 		let dislikedPost;
 
 		if (user) {
 			dislikedPost = {
-				postId: post.id,
+				postId: post?._id,
 			};
 
 			dispatch(toggleDislike(dislikedPost));
 		} else {
 			const annonData = {
-				postId: post.id,
+				postId: post?._id,
 				annonId,
 			};
 
@@ -93,7 +94,7 @@ const SinglePost = ({ dispatch, user, loading, post }) => {
 	const handleAddComment = (e) => {
 		e.preventDefault();
 		const commentData = {
-			postId: post._id,
+			postId: post?._id,
 			description: comment,
 		};
 		console.log(commentData);
@@ -105,228 +106,218 @@ const SinglePost = ({ dispatch, user, loading, post }) => {
 	// 	const commentData = {
 	// 		description: comment,
 	// 	};
-	// 	dispatch(updateComment(post._id, commentData));
+	// 	dispatch(updateComment(post?._id, commentData));
 	// };
 
 	const handleDeleteComment = (commentId) => {
-		dispatch(deleteComment(commentId, post._id));
+		dispatch(deleteComment(commentId, post?._id));
 	};
 
 	dayjs.extend(relativeTime);
 
 	return (
 		<div className='single-post'>
-			{loading
-				? null
-				: post && (
-						<div className='single-post-wrapper'>
-							{post.media && post.blogType === 'blog' ? (
-								<img src={post.media} alt='' className='single-post-img' />
-							) : post.media && post.blogType === 'vlog' ? (
-								<iframe
-									title='Vlog Post'
-									src={post.media}
-									frameBorder='0'
-									controls='0'
-									allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
-									allowFullScreen
-									className='single-post-img'
-								/>
+			{post && (
+				<div className='single-post-wrapper'>
+					{post?.media && post?.blogType === 'blog' ? (
+						<img src={post?.media} alt='' className='single-post-img' />
+					) : post?.media && post?.blogType === 'vlog' ? (
+						<iframe
+							title='Vlog Post'
+							src={post?.media}
+							frameBorder='0'
+							controls='0'
+							allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+							allowFullScreen
+							className='single-post-img'
+						/>
+					) : null}
+					<div className='single-post-feedback'>
+						<div>
+							<FontAwesomeIcon
+								icon='thumbs-up'
+								className='single-post-feedback-icon like'
+								onClick={handleLike}
+							/>
+							{' ' + post?.likes?.length}
+						</div>
+						<div>
+							<FontAwesomeIcon
+								icon='thumbs-down'
+								className='single-post-feedback-icon dislike'
+								onClick={handleDislike}
+							/>
+							{' ' + post?.dislikes?.length}
+						</div>
+						<div>
+							<FontAwesomeIcon
+								icon='eye'
+								className='single-post-feedback-icon views'
+							/>
+							{' ' + post?.numViews}
+						</div>
+					</div>
+					{updateMode ? (
+						<input
+							type='text'
+							className='single-post-title-input'
+							value={post?.title}
+							onChange={(e) => setTitle(e.target.value)}
+						/>
+					) : (
+						<h1 className='single-post-title'>
+							{post?.title}
+							{user?.isAdmin || post?.handle === user?.handle ? (
+								<div className='single-post-edit'>
+									<FontAwesomeIcon
+										icon='edit'
+										className='single-post-icon edit'
+										onClick={() => setUpdateMode(true)}
+									/>
+									<FontAwesomeIcon
+										icon='trash-alt'
+										className='single-post-icon trash'
+										onClick={handleDeletePost}
+									/>
+								</div>
 							) : null}
-							<div className='single-post-feedback'>
-								<div>
-									<FontAwesomeIcon
-										icon='thumbs-up'
-										className='single-post-feedback-icon like'
-										onClick={handleLike}
-									/>
-									{' ' + post?.likes?.length}
-								</div>
-								<button
-									style={{
-										backgroundColor: 'inherit',
-										border: 'none',
-										color: 'whitesmoke',
-									}}
-									onClick={handleDislike}
-								>
-									<FontAwesomeIcon
-										icon='thumbs-down'
-										className='single-post-feedback-icon dislike'
-									/>
-									{' ' + post?.dislikes?.length}
-								</button>
-								<div>
-									<FontAwesomeIcon
-										icon='eye'
-										className='single-post-feedback-icon views'
-									/>
-									{' ' + post?.numViews}
-								</div>
-							</div>
-							{updateMode ? (
+						</h1>
+					)}
+					<div className='single-post-info'>
+						<span className='single-post-author'>
+							Author:{' '}
+							<Link
+								to={`/profile/${post?.user?._id}`}
+								className='link'
+								onClick={() => dispatch(getUserProfile(post?.user?._id))}
+							>
+								<b>{post?.handle}</b>
+							</Link>
+						</span>
+						<span className='single-post-date'>
+							{new Date(post?.createdAt).toDateString()}
+						</span>
+					</div>
+					{updateMode ? (
+						<textarea
+							name=''
+							id=''
+							cols='30'
+							rows='7'
+							className='single-post-desc-input'
+							value={post?.description}
+							onChange={(e) => setDescription(e.target.value)}
+						/>
+					) : (
+						<p className='single-post-desc'>{post?.description}</p>
+					)}
+					{updateMode && (
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'right',
+							}}
+						>
+							<button
+								className='single-post-undo-btn'
+								onClick={() => setUpdateMode(false)}
+							>
+								Undo
+							</button>
+							<button
+								className='single-post-update-btn'
+								onClick={handleUpdatePost}
+							>
+								Update
+							</button>
+						</div>
+					)}
+					<div className='single-post-comments'>
+						<form
+							className='single-post-comment-form row'
+							id='comment-input'
+							onSubmit={handleAddComment}
+						>
+							<div className='col-sm-3'>
 								<input
 									type='text'
-									className='single-post-title-input'
-									value={post.title}
-									onChange={(e) => setTitle(e.target.value)}
+									className='single-post-comment-input form-control'
+									placeholder='Enter comment'
+									onChange={(e) => setComment(e.target.value)}
 								/>
-							) : (
-								<h1 className='single-post-title'>
-									{post.title}
-									{user?.isAdmin || post?.handle === user?.handle ? (
-										<div className='single-post-edit'>
-											<FontAwesomeIcon
-												icon='edit'
-												className='single-post-icon edit'
-												onClick={() => setUpdateMode(true)}
-											/>
-											<FontAwesomeIcon
-												icon='trash-alt'
-												className='single-post-icon trash'
-												onClick={handleDeletePost}
-											/>
-										</div>
-									) : null}
-								</h1>
-							)}
-							<div className='single-post-info'>
-								<span className='single-post-author'>
-									Author:{' '}
-									<Link
-										to={`/profile/${post?.user?._id}`}
-										className='link'
-										onClick={() => dispatch(getUserProfile(post?.user?._id))}
-									>
-										<b>{post?.handle}</b>
-									</Link>
-								</span>
-								<span className='single-post-date'>
-									{new Date(post.createdAt).toDateString()}
-								</span>
 							</div>
-							{updateMode ? (
-								<textarea
-									name=''
-									id=''
-									cols='30'
-									rows='7'
-									className='single-post-desc-input'
-									value={post.description}
-									onChange={(e) => setDescription(e.target.value)}
-								/>
-							) : (
-								<p className='single-post-desc'>{post.description}</p>
-							)}
-							{updateMode && (
-								<div
-									style={{
-										display: 'flex',
-										justifyContent: 'right',
-									}}
-								>
+							<div className='col-auto'>
+								{user ? (
 									<button
-										className='single-post-undo-btn'
-										onClick={() => setUpdateMode(false)}
+										type='submit'
+										className='single-post-comment-submit btn btn-primary'
 									>
-										Undo
+										Submit
 									</button>
+								) : (
 									<button
-										className='single-post-update-btn'
-										onClick={handleUpdatePost}
+										type='submit'
+										className='single-post-comment-submit btn btn-primary'
+										disabled
 									>
-										Update
+										Submit
 									</button>
-								</div>
-							)}
-							<div className='single-post-comments'>
-								<form
-									className='single-post-comment-form row'
-									id='comment-input'
-									onSubmit={handleAddComment}
-								>
-									<div className='col-sm-3'>
-										<input
-											type='text'
-											className='single-post-comment-input form-control'
-											placeholder='Enter comment'
-											onChange={(e) => setComment(e.target.value)}
-										/>
-									</div>
-									<div className='col-auto'>
-										{user ? (
-											<button
-												type='submit'
-												className='single-post-comment-submit btn btn-primary'
-											>
-												Submit
-											</button>
-										) : (
-											<button
-												type='submit'
-												className='single-post-comment-submit btn btn-primary'
-												disabled
-											>
-												Submit
-											</button>
-										)}
-									</div>
-								</form>
-								<div className='single-post-comment-list'>
-									<div className='col-xs-12 col-sm-5'>
-										{post?.comments ? (
-											post?.comments.map((comment) => (
-												<div
-													className='card single-post-comment-card'
-													key={comment._id}
-												>
-													<div className='card-header single-post-comment-card-header'>
-														<Link to={`/profile/${comment?.user?._id}`}>
-															<p className='single-post-comment-handle'>
-																{comment.user.handle}
-															</p>
-														</Link>
-														<p className='single-post-comment-date'>
-															{dayjs(comment.createdAt).fromNow()}
-														</p>
+								)}
+							</div>
+						</form>
+						<div className='single-post-comment-list'>
+							<div className='col-xs-12 col-sm-5'>
+								{post?.comments ? (
+									post?.comments?.map((comment) => (
+										<div
+											className='card single-post-comment-card'
+											key={comment?._id}
+										>
+											<div className='card-header single-post-comment-card-header'>
+												<Link to={`/profile/${comment?.user?._id}`}>
+													<p className='single-post-comment-handle'>
+														{comment?.user?.handle}
+													</p>
+												</Link>
+												<p className='single-post-comment-date'>
+													{dayjs(comment?.createdAt).fromNow()}
+												</p>
+											</div>
+											<div className='card-body'>
+												<p className='card-text'>{comment?.description}</p>
+											</div>
+											<div className='card-footer single-post-comment-card-footer'>
+												{user?.isAdmin ? (
+													<div className='single-post-edit'>
+														<FontAwesomeIcon
+															icon='edit'
+															className='single-post-icon edit'
+															onClick={() => setUpdateMode(true)}
+														/>
+														<FontAwesomeIcon
+															icon='trash-alt'
+															className='single-post-icon trash'
+															onClick={() => handleDeleteComment(comment?._id)}
+														/>
 													</div>
-													<div className='card-body'>
-														<p className='card-text'>{comment.description}</p>
-													</div>
-													<div className='card-footer single-post-comment-card-footer'>
-														{user?.isAdmin ? (
-															<div className='single-post-edit'>
-																<FontAwesomeIcon
-																	icon='edit'
-																	className='single-post-icon edit'
-																	onClick={() => setUpdateMode(true)}
-																/>
-																<FontAwesomeIcon
-																	icon='trash-alt'
-																	className='single-post-icon trash'
-																	onClick={() =>
-																		handleDeleteComment(comment._id)
-																	}
-																/>
-															</div>
-														) : null}
-													</div>
-												</div>
-											))
-										) : (
-											<p
-												style={{
-													textAlign: 'center',
-												}}
-											>
-												No Comments
-											</p>
-										)}
-									</div>
-								</div>
+												) : null}
+											</div>
+										</div>
+									))
+								) : (
+									<p
+										style={{
+											textAlign: 'center',
+										}}
+									>
+										No Comments
+									</p>
+								)}
 							</div>
 						</div>
-				  )}
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
@@ -334,7 +325,6 @@ const SinglePost = ({ dispatch, user, loading, post }) => {
 function mapStoreToProps(store) {
 	return {
 		user: store.app.user,
-		loading: store.app.loading,
 		post: store.app.post,
 	};
 }

@@ -7,8 +7,7 @@ const INITIAL_STATE = {
 	categories: JSON.parse(sessionStorage.getItem('categories')) || [],
 	authors: JSON.parse(sessionStorage.getItem('authors')) || [],
 	loading: false,
-	error: false,
-	errorMessage: {},
+	errors: {},
 };
 
 const appReducer = (state = INITIAL_STATE, action) => {
@@ -27,14 +26,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				user: payload,
 				loading: false,
-				error: false,
+				errors: {},
 			};
 		}
 
 		case types.LOGIN_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -50,13 +50,22 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				profile: payload,
+				error: false,
 			};
 		}
 
 		case types.GET_USER_PROFILE_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
+			};
+		}
+
+		case types.CLEAR_PROFILE: {
+			return {
+				...state,
+				profile: {},
 			};
 		}
 
@@ -72,13 +81,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				posts: payload,
 				loading: false,
+				error: false,
 			};
 		}
 
 		case types.GET_POSTS_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -94,13 +105,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				post: payload,
 				loading: false,
+				error: false,
 			};
 		}
 
 		case types.GET_POST_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -117,13 +130,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				loading: false,
 				post: payload.post,
 				posts: payload.posts,
+				error: false,
 			};
 		}
 
 		case types.LIKE_POST_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -140,13 +155,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				loading: false,
 				post: payload.post,
 				posts: payload.posts,
+				error: false,
 			};
 		}
 
 		case types.DISLIKE_POST_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -169,13 +186,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				post: payload,
 				loading: false,
+				error: false,
 			};
 		}
 
 		case types.SUBMIT_POST_FAILURE: {
 			return {
 				...state,
-				errorMessage: payload,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -190,13 +209,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
+				error: false,
 			};
 		}
 
 		case types.DELETE_POST_FAILURE: {
 			return {
 				...state,
-				errorMessage: payload,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -212,13 +233,135 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				categories: payload,
 				loading: false,
+				error: false,
 			};
 		}
 
 		case types.GET_CATEGORIES_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
+			};
+		}
+
+		case types.ADD_CATEGORY_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.ADD_CATEGORY_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				categories: payload,
+				errors: {},
+			};
+		}
+
+		case types.ADD_CATEGORY_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
+			};
+		}
+
+		case types.DELETE_CATEGORY_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.DELETE_CATEGORY_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				categories: payload,
+				errors: {},
+			};
+		}
+
+		case types.DELETE_CATEGORY_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
+			};
+		}
+
+		case types.SUBMIT_COMMENT_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.SUBMIT_COMMENT_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				post: payload,
+				errors: {},
+			};
+		}
+
+		case types.SUBMIT_COMMENT_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
+			};
+		}
+
+		case types.UPDATE_COMMENT_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.UPDATE_COMMENT_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				post: payload,
+				errors: {},
+			};
+		}
+
+		case types.UPDATE_COMMENT_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
+			};
+		}
+
+		case types.DELETE_COMMENT_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.DELETE_COMMENT_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				post: payload,
+				errors: {},
+			};
+		}
+
+		case types.DELETE_COMMENT_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -234,13 +377,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				user: payload,
+				error: false,
 			};
 		}
 
 		case types.FOLLOW_USER_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -256,13 +401,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				user: payload,
+				error: false,
 			};
 		}
 
 		case types.UNFOLLOW_USER_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -277,13 +424,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
+				error: false,
 			};
 		}
 
 		case types.SEND_EMAIL_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -298,13 +447,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
+				error: false,
 			};
 		}
 
 		case types.GENERATE_VERIFICATION_TOKEN_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -320,13 +471,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				user: payload,
+				error: false,
 			};
 		}
 
 		case types.VERIFY_ACCOUNT_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -342,13 +495,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				user: payload,
+				error: false,
 			};
 		}
 
 		case types.PROFILE_PHOTO_UPLOAD_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -364,13 +519,15 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				authors: payload,
+				error: false,
 			};
 		}
 
 		case types.GET_AUTHORS_FAILURE: {
 			return {
 				...state,
-				error: true,
+				loading: false,
+				errors: payload,
 			};
 		}
 
@@ -386,6 +543,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				authors: payload,
+				error: false,
 			};
 		}
 
@@ -393,7 +551,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
-				error: true,
+				errors: payload,
 			};
 		}
 
@@ -409,6 +567,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				authors: payload,
+				error: false,
 			};
 		}
 
@@ -416,7 +575,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
-				error: true,
+				errors: payload,
 			};
 		}
 
@@ -432,6 +591,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				authors: payload,
+				error: false,
 			};
 		}
 
@@ -439,7 +599,38 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
-				error: true,
+				errors: payload,
+			};
+		}
+
+		case types.UPDATE_USER_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.UPDATE_USER_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				user: payload,
+				error: false,
+			};
+		}
+
+		case types.UPDATE_USER_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
+			};
+		}
+
+		case types.CLEAR_ERRORS: {
+			return {
+				...state,
+				errors: {},
 			};
 		}
 

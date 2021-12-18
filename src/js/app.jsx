@@ -1,3 +1,4 @@
+import '../css/app.css';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -29,9 +30,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import Navbar from './components/Navbar';
+import PasswordUpdate from './components/PasswordUpdate';
 import VerificationAlert from './components/VerificationAlert';
 import Auth from './pages/Auth';
 import VerifyAccount from './pages/VerifyAccount';
+import Blocked from './pages/Blocked';
 import Home from './pages/Home';
 import Single from './pages/Single';
 import Create from './pages/Create';
@@ -61,7 +64,7 @@ library.add(
 	faCheckCircle
 );
 
-const App = ({ user }) => {
+const App = ({ user, errors }) => {
 	useEffect(() => {
 		const getAnnonId = (size) =>
 			[...Array(size)]
@@ -78,11 +81,13 @@ const App = ({ user }) => {
 	return (
 		<Router>
 			<Navbar />
+			<PasswordUpdate user={user} />
 			{user && !user.isVerified && <VerificationAlert />}
 			<Switch>
 				<Route exact path='/auth'>
-					{user ? <Redirect to='/' /> : <Auth />}
+					{user ? <Redirect to='/' /> : <Auth errors={errors} />}
 				</Route>
+				{user && user?.isBlocked ? <Blocked /> : null}
 				<Route exact path='/verify-account/:token'>
 					{user ? <VerifyAccount /> : <Auth />}
 				</Route>
@@ -115,6 +120,7 @@ const App = ({ user }) => {
 function mapStoreToProps(store) {
 	return {
 		user: store.app.user,
+		errors: store.app.errors,
 	};
 }
 
