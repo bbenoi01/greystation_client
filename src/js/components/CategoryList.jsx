@@ -13,7 +13,7 @@ const CategoryList = ({ dispatch, categories }) => {
 	};
 
 	const handleDelete = () => {
-		dispatch(deleteCategory(selectedCategory._id));
+		dispatch(deleteCategory(selectedCategory?._id));
 		setSelectedCategory(null);
 	};
 
@@ -23,13 +23,13 @@ const CategoryList = ({ dispatch, categories }) => {
 				<div className='card-header'>Available Categories</div>
 				<div className='card-body category-list-card-body'>
 					<ul className='list-group list-group-flush category-list-group'>
-						{categories.map((category) => (
+						{categories?.map((category) => (
 							<li
 								className='list-group-item category-list-item'
-								key={category._id}
+								key={category?._id}
 								onClick={() => setSelectedCategory(category)}
 							>
-								{category.title}
+								{category?.title}
 							</li>
 						))}
 					</ul>
@@ -54,7 +54,7 @@ const CategoryList = ({ dispatch, categories }) => {
 						/>
 						{selectedCategory && (
 							<p className='category-list-warning'>
-								Are you sure you want to delete {selectedCategory.title}?
+								Are you sure you want to delete {selectedCategory?.title}?
 							</p>
 						)}
 					</div>

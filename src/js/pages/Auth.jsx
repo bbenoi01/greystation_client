@@ -1,15 +1,17 @@
 import '../../css/auth.css';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { types } from '../types';
 
 import { register, login } from '../actions/actions';
 
-const Auth = ({ dispatch }) => {
+const Auth = ({ errors }) => {
 	const [authType, setAuthType] = useState('login');
 	const [title, setTitle] = useState('Login');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [username, setUsername] = useState('');
+	const [handle, setHandle] = useState('');
+	const dispatch = useDispatch();
 
 	const updateAuthType = () => {
 		if (authType === 'login') {
@@ -19,9 +21,13 @@ const Auth = ({ dispatch }) => {
 			setAuthType('login');
 			setTitle('Login');
 		}
+		dispatch({
+			type: types.CLEAR_ERRORS,
+		});
+		document.getElementById('auth-form').reset();
 		setEmail('');
 		setPassword('');
-		setUsername('');
+		setHandle('');
 	};
 
 	const handleLogin = (e) => {
@@ -37,7 +43,7 @@ const Auth = ({ dispatch }) => {
 	const handleRegister = (e) => {
 		e.preventDefault();
 		const userCredentials = {
-			username,
+			handle,
 			email,
 			password,
 		};
@@ -51,16 +57,22 @@ const Auth = ({ dispatch }) => {
 			<form
 				className='auth-form'
 				onSubmit={authType === 'login' ? handleLogin : handleRegister}
+				id='auth-form'
 			>
 				{authType === 'register' ? (
 					<>
-						<label htmlFor=''>Username</label>
+						<label htmlFor=''>Handle</label>
 						<input
 							type='text'
-							placeholder='Enter Username...'
+							placeholder='Enter Handle...'
 							className='auth-input'
-							onChange={(e) => setUsername(e.target.value)}
+							onChange={(e) => setHandle(e.target.value)}
 						/>
+						{errors && errors?.handle && (
+							<p className='error-message'>
+								<b>{errors.handle}</b>
+							</p>
+						)}
 						<label htmlFor=''>Email</label>
 						<input
 							type='email'
@@ -68,6 +80,11 @@ const Auth = ({ dispatch }) => {
 							className='auth-input'
 							onChange={(e) => setEmail(e.target.value)}
 						/>
+						{errors && errors?.email && (
+							<p className='error-message'>
+								<b>{errors.email}</b>
+							</p>
+						)}
 						<label htmlFor=''>Password</label>
 						<input
 							type='password'
@@ -75,6 +92,11 @@ const Auth = ({ dispatch }) => {
 							className='auth-input'
 							onChange={(e) => setPassword(e.target.value)}
 						/>
+						{errors && errors?.password && (
+							<p className='error-message'>
+								<b>{errors.password}</b>
+							</p>
+						)}
 					</>
 				) : (
 					<>
@@ -85,6 +107,11 @@ const Auth = ({ dispatch }) => {
 							className='auth-input'
 							onChange={(e) => setEmail(e.target.value)}
 						/>
+						{errors && errors?.email && (
+							<p className='error-message'>
+								<b>{errors.email}</b>
+							</p>
+						)}
 						<label htmlFor=''>Password</label>
 						<input
 							type='password'
@@ -92,6 +119,11 @@ const Auth = ({ dispatch }) => {
 							className='auth-input'
 							onChange={(e) => setPassword(e.target.value)}
 						/>
+						{errors && errors?.password && (
+							<p className='error-message'>
+								<b>{errors.password}</b>
+							</p>
+						)}
 					</>
 				)}
 				<button className='auth-submit' type='submit'>
@@ -105,8 +137,4 @@ const Auth = ({ dispatch }) => {
 	);
 };
 
-function mapStoreToProps(store) {
-	return {};
-}
-
-export default connect(mapStoreToProps)(Auth);
+export default Auth;

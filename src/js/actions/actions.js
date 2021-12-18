@@ -20,6 +20,7 @@ export function register(userCredentials) {
 			.catch((err) => {
 				dispatch({
 					type: types.LOGIN_FAILURE,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -44,6 +45,7 @@ export function login(userCredentials) {
 			.catch((err) => {
 				dispatch({
 					type: types.LOGIN_FAILURE,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -76,7 +78,7 @@ export function getUserProfile(path) {
 			.catch((err) => {
 				dispatch({
 					type: types.GET_USER_PROFILE_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -99,6 +101,7 @@ export function getPosts(search) {
 			.catch((err) => {
 				dispatch({
 					type: types.GET_POSTS_FAILURE,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -121,6 +124,7 @@ export function getPost(path) {
 			.catch((err) => {
 				dispatch({
 					type: types.GET_POST_FAILURE,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -144,7 +148,7 @@ export function toggleLike(id) {
 			.catch((err) => {
 				dispatch({
 					type: types.LIKE_POST_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -168,7 +172,7 @@ export function annonLikeToggle(annonData) {
 			.catch((err) => {
 				dispatch({
 					type: types.LIKE_POST_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -192,7 +196,7 @@ export function toggleDislike(id) {
 			.catch((err) => {
 				dispatch({
 					type: types.DISLIKE_POST_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -216,7 +220,7 @@ export function annonDislikeToggle(annonData) {
 			.catch((err) => {
 				dispatch({
 					type: types.DISLIKE_POST_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -238,21 +242,30 @@ export function deletePost(id) {
 			.catch((err) => {
 				dispatch({
 					type: types.DELETE_POST_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
 }
 
 export function updatePost(id, postDetails) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.UPDATE_POST_START,
+		});
 		blogApi
 			.put(`/api/posts/${id}`, postDetails)
 			.then((res) => {
-				window.location.replace('/post/' + res.data._id);
+				dispatch({
+					type: types.UPDATE_POST_SUCCESS,
+					payload: res.data,
+				});
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.UPDATE_POST_FAILURE,
+					payload: err.response.data,
+				});
 			});
 	};
 }
@@ -274,6 +287,7 @@ export function getCategories() {
 			.catch((err) => {
 				dispatch({
 					type: types.GET_CATEGORIES_FAILURE,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -281,27 +295,47 @@ export function getCategories() {
 
 export function addCategory(category) {
 	return (dispatch) => {
+		dispatch({
+			type: types.ADD_CATEGORY_START,
+		});
 		blogApi
 			.post('/api/category', category)
 			.then((res) => {
+				sessionStorage.setItem('categories', JSON.stringify(res.data));
+				dispatch({
+					type: types.ADD_CATEGORY_SUCCESS,
+					payload: res.data,
+				});
 				alert('Category Added!');
-				dispatch(getCategories());
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.ADD_CATEGORY_FAILURE,
+					payload: err.response.data,
+				});
 			});
 	};
 }
 
 export function deleteCategory(id) {
 	return (dispatch) => {
+		dispatch({
+			type: types.DELETE_CATEGORY_START,
+		});
 		blogApi
 			.delete(`/api/category/${id}`)
-			.then(() => {
-				dispatch(getCategories());
+			.then((res) => {
+				sessionStorage.setItem('categories', JSON.stringify(res.data));
+				dispatch({
+					type: types.DELETE_CATEGORY_SUCCESS,
+					payload: res.data,
+				});
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.DELETE_CATEGORY_FAILURE,
+					payload: err.response.data,
+				});
 			});
 	};
 }
@@ -324,47 +358,80 @@ export function submitPost(newPost) {
 			.catch((err) => {
 				dispatch({
 					type: types.SUBMIT_POST_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
 }
 
 export function submitComment(commentData) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.SUBMIT_COMMENT_START,
+		});
 		blogApi
 			.post('/api/comments', commentData)
-			.then(() => {
+			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data));
+				dispatch({
+					type: types.SUBMIT_COMMENT_SUCCESS,
+					payload: res.data,
+				});
 				window.location.reload();
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.SUBMIT_COMMENT_FAILURE,
+					payload: err.response.data,
+				});
 			});
 	};
 }
 
 export function updateComment(id, commentData) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.UPDATE_COMMENT_START,
+		});
 		blogApi
 			.put(`/api/comments/${id}`, commentData)
-			.then(() => {
+			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data));
+				dispatch({
+					type: types.UPDATE_COMMENT_SUCCESS,
+					payload: res.data,
+				});
 				window.location.reload();
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.UPDATE_COMMENT_FAILURE,
+					payload: err.response.data,
+				});
 			});
 	};
 }
 
 export function deleteComment(commentId) {
-	return () => {
+	return (dispatch) => {
+		dispatch({
+			type: types.DELETE_COMMENT_START,
+		});
 		blogApi
 			.delete(`/api/comments/${commentId}`)
 			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data));
+				dispatch({
+					type: types.DELETE_COMMENT_SUCCESS,
+					payload: res.data,
+				});
 				window.location.reload();
 			})
 			.catch((err) => {
-				console.log(err);
+				dispatch({
+					type: types.DELETE_COMMENT_FAILURE,
+					payload: err.response.data,
+				});
 			});
 	};
 }
@@ -386,6 +453,7 @@ export function uploadProfilePhoto(file) {
 			.catch((err) => {
 				dispatch({
 					type: types.PROFILE_PHOTO_UPLOAD_FAILURE,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -411,7 +479,7 @@ export function followUser(userToFollow) {
 			.catch((err) => {
 				dispatch({
 					type: types.FOLLOW_USER_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -437,7 +505,7 @@ export function unfollowUser(userToUnfollow) {
 			.catch((err) => {
 				dispatch({
 					type: types.UNFOLLOW_USER_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -459,7 +527,7 @@ export function sendEmail(emailData) {
 			.catch((err) => {
 				dispatch({
 					type: types.SEND_EMAIL_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -482,7 +550,7 @@ export function generateAcctVerificationToken() {
 			.catch((err) => {
 				dispatch({
 					type: types.GET_CATEGORIES_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -506,7 +574,7 @@ export function verifyAccount(verificationToken) {
 			.catch((err) => {
 				dispatch({
 					type: types.VERIFY_ACCOUNT_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -529,7 +597,7 @@ export function getAllAuthors() {
 			.catch((err) => {
 				dispatch({
 					type: types.GET_CATEGORIES_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -552,7 +620,7 @@ export function blockUser(id) {
 			.catch((err) => {
 				dispatch({
 					type: types.BLOCK_USER_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -575,7 +643,7 @@ export function unblockUser(id) {
 			.catch((err) => {
 				dispatch({
 					type: types.UNBLOCK_USER_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
@@ -598,21 +666,31 @@ export function deleteUser(id) {
 			.catch((err) => {
 				dispatch({
 					type: types.DELETE_USER_FAILURE,
-					payload: err,
+					payload: err.response.data,
 				});
 			});
 	};
 }
 
-export const updateStart = (userCredentials) => ({
-	type: types.UPDATE_START,
-});
-
-export const updateSuccess = (user) => ({
-	type: types.UPDATE_SUCCESS,
-	payload: user,
-});
-
-export const updateFailure = () => ({
-	type: types.UPDATE_FAILURE,
-});
+export function updateUser(id, userData) {
+	return (dispatch) => {
+		dispatch({
+			type: types.UPDATE_USER_START,
+		});
+		blogApi
+			.put(`/api/users/${id}`, userData)
+			.then((res) => {
+				localStorage.setItem('user', JSON.stringify(res.data));
+				dispatch({
+					type: types.UPDATE_USER_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.UPDATE_USER_FAILURE,
+					payload: err.response.data,
+				});
+			});
+	};
+}

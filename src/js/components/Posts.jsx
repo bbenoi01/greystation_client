@@ -9,7 +9,7 @@ const Posts = ({ allPosts }) => {
 		<div className='posts'>
 			<div className='row'>
 				{allPosts.map((post) => (
-					<div key={post._id} className='col-xs-12 col-md posts-col'>
+					<div key={post?._id} className='col-xs-12 col-md posts-col'>
 						<Post post={post} />
 					</div>
 				))}

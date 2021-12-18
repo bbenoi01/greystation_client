@@ -8,7 +8,7 @@ const Authors = ({ authors }) => {
 		<div className='authors'>
 			<ul className='authors-list'>
 				{authors &&
-					authors.map((author) => <Author key={author._id} author={author} />)}
+					authors?.map((author) => <Author key={author._id} author={author} />)}
 			</ul>
 		</div>
 	);

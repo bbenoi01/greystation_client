@@ -35,7 +35,7 @@ const Navbar = ({ dispatch, user }) => {
 										Create
 									</Link>
 								</li>
-								{user.isAdmin && (
+								{user?.isAdmin && (
 									<>
 										<li className='nav-item'>
 											<Link
@@ -66,7 +66,7 @@ const Navbar = ({ dispatch, user }) => {
 							</ul>
 							<div className='dropdown'>
 								<img
-									src={user.profilePhoto}
+									src={user?.profilePhoto}
 									alt='Profile'
 									className='nav-profile dropdown-toggle'
 									data-bs-toggle='dropdown'
@@ -80,7 +80,9 @@ const Navbar = ({ dispatch, user }) => {
 											Your Profile
 										</Link>
 									</li>
-									<li>Change Password</li>
+									<li data-bs-toggle='modal' data-bs-target='#password-modal'>
+										Change Password
+									</li>
 								</ul>
 							</div>
 						</div>

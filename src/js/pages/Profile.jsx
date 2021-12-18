@@ -1,8 +1,9 @@
 import '../../css/profile.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { types } from '../types';
 
 import {
 	uploadProfilePhoto,
@@ -12,18 +13,28 @@ import {
 	getPost,
 } from '../actions/actions';
 
-const Profile = ({ dispatch, user, profile, loading }) => {
+const Profile = ({ dispatch, user, profile }) => {
 	const [handle, setHandle] = useState('');
 	const [email, setEmail] = useState('');
 	const [file, setFile] = useState(null);
 	const [updateMode, setUpdateMode] = useState(false);
 	const [emailSubject, setEmailSubject] = useState('');
 	const [emailMessage, setEmailMessage] = useState('');
-	const currentUser = user._id;
-	const isSameUser = currentUser === profile._id;
+	const currentUser = user?._id;
+	const isSameUser = currentUser === profile?._id;
 	const alreadyFollowing = user?.following?.find(
 		(user) => user === profile?._id
 	);
+
+	useEffect(() => {
+		return () => {
+			dispatch({
+				type: types.CLEAR_PROFILE,
+			});
+			// setHandle('');
+			// setEmail('');
+		};
+	}, [dispatch]);
 
 	const handleProfilePhoto = () => {
 		const profilePhoto = new FormData();
@@ -40,11 +51,11 @@ const Profile = ({ dispatch, user, profile, loading }) => {
 	};
 
 	const handleFollow = () => {
-		dispatch(followUser(profile._id));
+		dispatch(followUser(profile?._id));
 	};
 
 	const handleUnFollow = () => {
-		dispatch(unfollowUser(profile._id));
+		dispatch(unfollowUser(profile?._id));
 	};
 
 	const handleSendEmail = (e) => {
@@ -63,18 +74,18 @@ const Profile = ({ dispatch, user, profile, loading }) => {
 
 	return (
 		<div className='profile'>
-			{loading ? null : (
+			{profile && (
 				<>
 					<img
-						src={profile.profilePhoto}
+						src={profile?.profilePhoto}
 						alt='Profile Hero'
 						height='250'
 						width='100%'
 						className='profile-image-hero'
 					/>
 					<div className='profile-wrapper'>
-						<div className='profile-handle'>{profile.handle}</div>
-						{profile.isVerified ? (
+						<div className='profile-handle'>{profile?.handle}</div>
+						{profile?.isVerified ? (
 							<span className='badge rounded-pill bg-success'>Verified</span>
 						) : (
 							<span className='badge rounded-pill bg-danger'>Unverified</span>
@@ -83,7 +94,7 @@ const Profile = ({ dispatch, user, profile, loading }) => {
 							<div className='profile-created-date'>
 								<span>
 									<b>Date Joined:</b>{' '}
-									{new Date(profile.createdAt).toDateString()}
+									{new Date(profile?.createdAt).toDateString()}
 								</span>
 							</div>
 							{!isSameUser && (
@@ -159,7 +170,7 @@ const Profile = ({ dispatch, user, profile, loading }) => {
 																type='text'
 																className='form-control'
 																id='to'
-																value={profile.handle}
+																value={profile?.handle}
 																disabled
 															/>
 														</div>
@@ -212,14 +223,14 @@ const Profile = ({ dispatch, user, profile, loading }) => {
 								<FontAwesomeIcon icon='plus' className='create-icon' />
 							</label>
 							<img
-								src={file ? URL.createObjectURL(file) : profile.profilePhoto}
+								src={file ? URL.createObjectURL(file) : profile?.profilePhoto}
 								alt='Profile'
 								className='profile-photo-preview'
 							/>
 							<div className='profile-stats'>
 								<p>
-									{profile.posts.length} posts {profile.followers.length}{' '}
-									followers {profile.following.length} following
+									{profile?.posts?.length} posts {profile?.followers?.length}{' '}
+									followers {profile?.following?.length} following
 								</p>
 								{isSameUser && (
 									<>
@@ -267,7 +278,7 @@ const Profile = ({ dispatch, user, profile, loading }) => {
 										<input
 											type='text'
 											className='form-control'
-											value={profile.handle}
+											value={profile?.handle}
 											onChange={(e) => setHandle(e.target.value)}
 										/>
 									</div>
@@ -280,7 +291,7 @@ const Profile = ({ dispatch, user, profile, loading }) => {
 										<input
 											type='email'
 											className='form-control'
-											value={profile.email}
+											value={profile?.email}
 											onChange={(e) => setEmail(e.target.value)}
 										/>
 									</div>
@@ -301,7 +312,7 @@ const Profile = ({ dispatch, user, profile, loading }) => {
 									profile?.viewedBy?.map((viewer) => (
 										<li key={viewer?._id} className='profile-viewer-item'>
 											<img
-												src={viewer.profilePhoto}
+												src={viewer?.profilePhoto}
 												alt='Profile'
 												className='profile-viewer-photo'
 											/>
@@ -315,25 +326,25 @@ const Profile = ({ dispatch, user, profile, loading }) => {
 							</ul>
 						</div>
 						<div className='profile-posts'>
-							My Posts: {profile.posts.length}
+							My Posts: {profile?.posts?.length}
 							<hr />
-							{profile.posts.length <= 0 ? (
+							{profile?.posts?.length <= 0 ? (
 								<h2>No Posts Found</h2>
 							) : (
-								profile.posts.map((post) => (
-									<div className='profile-post' key={post._id}>
+								profile?.posts?.map((post) => (
+									<div className='profile-post' key={post?._id}>
 										<img
-											src={post.media}
+											src={post?.media}
 											alt=''
 											className='profile-post-media'
 										/>
 										<div className='profile-post-data'>
-											<h3>{post.title}</h3>
-											<p className='profile-post-desc'>{post.description}</p>
+											<h3>{post?.title}</h3>
+											<p className='profile-post-desc'>{post?.description}</p>
 											<Link
-												to={`/post/${post._id}`}
+												to={`/post/${post?._id}`}
 												className='link'
-												onClick={() => dispatch(getPost(post._id))}
+												onClick={() => dispatch(getPost(post?._id))}
 											>
 												Read More
 											</Link>
@@ -353,7 +364,6 @@ function mapStoreToProps(store) {
 	return {
 		user: store.app.user,
 		profile: store.app.profile,
-		loading: store.app.loading,
 	};
 }
 

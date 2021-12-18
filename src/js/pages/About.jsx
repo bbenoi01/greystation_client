@@ -33,13 +33,13 @@ const About = ({ dispatch, categories }) => {
 			<div className='about-item'>
 				<div className='about-title'>CATEGORIES</div>
 				<ul className='about-list'>
-					{categories.map((category) => (
+					{categories?.map((category) => (
 						<Link
-							to={`/?category=${category.title}`}
-							key={category._id}
+							to={`/?category=${category?.title}`}
+							key={category?._id}
 							className='link'
 						>
-							<li className='about-list-item'>{category.title}</li>
+							<li className='about-list-item'>{category?.title}</li>
 						</Link>
 					))}
 				</ul>

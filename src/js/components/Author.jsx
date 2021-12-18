@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
+	getUserProfile,
 	blockUser,
 	unblockUser,
 	sendEmail,
@@ -34,35 +35,38 @@ const Author = ({ author }) => {
 		<li className='author-list-item'>
 			<div className='author-list-item-personal-info'>
 				<img
-					src={author.profilePhoto}
+					src={author?.profilePhoto}
 					alt='Profile'
 					className='author-list-item-image'
 				/>
 				<div className='author-list-item-details'>
-					<h6 className='author-list-item-details-handle'>{author.handle}</h6>
+					<h6 className='author-list-item-details-handle'>{author?.handle}</h6>
 					<p className='text-muted author-list-item-details-email'>
-						{author.email}
+						{author?.email}
 					</p>
 				</div>
 			</div>
 			<div className='author-list-item-followers'>
 				<span>
 					<b className='author-list-item-followers-data'>
-						{author.followers.length}
+						{author?.followers.length}
 					</b>{' '}
 					Followers
 				</span>
 			</div>
 			<div className='author-action-area'>
-				<Link to={`/?handle=${author.handle}`}>
+				<Link to={`/?handle=${author?.handle}`}>
 					<button
 						type='button'
 						className='btn btn-outline-secondary author-action-area-btn'
 					>
-						{author.posts.length}-Posts
+						{author?.posts.length}-Posts
 					</button>
 				</Link>
-				<Link to={`/profile/${author?._id}`}>
+				<Link
+					to={`/profile/${author?._id}`}
+					onClick={() => dispatch(getUserProfile(author?._id))}
+				>
 					<button
 						type='button'
 						className='btn btn-outline-warning author-action-area-btn'
@@ -70,7 +74,7 @@ const Author = ({ author }) => {
 						Profile
 					</button>
 				</Link>
-				{author.isBlocked ? (
+				{author?.isBlocked ? (
 					<button
 						type='button'
 						className='btn btn-outline-success author-action-area-btn'
@@ -117,7 +121,7 @@ const Author = ({ author }) => {
 											type='text'
 											className='form-control'
 											id='to'
-											value={author.handle}
+											value={author?.handle}
 											disabled
 										/>
 									</div>

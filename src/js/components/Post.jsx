@@ -21,13 +21,13 @@ const Post = ({ dispatch, user, post }) => {
 
 		if (user) {
 			likedPost = {
-				postId: post.id,
+				postId: post?.id,
 			};
 
 			dispatch(toggleLike(likedPost));
 		} else {
 			const annonData = {
-				postId: post.id,
+				postId: post?.id,
 				annonId,
 			};
 
@@ -41,13 +41,13 @@ const Post = ({ dispatch, user, post }) => {
 
 		if (user) {
 			dislikedPost = {
-				postId: post.id,
+				postId: post?.id,
 			};
 
 			dispatch(toggleDislike(dislikedPost));
 		} else {
 			const annonData = {
-				postId: post.id,
+				postId: post?.id,
 				annonId,
 			};
 
@@ -56,17 +56,17 @@ const Post = ({ dispatch, user, post }) => {
 	};
 
 	const handleGetPost = () => {
-		dispatch(getPost(post.id));
+		dispatch(getPost(post?.id));
 	};
 
 	return (
 		<div className='post'>
-			{post.media && post.blogType === 'blog' ? (
-				<img src={post.media} alt='' className='post-img' />
-			) : post.media && post.blogType === 'vlog' ? (
+			{post?.media && post?.blogType === 'blog' ? (
+				<img src={post?.media} alt='' className='post-img' />
+			) : post?.media && post?.blogType === 'vlog' ? (
 				<iframe
 					title='Vlog Post'
-					src={post.media}
+					src={post?.media}
 					frameBorder='0'
 					controls='0'
 					allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
@@ -81,7 +81,7 @@ const Post = ({ dispatch, user, post }) => {
 						className='post-feedback-icon like'
 						onClick={handleLike}
 					/>
-					{' ' + post.likes.length}
+					{' ' + post?.likes?.length}
 				</div>
 				<div>
 					<FontAwesomeIcon
@@ -89,25 +89,29 @@ const Post = ({ dispatch, user, post }) => {
 						className='post-feedback-icon dislike'
 						onClick={handleDislike}
 					/>
-					{' ' + post.dislikes.length}
+					{' ' + post?.dislikes?.length}
 				</div>
 				<div>
 					<FontAwesomeIcon icon='eye' className='post-feedback-icon views' />
-					{' ' + post.numViews}
+					{' ' + post?.numViews}
 				</div>
 			</div>
 			<div className='post-info'>
 				<div className='post-categories'>
-					<span className='post-category'>{post.category}</span>
+					<span className='post-category'>{post?.category}</span>
 				</div>
-				<Link to={`/post/${post._id}`} className='link' onClick={handleGetPost}>
-					<span className='post-title'>{post.title}</span>
+				<Link
+					to={`/post/${post?._id}`}
+					className='link'
+					onClick={handleGetPost}
+				>
+					<span className='post-title'>{post?.title}</span>
 				</Link>
 				<span className='post-date'>
-					{new Date(post.createdAt).toDateString()}
+					{new Date(post?.createdAt).toDateString()}
 				</span>
 			</div>
-			<p className='post-desc'>{post.description}</p>
+			<p className='post-desc'>{post?.description}</p>
 		</div>
 	);
 };
