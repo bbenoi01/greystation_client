@@ -55,6 +55,9 @@ export function logout() {
 	return (dispatch) => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
+		sessionStorage.removeItem('profile');
+		sessionStorage.removeItem('post');
+		sessionStorage.removeItem('authors');
 		dispatch({
 			type: types.LOGOUT,
 		});
@@ -680,15 +683,47 @@ export function updateUser(id, userData) {
 		blogApi
 			.put(`/api/users/${id}`, userData)
 			.then((res) => {
-				localStorage.setItem('user', JSON.stringify(res.data));
+				localStorage.setItem('user', JSON.stringify(res.data.user));
 				dispatch({
 					type: types.UPDATE_USER_SUCCESS,
-					payload: res.data,
+					payload: res.data.user,
 				});
 			})
 			.catch((err) => {
 				dispatch({
 					type: types.UPDATE_USER_FAILURE,
+					payload: err.response.data,
+				});
+			});
+	};
+}
+
+export function updateProfile(pid, uid, userData) {
+	return (dispatch) => {
+		dispatch({
+			type: types.UPDATE_PROFILE_START,
+		});
+		blogApi
+			.put(`/api/users/${pid}`, userData)
+			.then((res) => {
+				if (pid === uid) {
+					localStorage.setItem('user', JSON.stringify(res.data.user));
+					localStorage.setItem('profile', JSON.stringify(res.data.profile));
+					dispatch({
+						type: types.UPDATE_USER_AND_PROFILE_SUCCESS,
+						payload: res.data,
+					});
+				} else {
+					localStorage.setItem('profile', JSON.stringify(res.data.profile));
+					dispatch({
+						type: types.UPDATE_PROFILE_SUCCESS,
+						payload: res.data.profile,
+					});
+				}
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.UPDATE_PROFILE_FAILURE,
 					payload: err.response.data,
 				});
 			});

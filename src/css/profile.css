@@ -110,6 +110,14 @@
 	display: none;
 }
 
+.profile-update-action {
+	text-align: right;
+}
+
+.profile-update-action-btn {
+	margin-right: 10px;
+}
+
 .profile-content {
 	display: flex;
 }

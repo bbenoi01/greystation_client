@@ -50,7 +50,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				profile: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -81,7 +81,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				posts: payload,
 				loading: false,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -105,7 +105,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				post: payload,
 				loading: false,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -130,7 +130,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				loading: false,
 				post: payload.post,
 				posts: payload.posts,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -155,7 +155,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				loading: false,
 				post: payload.post,
 				posts: payload.posts,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -186,7 +186,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				post: payload,
 				loading: false,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -209,7 +209,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -233,7 +233,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				categories: payload,
 				loading: false,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -377,7 +377,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				user: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -401,7 +401,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				user: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -424,7 +424,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -447,7 +447,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -471,7 +471,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				user: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -495,7 +495,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				user: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -519,7 +519,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				authors: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -543,7 +543,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				authors: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -567,7 +567,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				authors: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -591,7 +591,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				authors: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
@@ -615,11 +615,45 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				loading: false,
 				user: payload,
-				error: false,
+				errors: {},
 			};
 		}
 
 		case types.UPDATE_USER_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
+			};
+		}
+
+		case types.UPDATE_PROFILE_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.UPDATE_PROFILE_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				profile: payload,
+				errors: {},
+			};
+		}
+
+		case types.UPDATE_USER_AND_PROFILE_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				user: payload.user,
+				profile: payload.profile,
+				errors: {},
+			};
+		}
+
+		case types.UPDATE_PROFILE_FAILURE: {
 			return {
 				...state,
 				loading: false,
@@ -639,7 +673,10 @@ const appReducer = (state = INITIAL_STATE, action) => {
 				...state,
 				user: null,
 				loading: false,
-				error: false,
+				profile: {},
+				post: {},
+				authors: [],
+				errors: {},
 			};
 		}
 

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { types } from '../types';
 
 import {
 	getUserProfile,
@@ -16,6 +17,13 @@ const Author = ({ author }) => {
 	const dispatch = useDispatch();
 	const [subject, setSubject] = useState('');
 	const [message, setMessage] = useState('');
+
+	const handleGetUserProfile = () => {
+		dispatch({
+			type: types.CLEAR_PROFILE,
+		});
+		dispatch(getUserProfile(author?._id));
+	};
 
 	const handleSendEmail = (e) => {
 		e.preventDefault();
@@ -63,10 +71,7 @@ const Author = ({ author }) => {
 						{author?.posts.length}-Posts
 					</button>
 				</Link>
-				<Link
-					to={`/profile/${author?._id}`}
-					onClick={() => dispatch(getUserProfile(author?._id))}
-				>
+				<Link to={`/profile/${author?._id}`} onClick={handleGetUserProfile}>
 					<button
 						type='button'
 						className='btn btn-outline-warning author-action-area-btn'
