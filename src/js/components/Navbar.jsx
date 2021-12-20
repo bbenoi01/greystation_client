@@ -2,12 +2,20 @@ import '../../css/navbar.css';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { types } from '../types';
 
 import { logout, getAllAuthors, getUserProfile } from '../actions/actions';
 
 const Navbar = ({ dispatch, user }) => {
 	const handleLogout = (e) => {
 		dispatch(logout());
+	};
+
+	const handleGetUserProfile = () => {
+		dispatch({
+			type: types.CLEAR_PROFILE,
+		});
+		dispatch(getUserProfile(user?._id));
 	};
 
 	return (
@@ -75,7 +83,7 @@ const Navbar = ({ dispatch, user }) => {
 									<li>
 										<Link
 											to={`/profile/${user?._id}`}
-											onClick={() => dispatch(getUserProfile(user?._id))}
+											onClick={handleGetUserProfile}
 										>
 											Your Profile
 										</Link>

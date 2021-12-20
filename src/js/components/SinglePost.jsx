@@ -29,9 +29,6 @@ const SinglePost = ({ dispatch, user, post }) => {
 
 	useEffect(() => {
 		return () => {
-			dispatch({
-				type: types.CLEAR_POST,
-			});
 			setTitle('');
 			setDescription('');
 		};
@@ -39,6 +36,13 @@ const SinglePost = ({ dispatch, user, post }) => {
 
 	const handleDeletePost = () => {
 		dispatch(deletePost(post?._id));
+	};
+
+	const handleGetUserProfile = () => {
+		dispatch({
+			type: types.CLEAR_PROFILE,
+		});
+		dispatch(getUserProfile(post?.user?._id));
 	};
 
 	const handleUpdatePost = () => {
@@ -189,7 +193,7 @@ const SinglePost = ({ dispatch, user, post }) => {
 							<Link
 								to={`/profile/${post?.user?._id}`}
 								className='link'
-								onClick={() => dispatch(getUserProfile(post?.user?._id))}
+								onClick={handleGetUserProfile}
 							>
 								<b>{post?.handle}</b>
 							</Link>

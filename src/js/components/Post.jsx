@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { types } from '../types';
 
 import {
 	toggleLike,
@@ -56,6 +57,9 @@ const Post = ({ dispatch, user, post }) => {
 	};
 
 	const handleGetPost = () => {
+		dispatch({
+			type: types.CLEAR_POST,
+		});
 		dispatch(getPost(post?.id));
 	};
 

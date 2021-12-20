@@ -11,6 +11,7 @@ import {
 	unfollowUser,
 	sendEmail,
 	getPost,
+	updateProfile,
 } from '../actions/actions';
 
 const Profile = ({ dispatch, user, profile }) => {
@@ -27,14 +28,13 @@ const Profile = ({ dispatch, user, profile }) => {
 	);
 
 	useEffect(() => {
+		setHandle(profile?.handle);
+		setEmail(profile?.email);
 		return () => {
-			dispatch({
-				type: types.CLEAR_PROFILE,
-			});
-			// setHandle('');
-			// setEmail('');
+			setHandle('');
+			setEmail('');
 		};
-	}, [dispatch]);
+	}, [dispatch, profile?.handle, profile?.email]);
 
 	const handleProfilePhoto = () => {
 		const profilePhoto = new FormData();
@@ -47,6 +47,12 @@ const Profile = ({ dispatch, user, profile }) => {
 
 	const handleProfileUpdate = (e) => {
 		e.preventDefault();
+		const userData = {
+			handle,
+			email,
+		};
+
+		dispatch(updateProfile(profile?._id, user?._id, userData));
 		setUpdateMode(false);
 	};
 
@@ -70,6 +76,13 @@ const Profile = ({ dispatch, user, profile }) => {
 		document.getElementById('send-email-form').reset();
 		setEmailSubject('');
 		setEmailMessage('');
+	};
+
+	const handleGetPost = (postId) => {
+		dispatch({
+			type: types.CLEAR_POST,
+		});
+		dispatch(getPost(postId));
 	};
 
 	return (
@@ -278,7 +291,7 @@ const Profile = ({ dispatch, user, profile }) => {
 										<input
 											type='text'
 											className='form-control'
-											value={profile?.handle}
+											value={handle}
 											onChange={(e) => setHandle(e.target.value)}
 										/>
 									</div>
@@ -291,12 +304,23 @@ const Profile = ({ dispatch, user, profile }) => {
 										<input
 											type='email'
 											className='form-control'
-											value={profile?.email}
+											value={email}
 											onChange={(e) => setEmail(e.target.value)}
 										/>
 									</div>
 								</div>
-								<button className='btn btn-primary'>Submit</button>
+								<div className='profile-update-action'>
+									<button
+										type='submit'
+										className='btn btn-outline-danger profile-update-action-btn'
+										onClick={() => setUpdateMode(false)}
+									>
+										Undo
+									</button>
+									<button type='submit' className='btn btn-outline-primary'>
+										Submit
+									</button>
+								</div>
 							</form>
 						</div>
 					</div>
@@ -344,7 +368,7 @@ const Profile = ({ dispatch, user, profile }) => {
 											<Link
 												to={`/post/${post?._id}`}
 												className='link'
-												onClick={() => dispatch(getPost(post?._id))}
+												onClick={() => handleGetPost(post?._id)}
 											>
 												Read More
 											</Link>
