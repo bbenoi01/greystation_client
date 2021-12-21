@@ -28,11 +28,13 @@ const SinglePost = ({ dispatch, user, post }) => {
 	const [comment, setComment] = useState('');
 
 	useEffect(() => {
+		setTitle(post?.title);
+		setDescription(post?.description);
 		return () => {
 			setTitle('');
 			setDescription('');
 		};
-	}, [dispatch]);
+	}, [post?.title, post?.description]);
 
 	const handleDeletePost = () => {
 		dispatch(deletePost(post?._id));
@@ -165,13 +167,13 @@ const SinglePost = ({ dispatch, user, post }) => {
 						<input
 							type='text'
 							className='single-post-title-input'
-							value={post?.title}
+							value={title}
 							onChange={(e) => setTitle(e.target.value)}
 						/>
 					) : (
 						<h1 className='single-post-title'>
 							{post?.title}
-							{user?.isAdmin || post?.handle === user?.handle ? (
+							{user?.isAdmin || post?.user?._id === user?._id ? (
 								<div className='single-post-edit'>
 									<FontAwesomeIcon
 										icon='edit'
@@ -209,7 +211,7 @@ const SinglePost = ({ dispatch, user, post }) => {
 							cols='30'
 							rows='7'
 							className='single-post-desc-input'
-							value={post?.description}
+							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 						/>
 					) : (

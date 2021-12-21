@@ -2,15 +2,18 @@
 
 .post {
 	width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
+	border: 1px solid steelblue;
+	border-radius: 20px;
+	padding: 15px;
 }
 
 .post-img {
 	height: 162.398px;
 	width: 100%;
 	object-fit: cover;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 }
 
 .post-feedback {
@@ -59,13 +62,13 @@
 	position: absolute;
 	left: 0px;
 	bottom: 0px;
-	font-size: 12px;
+	font-size: 10px;
 }
 
 .post-date {
 	font-family: 'Lora', serif;
 	font-style: italic;
-	font-size: 13px;
+	font-size: 10px;
 	color: #999;
 	margin-top: 15px;
 }
@@ -77,6 +80,7 @@
 @media only screen and (min-width: 768px) {
 	.post {
 		width: 385px;
+		max-height: 492px;
 	}
 
 	.post-img {
@@ -107,6 +111,7 @@
 		color: #444;
 		line-height: 24px;
 		margin-top: 15px;
+		margin-left: 15px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: -webkit-box;

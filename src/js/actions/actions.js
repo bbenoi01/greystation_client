@@ -259,6 +259,7 @@ export function updatePost(id, postDetails) {
 		blogApi
 			.put(`/api/posts/${id}`, postDetails)
 			.then((res) => {
+				sessionStorage.setItem('post', JSON.stringify(res.data));
 				dispatch({
 					type: types.UPDATE_POST_SUCCESS,
 					payload: res.data,
