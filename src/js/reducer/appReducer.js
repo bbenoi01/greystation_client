@@ -198,6 +198,30 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			};
 		}
 
+		case types.UPDATE_POST_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.UPDATE_POST_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				post: payload,
+				errors: {},
+			};
+		}
+
+		case types.UPDATE_POST_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
+			};
+		}
+
 		case types.DELETE_POST_START: {
 			return {
 				...state,
