@@ -518,7 +518,8 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				loading: false,
-				user: payload,
+				user: payload.user,
+				profile: payload.profile,
 				errors: {},
 			};
 		}
