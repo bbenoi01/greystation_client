@@ -380,7 +380,6 @@ export function submitComment(commentData) {
 					type: types.SUBMIT_COMMENT_SUCCESS,
 					payload: res.data,
 				});
-				window.location.reload();
 			})
 			.catch((err) => {
 				dispatch({
@@ -404,7 +403,6 @@ export function updateComment(id, commentData) {
 					type: types.UPDATE_COMMENT_SUCCESS,
 					payload: res.data,
 				});
-				window.location.reload();
 			})
 			.catch((err) => {
 				dispatch({
@@ -428,7 +426,6 @@ export function deleteComment(commentId) {
 					type: types.DELETE_COMMENT_SUCCESS,
 					payload: res.data,
 				});
-				window.location.reload();
 			})
 			.catch((err) => {
 				dispatch({
@@ -724,6 +721,51 @@ export function updateProfile(pid, uid, userData) {
 			.catch((err) => {
 				dispatch({
 					type: types.UPDATE_PROFILE_FAILURE,
+					payload: err.response.data,
+				});
+			});
+	};
+}
+
+export function generateForgotPasswordToken(userData) {
+	return (dispatch) => {
+		dispatch({
+			type: types.GENERATE_PASSWORD_TOKEN_START,
+		});
+		blogApi
+			.post('/api/users/forgot-password-token', userData)
+			.then((res) => {
+				dispatch({
+					type: types.GENERATE_PASSWORD_TOKEN_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.GENERATE_PASSWORD_TOKEN_FAILURE,
+					payload: err.response.data,
+				});
+			});
+	};
+}
+
+export function resetPassword(userData) {
+	return (dispatch) => {
+		dispatch({
+			type: types.RESET_PASSWORD_START,
+		});
+		blogApi
+			.put('/api/users/reset-password', userData)
+			.then((res) => {
+				dispatch({
+					type: types.RESET_PASSWORD_SUCCESS,
+					payload: res.data,
+				});
+				window.location.replace('/auth');
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.RESET_PASSWORD_FAILURE,
 					payload: err.response.data,
 				});
 			});

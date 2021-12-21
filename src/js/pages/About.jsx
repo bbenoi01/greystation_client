@@ -39,7 +39,7 @@ const About = ({ dispatch, categories }) => {
 							key={category?._id}
 							className='link'
 						>
-							<li className='about-list-item'>{category?.title}</li>
+							<li>{category?.title}</li>
 						</Link>
 					))}
 				</ul>

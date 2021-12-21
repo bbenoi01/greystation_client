@@ -27,12 +27,16 @@ import {
 	faUpload,
 	faExclamationTriangle,
 	faCheckCircle,
+	faUserLock,
+	faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Navbar from './components/Navbar';
 import PasswordUpdate from './components/PasswordUpdate';
 import VerificationAlert from './components/VerificationAlert';
 import Auth from './pages/Auth';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import VerifyAccount from './pages/VerifyAccount';
 import Blocked from './pages/Blocked';
 import Home from './pages/Home';
@@ -61,7 +65,9 @@ library.add(
 	faEnvelope,
 	faUpload,
 	faExclamationTriangle,
-	faCheckCircle
+	faCheckCircle,
+	faUserLock,
+	faQuestionCircle
 );
 
 const App = ({ user, errors }) => {
@@ -86,6 +92,12 @@ const App = ({ user, errors }) => {
 			<Switch>
 				<Route exact path='/auth'>
 					{user ? <Redirect to='/' /> : <Auth errors={errors} />}
+				</Route>
+				<Route exact path='/forgot-password'>
+					<ForgotPassword />
+				</Route>
+				<Route exact path='/reset-password/:id'>
+					<ResetPassword />
 				</Route>
 				{user && user?.isBlocked ? <Blocked /> : null}
 				<Route exact path='/verify-account/:token'>

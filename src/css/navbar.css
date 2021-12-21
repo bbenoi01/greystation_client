@@ -1,28 +1,10 @@
-@font-face {
-	font-family: 'MightySpidey';
-	src: local('MightySpidey'),
-		url('../fonts/MightySpidey.ttf') format('truetype');
-}
-
-* {
-	padding: 0;
-	margin: 0;
-}
-
-.link {
-	text-decoration: none;
-	color: steelblue;
-	font-family: 'MightySpidey';
-	font-size: 12px;
-}
-
-.link:hover {
-	color: red;
-}
-
 /* Navbar */
 .navbar {
 	height: 60px;
+}
+
+.link {
+	font-size: 12px;
 }
 
 .nav-profile {
@@ -33,6 +15,22 @@
 	border-radius: 50%;
 	object-fit: cover;
 	cursor: pointer;
+}
+
+.nav-profile-link {
+	font-size: 10px;
+}
+
+.nav-password-link {
+	margin-top: 5px;
+	font-family: 'MightySpidey';
+	font-size: 7.5px;
+	color: steelblue;
+	cursor: pointer;
+}
+
+.nav-password-link:hover {
+	color: red;
 }
 
 /* Extra small devices (phones, 600px and down) */
