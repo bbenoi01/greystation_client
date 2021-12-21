@@ -254,14 +254,14 @@ const SinglePost = ({ dispatch, user, post }) => {
 								{user ? (
 									<button
 										type='submit'
-										className='single-post-comment-submit btn btn-primary'
+										className='single-post-comment-submit btn'
 									>
 										Submit
 									</button>
 								) : (
 									<button
 										type='submit'
-										className='single-post-comment-submit btn btn-primary'
+										className='single-post-comment-submit btn'
 										disabled
 									>
 										Submit
@@ -278,10 +278,11 @@ const SinglePost = ({ dispatch, user, post }) => {
 											key={comment?._id}
 										>
 											<div className='card-header single-post-comment-card-header'>
-												<Link to={`/profile/${comment?.user?._id}`}>
-													<p className='single-post-comment-handle'>
-														{comment?.user?.handle}
-													</p>
+												<Link
+													to={`/profile/${comment?.user?._id}`}
+													className='single-post-comment-handle link'
+												>
+													<p>{comment?.user?.handle}</p>
 												</Link>
 												<p className='single-post-comment-date'>
 													{dayjs(comment?.createdAt).fromNow()}

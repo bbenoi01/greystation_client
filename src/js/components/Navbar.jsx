@@ -84,11 +84,16 @@ const Navbar = ({ dispatch, user }) => {
 										<Link
 											to={`/profile/${user?._id}`}
 											onClick={handleGetUserProfile}
+											className='link nav-profile-link'
 										>
 											Your Profile
 										</Link>
 									</li>
-									<li data-bs-toggle='modal' data-bs-target='#password-modal'>
+									<li
+										data-bs-toggle='modal'
+										data-bs-target='#password-modal'
+										className='nav-password-link'
+									>
 										Change Password
 									</li>
 								</ul>

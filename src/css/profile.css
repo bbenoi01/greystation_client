@@ -25,6 +25,10 @@
 
 /* Profile */
 
+.profile {
+	color: whitesmoke;
+}
+
 .profile-image-hero {
 	object-fit: cover;
 }

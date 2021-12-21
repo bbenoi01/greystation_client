@@ -55,6 +55,7 @@
 	margin: 10px 0;
 	font-family: 'Lora', serif;
 	font-size: 25px;
+	color: #666;
 }
 
 .single-post-title-input {
@@ -156,6 +157,13 @@
 
 .single-post-comment-submit {
 	margin: 5px 0;
+	background-color: steelblue;
+	color: whitesmoke;
+}
+
+.single-post-comment-submit:hover {
+	background-color: green;
+	color: whitesmoke;
 }
 
 .single-post-comment-list {
@@ -176,7 +184,7 @@
 }
 
 .single-post-comment-handle {
-	font-size: 15px;
+	font-size: 11px;
 }
 
 .single-post-comment-date {

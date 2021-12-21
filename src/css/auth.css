@@ -1,8 +1,4 @@
-@font-face {
-	font-family: 'MightySpidey';
-	src: local('MightySpidey'),
-		url('../fonts/MightySpidey.ttf') format('truetype');
-}
+/* Auth */
 
 .auth {
 	height: calc(100vh - 60px);
@@ -10,12 +6,18 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background: url('../assets/laughing_babies.jpg');
-	background-size: cover;
+	background: url('../assets/superhero-comic-4376194.png') center;
+}
+
+.auth-card {
+	background-color: black;
+	padding: 35px;
+	color: whitesmoke;
+	text-align: center;
+	border-radius: 50%;
 }
 
 .auth-title {
-	font-size: 50px;
 	color: red;
 	font-family: 'MightySpidey';
 }
@@ -39,11 +41,15 @@
 .auth-submit {
 	margin-top: 20px;
 	cursor: pointer;
-	background-color: lightcoral;
+	background-color: steelblue;
 	border: none;
 	color: whitesmoke;
 	border-radius: 10px;
 	padding: 10px;
+}
+
+.auth-submit:hover {
+	background-color: green;
 }
 
 .auth-submit:disabled {
@@ -64,8 +70,13 @@
 }
 
 .auth-switch:hover {
-	background-color: teal;
+	background-color: steelblue;
 	color: whitesmoke;
+}
+
+.auth-forgot-password {
+	margin-top: 5px;
+	font-size: 0.6rem;
 }
 
 /* Extra small devices (phones, 600px and down) */

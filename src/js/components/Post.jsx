@@ -106,10 +106,10 @@ const Post = ({ dispatch, user, post }) => {
 				</div>
 				<Link
 					to={`/post/${post?._id}`}
-					className='link'
+					className='post-title link'
 					onClick={handleGetPost}
 				>
-					<span className='post-title'>{post?.title}</span>
+					{post?.title}
 				</Link>
 				<span className='post-date'>
 					{new Date(post?.createdAt).toDateString()}

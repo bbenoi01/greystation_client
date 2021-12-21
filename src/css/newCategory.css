@@ -29,9 +29,13 @@
 .new-category-submit {
 	margin: auto;
 	color: whitesmoke;
-	background-color: teal;
+	background-color: steelblue;
 	padding: 10px;
 	border: none;
 	border-radius: 10px;
 	cursor: pointer;
+}
+
+.new-category-submit:hover {
+	background-color: green;
 }
