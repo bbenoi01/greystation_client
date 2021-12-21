@@ -445,7 +445,8 @@ export function uploadProfilePhoto(file) {
 		blogApi
 			.put(`profilephoto-upload`, file)
 			.then((res) => {
-				localStorage.setItem('user', JSON.stringify(res.data));
+				localStorage.setItem('user', JSON.stringify(res.data.user));
+				sessionStorage.setItem('profile', JSON.stringify(res.data.profile));
 				dispatch({
 					type: types.PROFILE_PHOTO_UPLOAD_SUCCESS,
 					payload: res.data,
