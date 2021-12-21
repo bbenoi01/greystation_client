@@ -43,6 +43,7 @@ const Profile = ({ dispatch, user, profile }) => {
 		profilePhoto.append('file', file);
 
 		dispatch(uploadProfilePhoto(profilePhoto));
+		setFile(null);
 	};
 
 	const handleProfileUpdate = (e) => {
