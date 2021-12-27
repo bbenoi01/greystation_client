@@ -18,6 +18,7 @@ const Profile = ({ dispatch, user, profile }) => {
 	const [handle, setHandle] = useState('');
 	const [email, setEmail] = useState('');
 	const [file, setFile] = useState(null);
+	const [base64File, setBase64File] = useState('');
 	const [updateMode, setUpdateMode] = useState(false);
 	const [emailSubject, setEmailSubject] = useState('');
 	const [emailMessage, setEmailMessage] = useState('');
@@ -36,11 +37,26 @@ const Profile = ({ dispatch, user, profile }) => {
 		};
 	}, [dispatch, profile?.handle, profile?.email]);
 
+	const base64Encode = (file) => {
+		const reader = new FileReader();
+		if (file) {
+			reader.readAsDataURL(file);
+			reader.onload = () => {
+				setBase64File(reader.result);
+				console.log(base64File);
+			};
+			reader.onerror = (error) => {
+				console.log('error: ', error);
+			};
+		}
+	};
+
 	const handleProfilePhoto = () => {
 		const profilePhoto = new FormData();
 		const filename = file.name;
 		profilePhoto.append('name', filename);
 		profilePhoto.append('file', file);
+		profilePhoto.append('b64str', base64File);
 
 		dispatch(uploadProfilePhoto(profilePhoto));
 		setFile(null);
@@ -85,6 +101,8 @@ const Profile = ({ dispatch, user, profile }) => {
 		});
 		dispatch(getPost(postId));
 	};
+
+	base64Encode(file);
 
 	return (
 		<div className='profile'>
