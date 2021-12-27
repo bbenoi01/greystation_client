@@ -10,8 +10,23 @@ const Create = ({ dispatch, user, categories }) => {
 	const [category, setCategory] = useState('');
 	const [description, setDescription] = useState('');
 	const [file, setFile] = useState(null);
+	const [base64File, setBase64File] = useState('');
 	const [blogType, setBlogType] = useState('');
 	const [videoAddress, setVideoAddress] = useState('');
+
+	const base64Encode = (file) => {
+		const reader = new FileReader();
+		if (file) {
+			reader.readAsDataURL(file);
+			reader.onload = () => {
+				setBase64File(reader.result);
+				console.log(base64File);
+			};
+			reader.onerror = (error) => {
+				console.log('error: ', error);
+			};
+		}
+	};
 
 	const handleBlogSubmit = (e) => {
 		e.preventDefault();
@@ -21,6 +36,7 @@ const Create = ({ dispatch, user, categories }) => {
 			const filename = file.name;
 			newPost.append('name', filename);
 			newPost.append('file', file);
+			newPost.append('b64str', base64File);
 			newPost.append('title', title);
 			newPost.append('category', category);
 			newPost.append('description', description);
@@ -49,6 +65,8 @@ const Create = ({ dispatch, user, categories }) => {
 
 		dispatch(submitPost(newPost));
 	};
+
+	base64Encode(file);
 
 	return (
 		<div className='create'>
