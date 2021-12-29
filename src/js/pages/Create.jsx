@@ -55,7 +55,6 @@ const Create = ({ dispatch, user, categories }) => {
 	const handleVlogSubmit = (e) => {
 		e.preventDefault();
 		const newPost = {
-			handle: user.handle,
 			title,
 			category,
 			description: 'VLOG',
