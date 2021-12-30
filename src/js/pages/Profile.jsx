@@ -376,11 +376,23 @@ const Profile = ({ dispatch, user, profile }) => {
 							) : (
 								profile?.posts?.map((post) => (
 									<div className='profile-post' key={post?._id}>
-										<img
-											src={post?.media}
-											alt=''
-											className='profile-post-media'
-										/>
+										{post?.media && post?.blogType === 'blog' ? (
+											<img
+												src={post?.media}
+												alt=''
+												className='profile-post-media'
+											/>
+										) : post?.media && post?.blogType === 'vlog' ? (
+											<iframe
+												title='Vlog Post'
+												src={post?.media}
+												frameBorder='0'
+												controls='0'
+												allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+												allowFullScreen
+												className='profile-post-media'
+											/>
+										) : null}
 										<div className='profile-post-data'>
 											<h3>{post?.title}</h3>
 											<p className='profile-post-desc'>{post?.description}</p>

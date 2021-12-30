@@ -18,7 +18,7 @@ const Sidebar = ({ dispatch, categories }) => {
 	return (
 		<div className='sidebar'>
 			<div className='sidebar-item'>
-				<div className='sidebar-title'>About Me</div>
+				<div className='sidebar-title'>ABOUT ME</div>
 				<img
 					src='/dj_greystation.jpg'
 					alt='DJ GreyStation'

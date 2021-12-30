@@ -11,9 +11,11 @@ import {
 	unblockUser,
 	sendEmail,
 	deleteUser,
+	makeAdmin,
+	removeAdmin,
 } from '../actions/actions';
 
-const Author = ({ author }) => {
+const Author = ({ user, author }) => {
 	const dispatch = useDispatch();
 	const [subject, setSubject] = useState('');
 	const [message, setMessage] = useState('');
@@ -167,13 +169,36 @@ const Author = ({ author }) => {
 						</div>
 					</div>
 				</div>
-				<button
-					type='button'
-					className='btn btn-danger author-action-area-btn'
-					onClick={() => dispatch(deleteUser(author?._id))}
-				>
-					<FontAwesomeIcon icon='trash-alt' />
-				</button>
+				{user.isSuperUser && (
+					<>
+						{author?.isAdmin ? (
+							<button
+								type='button'
+								className='author-admin-toggle btn btn-outline-danger'
+								onClick={() => dispatch(removeAdmin(author?._id))}
+							>
+								Remove Admin
+							</button>
+						) : (
+							<button
+								type='button'
+								className='author-admin-toggle btn btn-outline-success'
+								onClick={() => dispatch(makeAdmin(author?._id))}
+							>
+								Make Admin
+							</button>
+						)}
+					</>
+				)}
+				{!author?.isSuperUser && (
+					<button
+						type='button'
+						className='btn btn-danger author-action-area-btn'
+						onClick={() => dispatch(deleteUser(author?._id))}
+					>
+						<FontAwesomeIcon icon='trash-alt' />
+					</button>
+				)}
 			</div>
 		</li>
 	);

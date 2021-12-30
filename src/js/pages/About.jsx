@@ -18,7 +18,7 @@ const About = ({ dispatch, categories }) => {
 	return (
 		<div className='about'>
 			<div className='about-item'>
-				<div className='about-title'>About Me</div>
+				<div className='about-title'>ABOUT ME</div>
 				<img
 					src='/dj_greystation.jpg'
 					alt='DJ GreyStation'
