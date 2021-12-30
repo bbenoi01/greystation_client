@@ -39,6 +39,12 @@ const ResetPassword = ({ dispatch, errors, success }) => {
 						/>
 						<h5 className='card-title'>Reset Password</h5>
 						<div className='mb-3'>
+							{errors?.token && (
+								<div className='form-text error-message'>
+									<FontAwesomeIcon icon='times-circle' className='error-icon' />
+									<b>{errors?.token}</b>
+								</div>
+							)}
 							<input
 								type='password'
 								placeholder='Password'
@@ -52,11 +58,6 @@ const ResetPassword = ({ dispatch, errors, success }) => {
 										: null
 								}
 							/>
-							{errors?.token && (
-								<div className='form-text error-message'>
-									<b>{errors?.token}</b>
-								</div>
-							)}
 						</div>
 						<button type='submit' className='btn reset-password-btn'>
 							Reset Password

@@ -29,6 +29,7 @@ import {
 	faCheckCircle,
 	faUserLock,
 	faQuestionCircle,
+	faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Navbar from './components/Navbar';
@@ -67,7 +68,8 @@ library.add(
 	faExclamationTriangle,
 	faCheckCircle,
 	faUserLock,
-	faQuestionCircle
+	faQuestionCircle,
+	faTimesCircle
 );
 
 const App = ({ user, errors }) => {

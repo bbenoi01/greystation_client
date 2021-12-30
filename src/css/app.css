@@ -31,14 +31,22 @@ body::-webkit-scrollbar {
 	color: red;
 }
 
+.success-message,
+.error-message {
+	margin: 15px auto;
+}
+
 .success-message {
 	color: green;
-	margin: auto;
 }
 
 .error-message {
 	color: red;
-	margin: auto;
+}
+
+.success-icon,
+.error-icon {
+	margin-right: 5px;
 }
 
 .actual-email {
