@@ -674,6 +674,52 @@ export function deleteUser(id) {
 	};
 }
 
+export function makeAdmin(id) {
+	return (dispatch) => {
+		dispatch({
+			type: types.TOGGLE_ADMIN_START,
+		});
+		blogApi
+			.put(`/api/users/make-admin/${id}`)
+			.then((res) => {
+				sessionStorage.setItem('authors', JSON.stringify(res.data));
+				dispatch({
+					type: types.TOGGLE_ADMIN_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.TOGGLE_ADMIN_FAILURE,
+					payload: err.response.data,
+				});
+			});
+	};
+}
+
+export function removeAdmin(id) {
+	return (dispatch) => {
+		dispatch({
+			type: types.TOGGLE_ADMIN_START,
+		});
+		blogApi
+			.put(`/api/users/remove-admin/${id}`)
+			.then((res) => {
+				sessionStorage.setItem('authors', JSON.stringify(res.data));
+				dispatch({
+					type: types.TOGGLE_ADMIN_SUCCESS,
+					payload: res.data,
+				});
+			})
+			.catch((err) => {
+				dispatch({
+					type: types.TOGGLE_ADMIN_FAILURE,
+					payload: err.response.data,
+				});
+			});
+	};
+}
+
 export function updateUser(id, userData) {
 	return (dispatch) => {
 		dispatch({

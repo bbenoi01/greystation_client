@@ -3,9 +3,9 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
 	BrowserRouter as Router,
-	Switch,
+	Routes,
 	Route,
-	Redirect,
+	Navigate,
 } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -89,42 +89,40 @@ const App = ({ user, errors }) => {
 			<Navbar />
 			<PasswordUpdate user={user} />
 			{user && !user.isVerified && <VerificationAlert />}
-			<Switch>
-				<Route exact path='/auth'>
-					{user ? <Redirect to='/' /> : <Auth errors={errors} />}
-				</Route>
-				<Route exact path='/forgot-password'>
-					<ForgotPassword />
-				</Route>
-				<Route exact path='/reset-password/:id'>
-					<ResetPassword />
-				</Route>
+			<Routes>
+				<Route
+					path='/auth'
+					element={
+						user ? <Navigate to='/' replace /> : <Auth errors={errors} />
+					}
+				/>
+				<Route path='/forgot-password' element={<ForgotPassword />} />
+				<Route path='/reset-password/:id' element={<ResetPassword />} />
 				{user && user?.isBlocked ? <Blocked /> : null}
-				<Route exact path='/verify-account/:token'>
-					{user ? <VerifyAccount /> : <Auth />}
-				</Route>
-				<Route exact path='/'>
-					<Home />
-				</Route>
-				<Route exact path='/post/:postId'>
-					<Single />
-				</Route>
-				<Route exact path='/create'>
-					{user ? <Create /> : <Auth />}
-				</Route>
-				<Route exact path='/authors'>
-					{user && user.isAdmin ? <Authors /> : <Auth />}
-				</Route>
-				<Route exact path='/category-management'>
-					{user && user.isAdmin ? <CategoryManagement /> : <Auth />}
-				</Route>
-				<Route exact path='/about'>
-					<About />
-				</Route>
-				<Route exact path='/profile/:id'>
-					{user ? <Profile /> : <Auth />}
-				</Route>
-			</Switch>
+				<Route
+					path='/verify-account/:token'
+					element={user ? <VerifyAccount /> : <Auth />}
+				/>
+				<Route path='/' element={<Home />} />
+				<Route path='/post/:postId' element={<Single />} />
+				<Route path='/create' element={user ? <Create /> : <Auth />} />
+				<Route
+					exact
+					path='/authors'
+					element={user && user.isAdmin ? <Authors /> : <Auth />}
+				/>
+				<Route
+					exact
+					path='/category-management'
+					element={user && user.isAdmin ? <CategoryManagement /> : <Auth />}
+				/>
+				<Route exact path='/about' element={<About />} />
+				<Route
+					exact
+					path='/profile/:id'
+					element={user ? <Profile /> : <Auth />}
+				/>
+			</Routes>
 		</Router>
 	);
 };

@@ -628,6 +628,30 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			};
 		}
 
+		case types.TOGGLE_ADMIN_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.TOGGLE_ADMIN_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				authors: payload,
+				errors: {},
+			};
+		}
+
+		case types.TOGGLE_ADMIN_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
+			};
+		}
+
 		case types.UPDATE_USER_START: {
 			return {
 				...state,
