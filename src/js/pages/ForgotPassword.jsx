@@ -35,6 +35,25 @@ const ForgotPassword = ({ dispatch, errors, success }) => {
 						/>
 						<h5 className='card-title'>Forgot Password</h5>
 						<div className='mb-3'>
+							{success && (
+								<div className='form-text success-message'>
+									<FontAwesomeIcon
+										icon='check-circle'
+										className='success-icon'
+									/>
+									<b>{success}</b>
+								</div>
+							)}
+							{errors?.user && (
+								<div className='form-text error-message'>
+									<FontAwesomeIcon icon='times-circle' className='error-icon' />
+									<b>{errors?.user}</b>
+								</div>
+							)}
+							<p>
+								A link to reset your password will be sent to the email address
+								associated with your account.
+							</p>
 							<input
 								type='email'
 								placeholder='Email'
@@ -48,19 +67,9 @@ const ForgotPassword = ({ dispatch, errors, success }) => {
 										: null
 								}
 							/>
-							{success && (
-								<div className='form-text success-message'>
-									<b>{success}</b>
-								</div>
-							)}
-							{errors?.user && (
-								<div className='form-text error-message'>
-									<b>{errors?.user}</b>
-								</div>
-							)}
 						</div>
 						<button type='submit' className='btn forgot-password-btn'>
-							Check Email
+							Send Email
 						</button>
 						{errors?.token && (
 							<div className='form-text error-message'>

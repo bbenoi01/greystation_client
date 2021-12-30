@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const VerificationSuccess = () => {
 	return (
 		<div className='alert alert-success v-success' role='alert'>
-			<FontAwesomeIcon icon='check-circle' className='v-success-icon' /> Account
+			<FontAwesomeIcon icon='check-circle' className='success-icon' /> Account
 			Successfully Verified
 		</div>
 	);

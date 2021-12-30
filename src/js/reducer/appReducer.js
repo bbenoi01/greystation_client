@@ -734,6 +734,29 @@ const appReducer = (state = INITIAL_STATE, action) => {
 			};
 		}
 
+		case types.RESET_PASSWORD_START: {
+			return {
+				...state,
+				loading: true,
+			};
+		}
+
+		case types.RESET_PASSWORD_SUCCESS: {
+			return {
+				...state,
+				loading: false,
+				success: payload,
+			};
+		}
+
+		case types.RESET_PASSWORD_FAILURE: {
+			return {
+				...state,
+				loading: false,
+				errors: payload,
+			};
+		}
+
 		case types.CLEAR_SUCCESS: {
 			return {
 				...state,
